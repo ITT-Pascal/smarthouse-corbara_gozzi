@@ -1,15 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BlaisePascal.SmartHouse.Domain
 {
-    internal class Esermpio
+    public class Lamp
     {
-        public IsOn()
+        public bool IsOn { get; set; }
+        
+        public void TurnOn()
         {
-        }  //TODO: nominare classe lame e fare ublic bool IsOn { get; set};
+            if (!IsOn)
+            {
+                IsOn = true;
+            }
+        }
+
+        public void TurnOff()
+        {
+            if (IsOn)
+            {
+                IsOn = false;
+            }
+        }
     }
 }

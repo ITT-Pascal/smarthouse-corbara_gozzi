@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BlaisePascal.SmartHouse.Domain.Test")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eadd6ab5bb003b2f3f3f6125ca298bd46accde06")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6cf12cb148a97894043d6cadb2dfe083e1c245c7")]
 [assembly: System.Reflection.AssemblyProductAttribute("BlaisePascal.SmartHouse.Domain.Test")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BlaisePascal.SmartHouse.Domain.Test")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
