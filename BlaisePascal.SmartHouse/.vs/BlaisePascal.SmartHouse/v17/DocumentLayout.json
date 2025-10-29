@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\francesco.corbara\\Source\\Repos\\SmartHouse\\BlaisePascal.SmartHouse\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7B9ED593-1A2E-4A60-907F-F99C9F563223}|Src\\BlaisePascal.SmartHouse.Domain\\BlaisePascal.SmartHouse.Domain.csproj|c:\\users\\francesco.corbara\\source\\repos\\smarthouse\\blaisepascal.smarthouse\\src\\blaisepascal.smarthouse.domain\\esermpio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7B9ED593-1A2E-4A60-907F-F99C9F563223}|Src\\BlaisePascal.SmartHouse.Domain\\BlaisePascal.SmartHouse.Domain.csproj|solutionrelative:src\\blaisepascal.smarthouse.domain\\esermpio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7B9ED593-1A2E-4A60-907F-F99C9F563223}|Src\\BlaisePascal.SmartHouse.Domain\\BlaisePascal.SmartHouse.Domain.csproj|c:\\users\\francesco.corbara\\source\\repos\\smarthouse\\blaisepascal.smarthouse\\src\\blaisepascal.smarthouse.domain\\smarthouse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B9ED593-1A2E-4A60-907F-F99C9F563223}|Src\\BlaisePascal.SmartHouse.Domain\\BlaisePascal.SmartHouse.Domain.csproj|solutionrelative:src\\blaisepascal.smarthouse.domain\\smarthouse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -23,12 +23,12 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Esermpio.cs",
-              "DocumentMoniker": "C:\\Users\\francesco.corbara\\Source\\Repos\\SmartHouse\\BlaisePascal.SmartHouse\\Src\\BlaisePascal.SmartHouse.Domain\\Esermpio.cs",
-              "RelativeDocumentMoniker": "Src\\BlaisePascal.SmartHouse.Domain\\Esermpio.cs",
-              "ToolTip": "C:\\Users\\francesco.corbara\\Source\\Repos\\SmartHouse\\BlaisePascal.SmartHouse\\Src\\BlaisePascal.SmartHouse.Domain\\Esermpio.cs",
-              "RelativeToolTip": "Src\\BlaisePascal.SmartHouse.Domain\\Esermpio.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAdAAAAAAAAAA==",
+              "Title": "SmartHouse.cs",
+              "DocumentMoniker": "C:\\Users\\francesco.corbara\\Source\\Repos\\SmartHouse\\BlaisePascal.SmartHouse\\Src\\BlaisePascal.SmartHouse.Domain\\SmartHouse.cs",
+              "RelativeDocumentMoniker": "Src\\BlaisePascal.SmartHouse.Domain\\SmartHouse.cs",
+              "ToolTip": "C:\\Users\\francesco.corbara\\Source\\Repos\\SmartHouse\\BlaisePascal.SmartHouse\\Src\\BlaisePascal.SmartHouse.Domain\\SmartHouse.cs",
+              "RelativeToolTip": "Src\\BlaisePascal.SmartHouse.Domain\\SmartHouse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-22T08:57:31.661Z",
               "EditorCaption": ""

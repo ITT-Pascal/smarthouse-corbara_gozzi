@@ -8,6 +8,6 @@ namespace BlaisePascal.SmartHouse.Domain
 {
     internal class Esermpio
     {
-        // ciaooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+        //CIAOOOOOOOOOOOOOOOOOoo
     }
 }
