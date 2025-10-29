@@ -33,14 +33,7 @@ namespace BlaisePascal.SmartHouse.Domain
         {
             if (IsOn)
             {
-                if (Brightness + brightValue > 100)
-                {
-                    Brightness = 100;
-                }
-                else
-                {
-                    Brightness += brightValue;
-                }
+                Brightness = Math.Min(100, Brightness +  brightValue);
             }
 
 
@@ -50,14 +43,7 @@ namespace BlaisePascal.SmartHouse.Domain
         {
             if (IsOn)
             {
-                if (Brightness - brightValue < 1)
-                {
-                    Brightness = 1;
-                }
-                else
-                {
-                    Brightness -= brightValue;
-                }
+                Brightness = Math.Max(1, Brightness - brightValue);
 
             }
         }
