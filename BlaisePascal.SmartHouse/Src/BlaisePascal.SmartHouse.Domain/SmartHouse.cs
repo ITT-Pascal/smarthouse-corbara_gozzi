@@ -8,6 +8,8 @@ namespace BlaisePascal.SmartHouse.Domain
 {
     internal class Esermpio
     {
-        //CIAOOOOOOOOOOOOOOOOOoo
+        public IsOn()
+        {
+        }  //TODO: nominare classe lame e fare ublic bool 
     }
 }
