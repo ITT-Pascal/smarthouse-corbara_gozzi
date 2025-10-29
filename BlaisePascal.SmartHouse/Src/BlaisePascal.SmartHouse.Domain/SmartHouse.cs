@@ -10,6 +10,6 @@ namespace BlaisePascal.SmartHouse.Domain
     {
         public IsOn()
         {
-        }  //TODO: nominare classe lame e fare ublic bool 
+        }  //TODO: nominare classe lame e fare ublic bool IsOn { get; set};
     }
 }
