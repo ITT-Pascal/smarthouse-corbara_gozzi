@@ -13,11 +13,18 @@ namespace BlaisePascal.SmartHouse.Domain
         //INTENSITA' LUMINOSA
         public int Brightness { get; set; }
 
+        public Lamp()
+        {
+            IsOn = false;
+            Brightness = 0;
+        }
+
         public void TurnOn()
         {
             if (!IsOn)
             {
                 IsOn = true;
+                Brightness = 50;
             }
         }
 
@@ -26,6 +33,7 @@ namespace BlaisePascal.SmartHouse.Domain
             if (IsOn)
             {
                 IsOn = false;
+                Brightness = 0;
             }
         }
 
