@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BlaisePascal.SmartHouse.Domain
+﻿namespace BlaisePascal.SmartHouse.Domain
 {
     public class Lamp
     {
@@ -41,7 +34,7 @@ namespace BlaisePascal.SmartHouse.Domain
         {
             if (IsOn)
             {
-                Brightness = Math.Min(100, Brightness +  brightValue);
+                Brightness = Math.Min(100, Brightness + brightValue);
             }
 
 
@@ -55,5 +48,7 @@ namespace BlaisePascal.SmartHouse.Domain
 
             }
         }
+
+
     }
 }
