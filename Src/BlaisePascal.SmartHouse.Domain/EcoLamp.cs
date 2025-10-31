@@ -48,9 +48,8 @@ namespace BlaisePascal.SmartHouse.Domain
                 Brightness = Math.Min(MaxBrightness, Brightness + brightValue);
             }
 
-
-        }
-
+        }      
+           
         public override void TurnDownBrightness(int brightValue)
         {
             if (IsOn)
