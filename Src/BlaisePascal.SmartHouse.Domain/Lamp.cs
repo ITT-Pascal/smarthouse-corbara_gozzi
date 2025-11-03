@@ -1,10 +1,10 @@
 ﻿namespace BlaisePascal.SmartHouse.Domain
 {
-    public class Lamp
+    public class Lamp:AbstractLamp
     {
-        public bool IsOn { get; set; }
+        public bool IsOn { get; private set; }
         //INTENSITA' LUMINOSA
-        public int Brightness { get; set; }
+        public int Brightness { get; private set; }
 
         public Lamp()
         {
@@ -12,7 +12,7 @@
             Brightness = 0;
         }
 
-        public void TurnOn()
+        public override void TurnOn()
         {
             if (!IsOn)
             {
@@ -21,7 +21,7 @@
             }
         }
 
-        public void TurnOff()
+        public override void TurnOff()
         {
             if (IsOn)
             {
@@ -30,23 +30,14 @@
             }
         }
 
-        public void TurnUpBrightness(int brightValue)
-        {
+        public override void ChangeBrightness(int brightnessValue)
+        { 
             if (IsOn)
-            {
-                Brightness = Math.Min(100, Brightness + brightValue);
+            { //50-10= 40, 50-70= -20
+                Brightness = Math.Max(Brightness + brightnessValue, 1);
+                Brightness = Math.Min(Brightness, 100);
             }
 
-
-        }
-
-        public void TurnDownBrightness(int brightValue)
-        {
-            if (IsOn)
-            {
-                Brightness = Math.Max(1, Brightness - brightValue);
-
-            }
         }
 
 

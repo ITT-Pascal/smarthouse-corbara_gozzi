@@ -14,10 +14,7 @@ namespace BlaisePascal.SmartHouse.Domain
         public abstract void TurnOff();
 
 
-        public abstract void TurnUpBrightness(int brightValue);
-
-
-        public abstract void TurnDownBrightness(int brightValue);
+        public abstract void ChangeBrightness(int brightnessValue);
         
     }
 }

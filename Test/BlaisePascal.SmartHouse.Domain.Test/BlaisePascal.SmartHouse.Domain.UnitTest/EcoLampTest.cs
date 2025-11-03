@@ -97,29 +97,22 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void Lamp_TurnUpBrightness_WhenIsOffItRemain0()
+        public void Lamp_ChangeBrightness_WhenIsOffItRemain0()
         {
             var lamp = new Lamp();
-            lamp.TurnUpBrightness(83);
+            lamp.ChangeBrightness(83);
             Assert.Equal(0, lamp.Brightness);
         }
 
-        [Fact]
-
-        public void Lamp_TurnDownBrightness_WhenIsOffItRemain0()
-        {
-            var lamp = new Lamp();
-            lamp.TurnDownBrightness(83);
-            Assert.Equal(0, lamp.Brightness);
-        }
+        
 
         [Fact]
 
-        public void Lamp_TurnUpBrightness_WhenIsOnAndTurnUpOf10ItIncrease()
+        public void Lamp_ChangeBrightness_WhenIsOnAndTurnUpOf10ItIncrease()
         {
             var lamp = new Lamp();
             lamp.TurnOn();
-            lamp.TurnUpBrightness(10);
+            lamp.ChangeBrightness(10);
             Assert.Equal(60, lamp.Brightness);
 
         }
@@ -130,7 +123,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
         {
             var lamp = new Lamp();
             lamp.TurnOn();
-            lamp.TurnUpBrightness(100);
+            lamp.ChangeBrightness(100);
             Assert.Equal(100, lamp.Brightness);
 
         }
@@ -141,7 +134,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
         {
             var lamp = new Lamp();
             lamp.TurnOn();
-            lamp.TurnDownBrightness(10);
+            lamp.ChangeBrightness(10);
             Assert.Equal(40, lamp.Brightness);
 
         }
@@ -152,7 +145,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
         {
             var lamp = new Lamp();
             lamp.TurnOn();
-            lamp.TurnDownBrightness(50);
+            lamp.ChangeBrightness(50);
             Assert.Equal(1, lamp.Brightness);
 
         }
@@ -163,7 +156,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
         {
             var lamp = new Lamp();
             lamp.TurnOn();
-            lamp.TurnUpBrightness(50);
+            lamp.ChangeBrightness(50);
             Assert.Equal(100, lamp.Brightness);
 
         }
@@ -174,8 +167,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
         {
             var lamp = new Lamp();
             lamp.TurnOn();
-            lamp.TurnDownBrightness(50);
-            lamp.TurnUpBrightness(24);
+            lamp.ChangeBrightness(50);
+            lamp.ChangeBrightness(24);
             Assert.Equal(25, lamp.Brightness);
 
         }
@@ -186,8 +179,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
         {
             var lamp = new Lamp();
             lamp.TurnOn();
-            lamp.TurnUpBrightness(50);
-            lamp.TurnDownBrightness(75);
+            lamp.ChangeBrightness(50);
+            lamp.ChangeBrightness(75);
             Assert.Equal(25, lamp.Brightness);
 
         }
