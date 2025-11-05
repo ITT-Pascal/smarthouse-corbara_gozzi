@@ -47,7 +47,7 @@ namespace BlaisePascal.SmartHouse.Domain
             {
                 Brightness = Math.Max(Brightness + brightnessValue, 1);
                 Brightness = Math.Min(Brightness + brightnessValue, MaxBrightness);
-            }
+            } //  BUG : AGGIUNGI 2 VOLTE brightnessValue 
 
         }      
         
