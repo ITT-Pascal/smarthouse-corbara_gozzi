@@ -9,7 +9,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
     public class EcoLampTest
     {
         [Fact]
-        public void Lamp_StatusAndBrightness_WhenCreatedIsOffAndIsOff()
+        public void EcoLamp_StatusAndBrightness_WhenCreatedIsOffAndIsOff()
         {
             var lamp = new EcoLamp();
             Assert.Equal(0, lamp.Brightness);
@@ -17,7 +17,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
         }
 
         [Fact]
-        public void Lamp_Brightness_WhenCreatedIsOffAndIsOff()
+        public void EcoLamp_Brightness_WhenCreatedIsOffAndIsOff()
         {
             var lamp = new EcoLamp();
             Assert.Equal(0, lamp.Brightness);
@@ -26,7 +26,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void Lamp_Status_WhenCreatedIsOffAndIsOff()
+        public void EcoLamp_Status_WhenCreatedIsOffAndIsOff()
         {
             var lamp = new EcoLamp();
 
@@ -36,27 +36,27 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void Lamp_TurnOn_WhenTurnedOnTheBrightnessIs50AndIsOn()
+        public void EcoLamp_TurnOn_WhenTurnedOnTheBrightnessIsHalfMaxBrightness70AndIsOn()
         {
             var lamp = new EcoLamp();
             lamp.TurnOn();
-            Assert.Equal(50, lamp.Brightness);
+            Assert.Equal(35, lamp.Brightness);
             Assert.True(lamp.IsOn);
         }
 
         [Fact]
 
-        public void Lamp_TurnOn_WhenTurnedOnTheBrightnessIs50()
+        public void EcoLamp_TurnOn_WhenTurnedWithMaxBrightnessOf80ItTurnOnWith40()
         {
-            var lamp = new EcoLamp();
+            var lamp = new EcoLamp(80);
             lamp.TurnOn();
-            Assert.Equal(50, lamp.Brightness);
+            Assert.Equal(40, lamp.Brightness);
 
         }
 
         [Fact]
 
-        public void Lamp_TurnOn_WhenTurnedOnIsOn()
+        public void EcoLamp_TurnOn_WhenTurnedOnIsOn()
         {
             var lamp = new EcoLamp();
             lamp.TurnOn();
@@ -65,7 +65,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void Lamp_TurnOff_WhenTurnedOnAndOffIsOffAndTheBrightnessIs0()
+        public void EcoLamp_TurnOff_WhenTurnedOnAndOffIsOffAndTheBrightnessIs0()
         {
             var lamp = new EcoLamp();
             lamp.TurnOn();
@@ -76,7 +76,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void Lamp_TurnOff_WhenTurnedOnAndOffIsOff()
+        public void EcoLamp_TurnOff_WhenTurnedOnAndOffIsOff()
         {
             var lamp = new EcoLamp();
             lamp.TurnOn();
@@ -87,7 +87,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void Lamp_TurnOff_WhenTurnedOnAndOffTheBrightnessIs0()
+        public void EcoLamp_TurnOff_WhenTurnedOnAndOffTheBrightnessIs0()
         {
             var lamp = new EcoLamp();
             lamp.TurnOn();
@@ -97,7 +97,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void Lamp_ChangeBrightness_WhenIsOffItRemain0()
+        public void EcoLamp_ChangeBrightness_WhenIsOffItRemain0()
         {
             var lamp = new EcoLamp();
             lamp.ChangeBrightness(83);
@@ -108,51 +108,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void Lamp_ChangeBrightness_WhenIsOnAndTurnUpOf10ItIncrease()
-        {
-            var lamp = new EcoLamp();
-            lamp.TurnOn();
-            lamp.ChangeBrightness(10);
-            Assert.Equal(60, lamp.Brightness);
-
-        }
-
-        [Fact]
-
-        public void Lamp_TurnUpBrightness_WhenIsOnAndTurnUpOf100ItGoToTheMax()
-        {
-            var lamp = new EcoLamp();
-            lamp.TurnOn();
-            lamp.ChangeBrightness(100);
-            Assert.Equal(100, lamp.Brightness);
-
-        }
-
-        [Fact]
-
-        public void Lamp_TurnDownBrightness_WhenIsOnAndTurnDownOf10ItDecrease()
-        {
-            var lamp = new EcoLamp();
-            lamp.TurnOn();
-            lamp.ChangeBrightness(15);
-            Assert.Equal(55, lamp.Brightness);
-
-        }
-
-        [Fact]
-
-        public void Lamp_TurnDownBrightness_WhenIsOnAndTurnDownOf50ItDecrease()
-        {
-            var lamp = new EcoLamp();
-            lamp.TurnOn();
-            lamp.ChangeBrightness(-10);
-            Assert.Equal(5, lamp.Brightness);
-
-        }
-
-        [Fact]
-
-        public void Lamp_TurnUpBrightness_WhenIsOnAndTurnUpOf50ItIncrease()
+        public void EcoLamp_ChangeBrightness_WhenIsOnAndTurnUpOf10ItIncrease()
         {
             var lamp = new EcoLamp();
             lamp.TurnOn();
@@ -163,11 +119,21 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void Lamp_TurnUpBrightness_WhenIsOnAndDecreasrdAndIncreased()
+        public void EcoLamp_ChangeBrightness_WhenIsOnAndTurnUpOf100ItGoToTheMax()
         {
             var lamp = new EcoLamp();
             lamp.TurnOn();
-            lamp.ChangeBrightness(10);
+            lamp.ChangeBrightness(100);
+            Assert.Equal(70, lamp.Brightness);
+
+        }
+
+        [Fact]
+
+        public void EcoLamp_ChangeBrightness_WhenIsOnAndTurnDownOf10ItDecrease()
+        {
+            var lamp = new EcoLamp();
+            lamp.TurnOn();
             lamp.ChangeBrightness(-10);
             Assert.Equal(25, lamp.Brightness);
 
@@ -175,15 +141,31 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void Lamp_TurnUpBrightness_WhenIsOnAndIncreasedAndDecreaded()
+        public void EcoLamp_ChangeBrightness_WhenIsOnAndTurnDownInNegative50ItSetAt1()
         {
             var lamp = new EcoLamp();
             lamp.TurnOn();
-            lamp.ChangeBrightness(50);
-            lamp.ChangeBrightness(-30);
+            lamp.ChangeBrightness(-50);
+            Assert.Equal(1, lamp.Brightness);
+
+        }
+
+        
+        
+
+        [Fact]
+
+        public void EcoLamp_ChangeBrightness_WhenIsOnAndDecreasreOf10AndIncreasedOf15ItIs40()
+        {
+            var lamp = new EcoLamp();
+            lamp.TurnOn();
+            lamp.ChangeBrightness(-10);
+            lamp.ChangeBrightness(15);
             Assert.Equal(40, lamp.Brightness);
 
         }
+
+        
 
         //FINIRE TEST (PRIMA RISOLVERE ERRORE NEL PROGRAMMA)
     }

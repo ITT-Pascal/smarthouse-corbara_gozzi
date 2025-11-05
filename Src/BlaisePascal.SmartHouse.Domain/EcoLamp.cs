@@ -28,7 +28,7 @@ namespace BlaisePascal.SmartHouse.Domain
             if (!IsOn)
             {
                 IsOn = true;
-                Brightness = 25;
+                Brightness = MaxBrightness/2;
             }
         }
 
@@ -46,8 +46,8 @@ namespace BlaisePascal.SmartHouse.Domain
             if (IsOn)
             {
                 Brightness = Math.Max(Brightness + brightnessValue, 1);
-                Brightness = Math.Min(Brightness + brightnessValue, MaxBrightness);
-            } //  BUG : AGGIUNGI 2 VOLTE brightnessValue 
+                Brightness = Math.Min(Brightness, MaxBrightness);
+            } 
 
         }      
         
