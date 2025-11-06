@@ -18,7 +18,20 @@ namespace BlaisePascal.SmartHouse.Domain
         {
             IsOn = false;
             Brightness = 0;
-            MaxBrightness = maxBrightness;
+            if (maxBrightness <= 1)
+            {
+                MaxBrightness = 2;
+            }
+            else if (maxBrightness >= 90)
+            {
+                MaxBrightness = 90;
+            }
+            else
+            {
+                MaxBrightness = maxBrightness;
+
+
+            }
         }
 
         public EcoLamp() : this(70) { }
@@ -54,8 +67,10 @@ namespace BlaisePascal.SmartHouse.Domain
 
         public void ChangeMaxBrightness(int newMaxBrightness)
         {
-            MaxBrightness = Math.Max(1, newMaxBrightness);
+            MaxBrightness = Math.Max(2, newMaxBrightness);
             MaxBrightness = Math.Min(90, newMaxBrightness);
+
+            Brightness = newMaxBrightness / 2;
         }
 
     }

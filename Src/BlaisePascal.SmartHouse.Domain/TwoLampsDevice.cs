@@ -13,15 +13,19 @@ namespace BlaisePascal.SmartHouse.Domain
         public TwoLampsDevice(Lamp firstLamp, Lamp secondLamp)
         {
             FirstLamp = new Lamp();
+            
             SecondLamp = new Lamp();
         }
 
-        public void TurnOnFirstLamp()
+        public  void TurnOnFirstLamp()
         {
             if (!FirstLamp.IsOn)
             {
                 FirstLamp.IsOn = true;
             }
+
+            
+
         }
 
         public void TurnOnSecondLamp()
