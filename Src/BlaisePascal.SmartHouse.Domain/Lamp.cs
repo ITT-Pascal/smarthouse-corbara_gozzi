@@ -2,9 +2,9 @@
 {
     public class Lamp:AbstractLamp
     {
-        public bool IsOn { get; private set; }
+        public bool IsOn { get; set; }
         //INTENSITA' LUMINOSA
-        public int Brightness { get; private set; }
+        public int Brightness { get; set; }
 
         public Lamp()
         {

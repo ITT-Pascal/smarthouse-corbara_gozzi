@@ -165,8 +165,5 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         }
 
-        
-
-        //FINIRE TEST (PRIMA RISOLVERE ERRORE NEL PROGRAMMA)
     }
 }

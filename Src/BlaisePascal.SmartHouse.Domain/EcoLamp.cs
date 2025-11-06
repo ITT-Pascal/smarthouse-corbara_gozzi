@@ -8,11 +8,11 @@ namespace BlaisePascal.SmartHouse.Domain
 {
     public class EcoLamp: AbstractLamp
     {
-        public bool IsOn { get; private set; }
+        public bool IsOn { get; set; }
         //INTENSITA' LUMINOSA
-        public int Brightness { get; private set; }
+        public int Brightness { get; set; }
 
-        public int MaxBrightness { get; private set; }
+        public int MaxBrightness { get; set; }
 
         public EcoLamp(int maxBrightness)
         {
