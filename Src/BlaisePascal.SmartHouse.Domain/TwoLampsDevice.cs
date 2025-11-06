@@ -34,13 +34,35 @@ namespace BlaisePascal.SmartHouse.Domain
 
         public void TurnOnAllLamps()
         {
-            if (FirstLamp.IsOn && SecondLamp.IsOn) 
+            if (!(FirstLamp.IsOn && SecondLamp.IsOn)) 
             { 
                 FirstLamp.IsOn = true;
                 SecondLamp.IsOn = true;
             }
         }
+        public void TurnOffFirstLamp()
+        {
+            if (FirstLamp.IsOn)
+            {
+                FirstLamp.IsOn = false;
+            }
+        }
+        public void TurnOffSecondLamp()
+        {
+            if (SecondLamp.IsOn)
+            {
+                SecondLamp.IsOn = false;
+            }
+        }
 
+        public void TurnOffAllLamps()
+        {
+            if (FirstLamp.IsOn && SecondLamp.IsOn)
+            {
+                FirstLamp.IsOn = false;
+                SecondLamp.IsOn = false;
+            }
+        }
         public void changeBrightnessOfLamps(int brightness) 
         {
             if (FirstLamp.IsOn && SecondLamp.IsOn)
