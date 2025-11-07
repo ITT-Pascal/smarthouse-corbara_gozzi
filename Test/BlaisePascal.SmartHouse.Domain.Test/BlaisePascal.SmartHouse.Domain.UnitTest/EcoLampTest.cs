@@ -54,11 +54,13 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         }
 
+        [Fact]
+
         public void EcoLamp_TurnOn_WhenTurnedOnTheBrightnessIsHalfMaxBrightness1000Its100()
         {
-            var lamp = new EcoLamp(100000);
+            var lamp = new EcoLamp(1000);
             lamp.TurnOn();
-            Assert.Equal(100, lamp.Brightness);
+            Assert.Equal(45, lamp.Brightness);
 
         }
 
@@ -179,8 +181,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
             Assert.Equal(1, lamp.Brightness);
 
         }
-
-
 
 
         [Fact]

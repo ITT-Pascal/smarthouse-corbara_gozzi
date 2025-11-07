@@ -9,7 +9,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
     public class TwoLampsDeviceTest
     {
         [Fact]
-        public void TwoLampDevice_StatusAndBrightness_WhenCreatedIsOffAndIsOff()
+        public void TwoLampsDevice_StatusAndBrightness_WhenCreatedIsOffAndIsOff()
         {
             var lamp = new Lamp();
             Assert.Equal(0, lamp.Brightness);
@@ -17,7 +17,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
         }
 
         [Fact]
-        public void TwoLampDevice_Brightness_WhenCreatedIsOffAndIsOff()
+        public void TwoLampsDevice_Brightness_WhenCreatedIsOffAndIsOff()
         {
             var lamp = new Lamp();
             Assert.Equal(0, lamp.Brightness);
@@ -26,7 +26,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void TwoLampDevice_Status_WhenCreatedIsOffAndIsOff()
+        public void TwoLampsDevice_Status_WhenCreatedIsOffAndIsOff()
         {
             var lamp = new Lamp();
 
@@ -35,7 +35,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void TwoLampDevice_TurnOnFirstLamp_WhenTurnedOnIsOn()
+        public void TwoLampsDevice_TurnOnFirstLamp_WhenTurnedOnIsOn()
         {
             var firstLamp = new Lamp();
             var secondLamp = new Lamp();
@@ -47,7 +47,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void TwoLampDevice_TurnOnSecondLamp_WhenTurnedOnIsOn()
+        public void TwoLampsDevice_TurnOnSecondLamp_WhenTurnedOnIsOn()
         {
             var firstLamp = new Lamp();
             var secondLamp = new Lamp();
@@ -59,7 +59,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void TwoLampDevice_TurnOnAllLamps_WhenTurnedOnBothAreOn()
+        public void TwoLampsDevice_TurnOnAllLamps_WhenTurnedOnBothAreOn()
         {
             var firstLamp = new Lamp();
             var secondLamp = new Lamp();
@@ -71,7 +71,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void TwoLampDevice_TurnOffFirstLamp_WhenTurnedOffIsOff()
+        public void TwoLampsDevice_TurnOffFirstLamp_WhenTurnedOffIsOff()
         {
             var firstLamp = new Lamp();
             var secondLamp = new Lamp();
@@ -84,7 +84,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void TwoLampDevice_TurnOffSecondLamp_WhenTurnedOffIsOff()
+        public void TwoLampsDevice_TurnOffSecondLamp_WhenTurnedOffIsOff()
         {
             var firstLamp = new Lamp();
             var secondLamp = new Lamp() ;
@@ -97,7 +97,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void TwoLampDevice_TurnOffAllLamps_WhenTurnedOffBothAreOff()
+        public void TwoLampsDevice_TurnOffAllLamps_WhenTurnedOffBothAreOff()
         {
             var firstLamp = new Lamp() ;
             var secondLamp = new Lamp() ;
@@ -110,7 +110,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void TwoLampDevice_Brightness_WhenOnlyTheFirstIsOnTheBrightnessIs0()
+        public void TwoLampsDevice_Brightness_WhenOnlyTheFirstIsOnTheBrightnessIs0()
         {
             var firstLamp = new Lamp();
             var secondLamp = new Lamp();
@@ -123,8 +123,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void TwoLampDevice_ChangeBrightnessOfLamps_WhenBothAreOnBrightnessChanges()
-        {
+        public void TwoLampsDevice_ChangeBrightnessOfLamps_WhenBothAreOnBrightnessChanges()
+        {//xiao
             var firstLamp = new Lamp();
             var secondLamp = new Lamp();
             var twoLampsDevice = new TwoLampsDevice(firstLamp, secondLamp);
@@ -136,7 +136,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void TwoLampDevice_ChangeBrightnessOfLamps_WhenIsIncreasedItGoAt100()
+        public void TwoLampsDevice_ChangeBrightnessOfLamps_WhenIsIncreasedItGoAt100()
         {
             var firstLamp = new Lamp();
             var secondLamp = new Lamp();
@@ -149,7 +149,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void TwoLampDevice_ChangeBrightnessOfLamps_WhenTheBrightnessIsLowerThan0ItBecame0()
+        public void TwoLampsDevice_ChangeBrightnessOfLamps_WhenTheBrightnessIsLowerThan0ItBecame0()
         {
             var firstLamp = new Lamp();
             var secondLamp = new Lamp();
@@ -161,7 +161,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
         [Fact]
 
-        public void TwoLampDevice_ChangeBrightnessOfLamps_WhenAreOffBrightnessDoesNotChange()
+        public void TwoLampsDevice_ChangeBrightnessOfLamps_WhenAreOffBrightnessDoesNotChange()
         {
             var firstLamp = new Lamp();
             var secondLamp = new Lamp();
@@ -171,7 +171,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
             Assert.Equal(0, twoLampsDevice.SecondLamp.Brightness);
         }
 
-        public void TwoLampDevice_ChangeBrightnessOfLamps_WhenBothAreOnTheBrightnessIs50()
+        public void TwoLampsDevice_ChangeBrightnessOfLamps_WhenBothAreOnTheBrightnessIs50()
         {
             var firstLamp = new Lamp();
             var secondLamp = new Lamp();
