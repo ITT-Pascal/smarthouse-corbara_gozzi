@@ -22,6 +22,7 @@ namespace BlaisePascal.SmartHouse.Domain
             if (!FirstLamp.IsOn)
             {
                 FirstLamp.IsOn = true;
+                FirstLamp.Brightness = 50;
             }
 
             
@@ -33,6 +34,7 @@ namespace BlaisePascal.SmartHouse.Domain
             if (!SecondLamp.IsOn)
             {
                 SecondLamp.IsOn = true;
+                SecondLamp.Brightness = 50;
             }
         }
 
@@ -42,6 +44,8 @@ namespace BlaisePascal.SmartHouse.Domain
             { 
                 FirstLamp.IsOn = true;
                 SecondLamp.IsOn = true;
+                FirstLamp.Brightness = 50;
+                SecondLamp.Brightness = 50;
             }
         }
         public void TurnOffFirstLamp()
@@ -67,7 +71,7 @@ namespace BlaisePascal.SmartHouse.Domain
                 SecondLamp.IsOn = false;
             }
         }
-        public void changeBrightnessOfLamps(int brightness) 
+        public void ChangeBrightnessOfLamps(int brightness) 
         {
             if (FirstLamp.IsOn && SecondLamp.IsOn)
             { 

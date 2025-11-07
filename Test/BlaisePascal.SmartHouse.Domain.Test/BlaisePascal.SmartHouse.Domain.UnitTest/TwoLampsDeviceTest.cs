@@ -116,8 +116,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
             var secondLamp = new Lamp();
             var twoLampsDevice = new TwoLampsDevice(firstLamp, secondLamp);
             twoLampsDevice.TurnOnFirstLamp();
-            twoLampsDevice.TurnOnSecondLamp();
-            Assert.Equal(0, twoLampsDevice.FirstLamp.Brightness);
+            Assert.Equal(50, twoLampsDevice.FirstLamp.Brightness);
             Assert.Equal(0, twoLampsDevice.SecondLamp.Brightness);
         }
 
@@ -130,10 +129,9 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
             var secondLamp = new Lamp();
             var twoLampsDevice = new TwoLampsDevice(firstLamp, secondLamp);
             twoLampsDevice.TurnOnAllLamps();
-            twoLampsDevice.FirstLamp.ChangeBrightness(30);
-            twoLampsDevice.SecondLamp.ChangeBrightness(50);
-            Assert.Equal(30, twoLampsDevice.FirstLamp.Brightness);
-            Assert.Equal(50, twoLampsDevice.SecondLamp.Brightness);
+            twoLampsDevice.ChangeBrightnessOfLamps(30);
+            Assert.Equal(80, twoLampsDevice.FirstLamp.Brightness);
+            Assert.Equal(80, twoLampsDevice.SecondLamp.Brightness);
         }
 
         [Fact]
@@ -144,8 +142,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
             var secondLamp = new Lamp();
             var twoLampsDevice = new TwoLampsDevice(firstLamp, secondLamp);
             twoLampsDevice.TurnOnAllLamps();
-            twoLampsDevice.FirstLamp.ChangeBrightness(1000);
-            twoLampsDevice.SecondLamp.ChangeBrightness(5000);
+            twoLampsDevice.ChangeBrightnessOfLamps(100);
             Assert.Equal(100, twoLampsDevice.FirstLamp.Brightness);
             Assert.Equal(100, twoLampsDevice.SecondLamp.Brightness);
         }
@@ -157,8 +154,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
             var firstLamp = new Lamp();
             var secondLamp = new Lamp();
             var twoLampsDevice = new TwoLampsDevice(firstLamp, secondLamp);
-            twoLampsDevice.FirstLamp.ChangeBrightness(-1000);
-            twoLampsDevice.SecondLamp.ChangeBrightness(-5000);
+            twoLampsDevice.ChangeBrightnessOfLamps(-100);
             Assert.Equal(0, twoLampsDevice.FirstLamp.Brightness);
             Assert.Equal(0, twoLampsDevice.SecondLamp.Brightness);
         }
@@ -170,12 +166,20 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
             var firstLamp = new Lamp();
             var secondLamp = new Lamp();
             var twoLampsDevice = new TwoLampsDevice(firstLamp, secondLamp);
-            twoLampsDevice.FirstLamp.ChangeBrightness(30);
-            twoLampsDevice.SecondLamp.ChangeBrightness(50);
+            twoLampsDevice.ChangeBrightnessOfLamps(30);
             Assert.Equal(0, twoLampsDevice.FirstLamp.Brightness);
             Assert.Equal(0, twoLampsDevice.SecondLamp.Brightness);
         }
 
+        public void TwoLampDevice_ChangeBrightnessOfLamps_WhenBothAreOnTheBrightnessIs50()
+        {
+            var firstLamp = new Lamp();
+            var secondLamp = new Lamp();
+            var twoLampsDevice = new TwoLampsDevice(firstLamp, secondLamp);
+            twoLampsDevice.TurnOnAllLamps();
+            Assert.Equal(50, twoLampsDevice.FirstLamp.Brightness);
+            Assert.Equal(50, twoLampsDevice.SecondLamp.Brightness);
+        }
 
 
     }
