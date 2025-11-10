@@ -8,23 +8,21 @@ namespace BlaisePascal.SmartHouse.Domain
 {
     public class EcoLamp: AbstractLamp
     {
-        public bool IsOn { get; set; }
-        //INTENSITA' LUMINOSA
-        public int Brightness { get; set; }
-
         public int MaxBrightness { get; set; }
-
+        
+        private const int minValueOfMaxBrightness = 2;
+        private const int maxValueOfMaxBrightness = 90;
         public EcoLamp(int maxBrightness)
         {
             IsOn = false;
             Brightness = 0;
             if (maxBrightness <= 1)
             {
-                MaxBrightness = 2;
+                MaxBrightness = minValueOfMaxBrightness;
             }
-            else if (maxBrightness >= 90)
+            else if (maxBrightness >= maxValueOfMaxBrightness)
             {
-                MaxBrightness = 90;
+                MaxBrightness = maxValueOfMaxBrightness;
             }
             else
             {
@@ -64,11 +62,10 @@ namespace BlaisePascal.SmartHouse.Domain
 
         }      
         
-
         public void ChangeMaxBrightness(int newMaxBrightness)
         {
-            MaxBrightness = Math.Max(2, newMaxBrightness);
-            MaxBrightness = Math.Min(90, newMaxBrightness);
+            MaxBrightness = Math.Max(minValueOfMaxBrightness, newMaxBrightness);
+            MaxBrightness = Math.Min(maxValueOfMaxBrightness, newMaxBrightness);
 
             Brightness = newMaxBrightness / 2;
         }

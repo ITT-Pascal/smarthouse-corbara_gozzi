@@ -2,10 +2,8 @@
 {
     public class Lamp:AbstractLamp
     {
-        public bool IsOn { get; set; }
-        //INTENSITA' LUMINOSA
-        public int Brightness { get; set; }
-
+        private const int minValueOfMaxBrightness = 1;
+        private const int maxValueOfMaxBrightness = 100;
         public Lamp()
         {
             IsOn = false;
@@ -33,9 +31,9 @@
         public override void ChangeBrightness(int brightnessValue)
         { 
             if (IsOn)
-            { //50-10= 40, 50-70= -20
-                Brightness = Math.Max(Brightness + brightnessValue, 1);
-                Brightness = Math.Min(Brightness, 100);
+            { 
+                Brightness = Math.Max(Brightness + brightnessValue, minValueOfMaxBrightness);
+                Brightness = Math.Min(Brightness, maxValueOfMaxBrightness);
             }
 
         }
