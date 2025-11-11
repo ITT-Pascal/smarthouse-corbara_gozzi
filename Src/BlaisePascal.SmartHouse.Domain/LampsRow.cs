@@ -8,6 +8,38 @@ namespace BlaisePascal.SmartHouse.Domain
 {
     public class LampsRow
     {
+        public List<AbstractLamp> _lampsRow { get; set; }
+
+        public LampsRow() 
+        { 
+            
+        }
+
+        public void AddLamp(AbstractLamp lamp) 
+        { 
+            _lampsRow.Add(lamp);
+        }
+
+        public void RemoveLamp(int position)
+        {
+            _lampsRow.RemoveAt(position);
+        }
+
+        public void TurnOnAllLamps()
+        {
+            for(int i = 0; i < _lampsRow.Count; i++)
+            {
+                _lampsRow[i].IsOn = true;
+            }
+        }
+
+        public void TurnOffAllLamps()
+        {
+            for (int i = 0; i < _lampsRow.Count; i++)
+            {
+                _lampsRow[i].IsOn = true;
+            }
+        }
 
     }
 }
