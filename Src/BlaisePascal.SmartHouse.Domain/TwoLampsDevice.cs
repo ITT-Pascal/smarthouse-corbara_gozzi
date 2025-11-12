@@ -10,6 +10,9 @@ namespace BlaisePascal.SmartHouse.Domain
     {
         public Lamp FirstLamp { get; set; }
         public Lamp SecondLamp { get; set; }
+        private const int minValueOfMaxBrightness = 1;
+        private const int maxValueOfMaxBrightness = 100;
+        private const int brightnessValueAtTurnOn = 50;
         public TwoLampsDevice(Lamp firstLamp, Lamp secondLamp)
         {
             FirstLamp = new Lamp();
@@ -22,11 +25,8 @@ namespace BlaisePascal.SmartHouse.Domain
             if (!FirstLamp.IsOn)
             {
                 FirstLamp.IsOn = true;
-                FirstLamp.Brightness = 50;
+                FirstLamp.Brightness = brightnessValueAtTurnOn;
             }
-
-            
-
         }
 
         public void TurnOnSecondLamp()
@@ -34,7 +34,7 @@ namespace BlaisePascal.SmartHouse.Domain
             if (!SecondLamp.IsOn)
             {
                 SecondLamp.IsOn = true;
-                SecondLamp.Brightness = 50;
+                SecondLamp.Brightness = brightnessValueAtTurnOn;
             }
         }
 
@@ -44,8 +44,8 @@ namespace BlaisePascal.SmartHouse.Domain
             { 
                 FirstLamp.IsOn = true;
                 SecondLamp.IsOn = true;
-                FirstLamp.Brightness = 50;
-                SecondLamp.Brightness = 50;
+                FirstLamp.Brightness = brightnessValueAtTurnOn;
+                SecondLamp.Brightness = brightnessValueAtTurnOn;
             }
         }
         public void TurnOffFirstLamp()
@@ -75,10 +75,10 @@ namespace BlaisePascal.SmartHouse.Domain
         {
             if (FirstLamp.IsOn && SecondLamp.IsOn)
             { 
-                FirstLamp.Brightness = Math.Max(FirstLamp.Brightness + brightness, 1);
-                FirstLamp.Brightness = Math.Min(FirstLamp.Brightness, 100);
-                SecondLamp.Brightness = Math.Max(SecondLamp.Brightness + brightness, 1);
-                SecondLamp.Brightness = Math.Min(SecondLamp.Brightness, 100);
+                FirstLamp.Brightness = Math.Max(FirstLamp.Brightness + brightness, minValueOfMaxBrightness);
+                FirstLamp.Brightness = Math.Min(FirstLamp.Brightness, maxValueOfMaxBrightness);
+                SecondLamp.Brightness = Math.Max(SecondLamp.Brightness + brightness, minValueOfMaxBrightness);
+                SecondLamp.Brightness = Math.Min(SecondLamp.Brightness, maxValueOfMaxBrightness);
             }
 
         }
