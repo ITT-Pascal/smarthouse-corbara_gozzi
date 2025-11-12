@@ -37,15 +37,12 @@
         }
 
         public override void ChangeBrightness(int brightnessValue)
-        { 
+        {
             if (IsOn)
-            { 
+            {
                 Brightness = Math.Max(Brightness + brightnessValue, minValueOfMaxBrightness);
                 Brightness = Math.Min(Brightness, maxValueOfMaxBrightness);
             }
-
         }
-
-
     }
 }

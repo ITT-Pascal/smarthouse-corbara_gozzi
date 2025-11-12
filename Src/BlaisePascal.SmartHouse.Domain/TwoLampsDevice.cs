@@ -38,6 +38,7 @@ namespace BlaisePascal.SmartHouse.Domain
             }
         }
 
+
         public void TurnOnAllLamps()
         {
             if (!(FirstLamp.IsOn && SecondLamp.IsOn)) 
@@ -51,16 +52,12 @@ namespace BlaisePascal.SmartHouse.Domain
         public void TurnOffFirstLamp()
         {
             if (FirstLamp.IsOn)
-            {
-                FirstLamp.IsOn = false;
-            }
+                FirstLamp.IsOn = false;  
         }
         public void TurnOffSecondLamp()
         {
             if (SecondLamp.IsOn)
-            {
                 SecondLamp.IsOn = false;
-            }
         }
 
         public void TurnOffAllLamps()
@@ -80,7 +77,6 @@ namespace BlaisePascal.SmartHouse.Domain
                 SecondLamp.Brightness = Math.Max(SecondLamp.Brightness + brightness, minValueOfMaxBrightness);
                 SecondLamp.Brightness = Math.Min(SecondLamp.Brightness, maxValueOfMaxBrightness);
             }
-
         }
     }
 }
