@@ -12,9 +12,9 @@ namespace BlaisePascal.SmartHouse.Domain
 
         public LampsRow() 
         { 
-            
+            _lampsRow = new List<AbstractLamp>();
         }
-
+            
         public void AddLamp(AbstractLamp lamp) 
         { 
             _lampsRow.Add(lamp);
@@ -22,7 +22,7 @@ namespace BlaisePascal.SmartHouse.Domain
 
         public void RemoveLamp(int position)
         {
-            _lampsRow.RemoveAt(position);
+            _lampsRow.RemoveAt(position - 1);                          
         }
 
         public void TurnOnAllLamps()
