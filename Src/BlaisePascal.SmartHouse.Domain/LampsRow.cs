@@ -19,27 +19,99 @@ namespace BlaisePascal.SmartHouse.Domain
         { 
             _lampsRow.Add(lamp);
         }
+        //TODO: Add AddLampAtPosition
 
-        public void RemoveLamp(int position)
+        public void RemoveLamp()
         {
-            _lampsRow.RemoveAt(position - 1);                          
+            _lampsRow.RemoveAt(_lampsRow.Count()-1);                          
+        }
+        public void RemoveLampAtPosition(int position)
+        {
+            _lampsRow.RemoveAt(position);
         }
 
-        public void TurnOnAllLamps()
+        public void SwitchOn()
         {
             for(int i = 0; i < _lampsRow.Count; i++)
             {
                 _lampsRow[i].IsOn = true;
             }
         }
-
-        public void TurnOffAllLamps()
+        public void SwitchOn(Guid guid)
+        {
+            for (int i = 0; i < _lampsRow.Count; i++)
+            {
+                if (_lampsRow[i].Guid == guid)
+                {
+                    _lampsRow[i].IsOn = true;
+                }
+            }
+        }
+        public void SwitchOn(string name)
+        {
+            for (int i = 0; i < _lampsRow.Count; i++)
+            {
+                if (_lampsRow[i].Name == name)
+                {
+                    _lampsRow[i].IsOn = true;
+                }
+            }
+        }
+        public void SwitchOff()
         {
             for (int i = 0; i < _lampsRow.Count; i++)
             {
                 _lampsRow[i].IsOn = true;
             }
         }
+        public void SwitchOff(Guid guid)
+        {
+            for (int i = 0; i < _lampsRow.Count; i++)
+            {
+                if (_lampsRow[i].Guid == guid)
+                {
+                    _lampsRow[i].IsOn = true;
+                }
+            }
+        }
+        public void SwitchOff(string name)
+        {
+            for (int i = 0; i < _lampsRow.Count; i++)
+            {
+                if (_lampsRow[i].Name == name)
+                {
+                    _lampsRow[i].IsOn = true;
+                }
+            }
+        }
+        public void SettingIntAllLamps(int brightness)
+        {
+            for (int i = 0; i > _lampsRow.Count(); i++)
+            {
+                _lampsRow[i].Brightness = brightness;
+            }
+        }
+        public void SettingIntForLamp(int brightness, Guid guid)
+        {
+            for (int i = 0; i < _lampsRow.Count; i++)
+            {
+                if (_lampsRow[i].Guid == guid)
+                {
+                    _lampsRow[i].Brightness = brightness;
+                }
+            }
+        }
+        public void SettingIntForLamp(int brightness, string name)
+        {
+            for (int i = 0; i < _lampsRow.Count; i++)
+            {
+                if (_lampsRow[i].Name == name)
+                {
+                    _lampsRow[i].Brightness = brightness;
+                }
+            }
+        }
+
 
     }
 }

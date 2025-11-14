@@ -5,17 +5,19 @@
         private const int minValueOfMaxBrightness = 1;
         private const int maxValueOfMaxBrightness = 100;
         private const int brightnessValueAtTurnOn = 50;
-        public Lamp()
+        public Lamp(string name)
         {
             IsOn = false;
             Brightness = 0;
             Guid = new Guid();
+            Name = name;
         }
-        public Lamp(Guid guid)
+        public Lamp(Guid guid, string name)
         {
             IsOn = false;
             Brightness = 0;
             Guid = guid;
+            Name = name;
         }
 
         public override void TurnOn()

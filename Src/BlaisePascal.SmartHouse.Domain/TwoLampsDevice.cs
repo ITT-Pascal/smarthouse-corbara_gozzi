@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace BlaisePascal.SmartHouse.Domain
 {
@@ -13,11 +14,11 @@ namespace BlaisePascal.SmartHouse.Domain
         private const int minValueOfMaxBrightness = 1;
         private const int maxValueOfMaxBrightness = 100;
         private const int brightnessValueAtTurnOn = 50;
-        public TwoLampsDevice(Lamp firstLamp, Lamp secondLamp)
+        public TwoLampsDevice(Lamp firstLamp, string firstLampName, Lamp secondLamp, string secondLampName)
         {
-            FirstLamp = new Lamp();
+            FirstLamp = new Lamp(firstLampName);
             
-            SecondLamp = new Lamp();
+            SecondLamp = new Lamp(secondLampName);
         }
 
         public  void TurnOnFirstLamp()

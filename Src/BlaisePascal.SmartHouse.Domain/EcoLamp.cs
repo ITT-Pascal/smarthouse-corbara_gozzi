@@ -11,11 +11,12 @@ namespace BlaisePascal.SmartHouse.Domain
         public int MaxBrightness { get; set; }
         private const int minValueOfMaxBrightness = 2;
         private const int maxValueOfMaxBrightness = 90;
-        public EcoLamp(int maxBrightness)
+        public EcoLamp(int maxBrightness, string name)
         {
             IsOn = false;
             Brightness = 0;
             Guid = new Guid();
+            Name = name;
             if (maxBrightness <= 1)
             {
                 MaxBrightness = minValueOfMaxBrightness;
@@ -30,15 +31,14 @@ namespace BlaisePascal.SmartHouse.Domain
             }
         }
 
-        public EcoLamp() : this(70) { }
-        public EcoLamp(int maxBrightness, Guid guid)
+        public EcoLamp(int maxBrightness, Guid guid, string name)
         {
             IsOn = false;
             Brightness = 0;
             MaxBrightness = maxBrightness;
             Guid = guid;
+            Name = name;
         }
-
 
         public override void TurnOn()
         {
