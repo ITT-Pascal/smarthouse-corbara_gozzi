@@ -6,32 +6,29 @@ using System.Threading.Tasks;
 
 namespace BlaisePascal.SmartHouse.Domain
 {
-    public class EcoLamp: AbstractLamp
+    public class EcoLamp: Lamp
     {
         public int MaxBrightness { get; set; }
-        private const int minValueOfMaxBrightness = 2;
-        private const int maxValueOfMaxBrightness = 90;
-        public EcoLamp(int maxBrightness, string name)
+        public EcoLamp(int maxBrightness, string name, int minValueOfBrightness, int maxValueOfBrightness, int brightnessValueAtTurnOn) : base(name)
         {
-            IsOn = false;
-            Brightness = 0;
-            Guid = new Guid();
-            Name = name;
             if (maxBrightness <= 1)
             {
-                MaxBrightness = minValueOfMaxBrightness;
+                MaxBrightness = maxBrightness;
             }
-            else if (maxBrightness >= maxValueOfMaxBrightness)
+            else if (maxBrightness >= MaxValueOfBrightness)
             {
-                MaxBrightness = maxValueOfMaxBrightness;
+                MaxBrightness = MaxValueOfBrightness;
             }
             else
             {
                 MaxBrightness = maxBrightness;
             }
+            MinValueOfBrightness = minValueOfBrightness;
+            MaxValueOfBrightness = maxValueOfBrightness;
+            BrightnessValueAtTurnOn = maxValueOfBrightness / 2;
         }
 
-        public EcoLamp(int maxBrightness, Guid guid, string name)
+        public EcoLamp(int maxBrightness, Guid guid, string name, int minValueOfBrightness, int maxValueOfBrightness, int brightnessValueAtTurnOn) : base(name)
         {
             IsOn = false;
             Brightness = 0;
@@ -42,35 +39,29 @@ namespace BlaisePascal.SmartHouse.Domain
 
         public override void TurnOn()
         {
-            if (!IsOn)
-            {
-                IsOn = true;
-                Brightness = MaxBrightness/2;
-            }
+            IsOn = true;
+            Brightness = MaxBrightness/2;
         }
 
         public override void TurnOff()
         {
-            if (IsOn)
-            {
-                IsOn = false;
-                Brightness = 0;
-            }
+            
+            IsOn = false;
+            Brightness = 0;
         }
 
-        public override void ChangeBrightness(int brightnessValue)
+        public override void ChangeBrightness(Lamp lamp, int brightnessValue)
         {
             if (IsOn)
             {
-                Brightness = Math.Max(Brightness + brightnessValue, 1);
-                Brightness = Math.Min(Brightness, MaxBrightness);
+                Brightness = BrightnessValidator.ValidateBrightness(brightnessValue, lamp);
             } 
         }
 
         public void ChangeMaxBrightness(int newMaxBrightness)
         {
-            MaxBrightness = Math.Max(minValueOfMaxBrightness, newMaxBrightness);
-            MaxBrightness = Math.Min(maxValueOfMaxBrightness, newMaxBrightness);
+            MaxBrightness = Math.Max(MinValueOfBrightness, newMaxBrightness);
+            MaxBrightness = Math.Min(MaxValueOfBrightness, newMaxBrightness);
             Brightness = newMaxBrightness / 2;
         }
     }

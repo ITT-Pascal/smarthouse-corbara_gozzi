@@ -1,16 +1,23 @@
 ﻿namespace BlaisePascal.SmartHouse.Domain
 {
-    public class Lamp:AbstractLamp
+    public class Lamp
     {
-        private const int minValueOfMaxBrightness = 1;
-        private const int maxValueOfMaxBrightness = 100;
-        private const int brightnessValueAtTurnOn = 50;
+        public bool IsOn { get; set; }
+        public int Brightness { get; set; }
+        public Guid Guid { get; set; }
+        public string Name { get; set; }
+        public int MinValueOfBrightness { get; set; }
+        public int MaxValueOfBrightness { get; set; }
+        public int BrightnessValueAtTurnOn { get; set; }
         public Lamp(string name)
         {
             IsOn = false;
             Brightness = 0;
             Guid = new Guid();
             Name = name;
+            MinValueOfBrightness = 1;
+            MaxValueOfBrightness = 100;
+            BrightnessValueAtTurnOn = 50;
         }
         public Lamp(Guid guid, string name)
         {
@@ -18,32 +25,30 @@
             Brightness = 0;
             Guid = guid;
             Name = name;
+            MinValueOfBrightness = 1;
+            MaxValueOfBrightness = 100;
+            BrightnessValueAtTurnOn = 50;
         }
 
-        public override void TurnOn()
+
+
+        public virtual void TurnOn()
         {
-            if (!IsOn)
-            {
-                IsOn = true;
-                Brightness = brightnessValueAtTurnOn;
-            }
+            IsOn = true;
+            Brightness = BrightnessValueAtTurnOn;
         }
 
-        public override void TurnOff()
+        public virtual void TurnOff()
+        {  
+            IsOn = false;
+            Brightness = 0;
+        }
+
+        public virtual void ChangeBrightness(Lamp lamp, int brightnessValue)
         {
             if (IsOn)
             {
-                IsOn = false;
-                Brightness = 0;
-            }
-        }
-
-        public override void ChangeBrightness(int brightnessValue)
-        {
-            if (IsOn)
-            {
-                Brightness = Math.Max(Brightness + brightnessValue, minValueOfMaxBrightness);
-                Brightness = Math.Min(Brightness, maxValueOfMaxBrightness);
+                Brightness = BrightnessValidator.ValidateBrightness(brightnessValue, lamp);
             }
         }
     }

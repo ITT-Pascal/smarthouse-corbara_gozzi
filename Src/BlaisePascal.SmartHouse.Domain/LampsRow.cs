@@ -8,14 +8,14 @@ namespace BlaisePascal.SmartHouse.Domain
 {
     public class LampsRow
     {
-        public List<AbstractLamp> _lampsRow { get; set; }
+        public List<Lamp> _lampsRow { get; set; }
 
         public LampsRow() 
         { 
-            _lampsRow = new List<AbstractLamp>();
+            _lampsRow = new List<Lamp>();
         }
             
-        public void AddLamp(AbstractLamp lamp) 
+        public void AddLamp(Lamp lamp) 
         { 
             _lampsRow.Add(lamp);
         }

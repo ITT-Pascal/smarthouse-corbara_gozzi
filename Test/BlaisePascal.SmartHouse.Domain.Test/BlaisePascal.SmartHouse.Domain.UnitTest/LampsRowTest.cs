@@ -9,7 +9,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
     public class LampsRowTest
     {
 
-        List<AbstractLamp> lampList = new List<AbstractLamp>();
+        List<Lamp> lampList = new List<Lamp>();
         LampsRow newLampsRow = new LampsRow();
 
         [Fact]

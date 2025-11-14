@@ -69,14 +69,12 @@ namespace BlaisePascal.SmartHouse.Domain
                 SecondLamp.IsOn = false;
             }
         }
-        public void ChangeBrightnessOfLamps(int brightness) 
+        public void ChangeBrightnessOfLamps(Lamp firstLamp, Lamp secondLamp, int brightnessValue) 
         {
             if (FirstLamp.IsOn && SecondLamp.IsOn)
             { 
-                FirstLamp.Brightness = Math.Max(FirstLamp.Brightness + brightness, minValueOfMaxBrightness);
-                FirstLamp.Brightness = Math.Min(FirstLamp.Brightness, maxValueOfMaxBrightness);
-                SecondLamp.Brightness = Math.Max(SecondLamp.Brightness + brightness, minValueOfMaxBrightness);
-                SecondLamp.Brightness = Math.Min(SecondLamp.Brightness, maxValueOfMaxBrightness);
+                FirstLamp.Brightness = BrightnessValidator.ValidateBrightness(brightnessValue, firstLamp);
+                SecondLamp.Brightness = BrightnessValidator.ValidateBrightness(brightnessValue, secondLamp);
             }
         }
     }
