@@ -1,54 +1,51 @@
-﻿namespace BlaisePascal.SmartHouse.Domain
+﻿using System.Xml.Linq;
+
+namespace BlaisePascal.SmartHouse.Domain
 {
-    public class Lamp
+    public class Lamp:AbstractLamp
     {
-        public bool IsOn { get; set; }
-        public int Brightness { get; set; }
-        public Guid Guid { get; set; }
-        public string Name { get; set; }
-        public int MinValueOfBrightness { get; set; }
-        public int MaxValueOfBrightness { get; set; }
-        public int BrightnessValueAtTurnOn { get; set; }
+        //Costanti per impostare max brightness alla creazione e per inserire brightness all'accensione
+        private const int brightnessAtOn = 50;
+        private const int maxBrightnessOfLamp = 100;
+        public Lamp()
+        {
+            IsOn = false;
+            Brightness = 0;
+            ID = new Guid();
+            MaxBrightness = maxBrightnessOfLamp;
+        }
         public Lamp(string name)
         {
             IsOn = false;
             Brightness = 0;
-            Guid = new Guid();
+            ID = new Guid();
             Name = name;
-            MinValueOfBrightness = 1;
-            MaxValueOfBrightness = 100;
-            BrightnessValueAtTurnOn = 50;
+            MaxBrightness = maxBrightnessOfLamp;
         }
-        public Lamp(Guid guid, string name)
+        public Lamp(Guid Id, string name)
         {
             IsOn = false;
             Brightness = 0;
-            Guid = guid;
+            ID = Id;
             Name = name;
-            MinValueOfBrightness = 1;
-            MaxValueOfBrightness = 100;
-            BrightnessValueAtTurnOn = 50;
+            MaxBrightness = maxBrightnessOfLamp;
         }
 
-
-
-        public virtual void TurnOn()
+        public override void TurnOn()
         {
             IsOn = true;
-            Brightness = BrightnessValueAtTurnOn;
+            Brightness = brightnessAtOn;
         }
-
-        public virtual void TurnOff()
+        public override void TurnOff()
         {  
             IsOn = false;
             Brightness = 0;
         }
-
-        public virtual void ChangeBrightness(Lamp lamp, int brightnessValue)
+        public override void ChangeBrightness(int brightnessToAdd)
         {
             if (IsOn)
             {
-                Brightness = BrightnessValidator.ValidateBrightness(brightnessValue, lamp);
+                Brightness = BrightnessGestor.ValidateNewBrightness(brightnessToAdd, Brightness, MaxBrightness);
             }
         }
     }

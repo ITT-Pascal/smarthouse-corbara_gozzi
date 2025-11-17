@@ -9,72 +9,56 @@ namespace BlaisePascal.SmartHouse.Domain
 {
     public class TwoLampsDevice
     {
-        public Lamp FirstLamp { get; set; }
-        public Lamp SecondLamp { get; set; }
-        private const int minValueOfMaxBrightness = 1;
-        private const int maxValueOfMaxBrightness = 100;
-        private const int brightnessValueAtTurnOn = 50;
-        public TwoLampsDevice(Lamp firstLamp, string firstLampName, Lamp secondLamp, string secondLampName)
+        public AbstractLamp FirstLamp { get; set; }
+        public AbstractLamp SecondLamp { get; set; }
+
+        public TwoLampsDevice()
         {
-            FirstLamp = new Lamp(firstLampName);
-            
-            SecondLamp = new Lamp(secondLampName);
+            FirstLamp = new Lamp();
+            SecondLamp = new Lamp();
+        }
+        public TwoLampsDevice(AbstractLamp firstLamp, AbstractLamp secondLamp)
+        {
+            FirstLamp = firstLamp;
+            SecondLamp = secondLamp;
         }
 
         public  void TurnOnFirstLamp()
         {
-            if (!FirstLamp.IsOn)
-            {
-                FirstLamp.IsOn = true;
-                FirstLamp.Brightness = brightnessValueAtTurnOn;
-            }
+            FirstLamp.TurnOn();
         }
-
         public void TurnOnSecondLamp()
         {
-            if (!SecondLamp.IsOn)
-            {
-                SecondLamp.IsOn = true;
-                SecondLamp.Brightness = brightnessValueAtTurnOn;
-            }
+            SecondLamp.TurnOn();
         }
-
-
         public void TurnOnAllLamps()
         {
-            if (!(FirstLamp.IsOn && SecondLamp.IsOn)) 
-            { 
-                FirstLamp.IsOn = true;
-                SecondLamp.IsOn = true;
-                FirstLamp.Brightness = brightnessValueAtTurnOn;
-                SecondLamp.Brightness = brightnessValueAtTurnOn;
-            }
+            FirstLamp.TurnOn();
+            SecondLamp.TurnOn();
         }
         public void TurnOffFirstLamp()
         {
-            if (FirstLamp.IsOn)
-                FirstLamp.IsOn = false;  
+            FirstLamp.TurnOff();
         }
         public void TurnOffSecondLamp()
         {
-            if (SecondLamp.IsOn)
-                SecondLamp.IsOn = false;
+            FirstLamp.TurnOff();
         }
-
         public void TurnOffAllLamps()
+        {
+            FirstLamp.TurnOff();
+            SecondLamp.TurnOff();
+        }
+        /// <summary>
+        /// Cambia la brightness a tutte e due
+        /// </summary>
+        /// <param name="brightnessToAdd"></param>
+        public void ChangeBrightnessOfLamps(int brightnessToAdd) 
         {
             if (FirstLamp.IsOn && SecondLamp.IsOn)
             {
-                FirstLamp.IsOn = false;
-                SecondLamp.IsOn = false;
-            }
-        }
-        public void ChangeBrightnessOfLamps(Lamp firstLamp, Lamp secondLamp, int brightnessValue) 
-        {
-            if (FirstLamp.IsOn && SecondLamp.IsOn)
-            { 
-                FirstLamp.Brightness = BrightnessValidator.ValidateBrightness(brightnessValue, firstLamp);
-                SecondLamp.Brightness = BrightnessValidator.ValidateBrightness(brightnessValue, secondLamp);
+                FirstLamp.ChangeBrightness(brightnessToAdd);
+                SecondLamp.ChangeBrightness(brightnessToAdd);
             }
         }
     }
