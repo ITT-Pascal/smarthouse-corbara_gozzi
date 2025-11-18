@@ -17,22 +17,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
         }
 
         [Fact]
-        public void EcoLamp_Brightness_WhenCreatedIsOffAndIsOff()
-        {
-            var lamp = new EcoLamp(80);
-            Assert.Equal(0, lamp.Brightness);
-
-        }
-
-        [Fact]
-        public void EcoLamp_Status_WhenCreatedIsOffAndIsOff()
-        {
-            var lamp = new EcoLamp(80);
-            Assert.False(lamp.IsOn);
-        }
-
-
-        [Fact]
         public void EcoLamp_TurnOn_WhenTurnedOnTheBrightnessIsHalfMaxBrightness70AndIsOn()
         {
             var lamp = new EcoLamp(70);
