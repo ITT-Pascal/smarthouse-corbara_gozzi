@@ -30,8 +30,8 @@ namespace BlaisePascal.SmartHouse.Domain
         {
             if (newMaxBrightness > 70)
                 return 70;
-            else if (newMaxBrightness > 2)
-                return 2;
+            else if (newMaxBrightness > 1)
+                return 1;
             else
                 return newMaxBrightness;
         }

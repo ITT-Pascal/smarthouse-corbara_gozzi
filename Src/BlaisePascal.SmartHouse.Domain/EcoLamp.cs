@@ -9,76 +9,28 @@ namespace BlaisePascal.SmartHouse.Domain
 {
     public class EcoLamp : AbstractLamp
     {
-        //Costante per impostare max brightness alla creazione
-        private const int maxBrightnessOfLamp = 70;
+        private const int maxIntensity = 70;
+        private const int minIntensity = 1;
+        private const int intensityAtOn = 30;
 
-        public EcoLamp()
+        //------CONSTRUCTORS------
+        public EcoLamp() : base()
         {
-            IsOn = false;
-            Brightness = 0;
-            ID = new Guid();
-            MaxBrightness = maxBrightnessOfLamp;
+            MaxIntensity = maxIntensity;
+            MinIntensity = minIntensity;
+            IntensityAtOn = intensityAtOn;
         }
-        public EcoLamp(Guid Id)
+        public EcoLamp(string name) : base(name)
         {
-            IsOn = false;
-            Brightness = 0;
-            MaxBrightness = maxBrightnessOfLamp;
-            ID = Id;
+            MaxIntensity = maxIntensity;
+            MinIntensity = minIntensity;
+            IntensityAtOn = intensityAtOn;
         }
-        public EcoLamp(Guid Id, string name)
+        public EcoLamp(Guid Id, string name) : base(name, Id)
         {
-            IsOn = false;
-            Brightness = 0;
-            MaxBrightness = maxBrightnessOfLamp;
-            ID = Id;
-            Name = name;
+            MaxIntensity = maxIntensity;
+            MinIntensity = minIntensity;
+            IntensityAtOn = intensityAtOn;
         }
-
-        public override void TurnOn()
-        {
-            IsOn = true;
-            Brightness = MaxBrightness / 2;
-        }
-        public override void TurnOff()
-        {
-            IsOn = false;
-            Brightness = 0;
-        }
-        public override void ChangeBrightness(int brightnessToAdd)
-        {
-            if (IsOn)
-            {
-                Brightness = BrightnessGestor.ValidateNewBrightness(brightnessToAdd, Brightness, MaxBrightness);
-            }
-        }
-        /// <summary>
-        /// Cambia la brightness massima, dato che è un'eco lampada
-        /// </summary>
-        /// <param name="newMaxBrightness"></param>
-        public void ChangeMaxBrightness(int newMaxBrightness)
-        {
-            if (IsOn)
-            {
-
-                MaxBrightness = BrightnessGestor.ValidateNewMaxBrightness(newMaxBrightness);
-
-                if (newMaxBrightness == 1)
-                {
-                    MaxBrightness = 2;
-                }
-
-                Brightness = MaxBrightness / 2;
-            }
-            else
-            {
-                MaxBrightness = BrightnessGestor.ValidateNewMaxBrightness(newMaxBrightness);
-
-                if (newMaxBrightness == 1)
-                {
-                    MaxBrightness = 2;
-                }
-            }
-
-        }
-}   }
+    }
+}

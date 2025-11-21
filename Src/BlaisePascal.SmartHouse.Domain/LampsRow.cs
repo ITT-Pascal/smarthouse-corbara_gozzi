@@ -8,18 +8,21 @@ namespace BlaisePascal.SmartHouse.Domain
 {
     public class LampsRow
     {
+        //-------ATTRIBUTES AND PROPERTY-------
         public List<AbstractLamp> _lampsRow { get; set; }
 
+        //------CONSTRUCTORS------
         public LampsRow() 
         { 
             _lampsRow = new List<AbstractLamp>();
         }
 
+        //------METHODS------
         public void SwitchOn()
         {
             for (int i = 0; i < _lampsRow.Count; i++)
             {
-                _lampsRow[i].IsOn = true;
+                _lampsRow[i].lampStatus = DeviceStatus.On;
             }
         }
         /// <summary>
@@ -32,7 +35,7 @@ namespace BlaisePascal.SmartHouse.Domain
             {
                 if (_lampsRow[i].ID == guid)
                 {
-                    _lampsRow[i].IsOn = true;
+                    _lampsRow[i].lampStatus = DeviceStatus.On;
                 }
             }
         }
@@ -46,7 +49,7 @@ namespace BlaisePascal.SmartHouse.Domain
             {
                 if (_lampsRow[i].Name == name)
                 {
-                    _lampsRow[i].IsOn = true;
+                    _lampsRow[i].lampStatus = DeviceStatus.On;
                 }
             }
         }
@@ -54,7 +57,7 @@ namespace BlaisePascal.SmartHouse.Domain
         {
             for (int i = 0; i < _lampsRow.Count; i++)
             {
-                _lampsRow[i].IsOn = true;
+                _lampsRow[i].lampStatus = DeviceStatus.Off;
             }
         }
         /// <summary>
@@ -67,7 +70,7 @@ namespace BlaisePascal.SmartHouse.Domain
             {
                 if (_lampsRow[i].ID == guid)
                 {
-                    _lampsRow[i].IsOn = true;
+                    _lampsRow[i].lampStatus = DeviceStatus.Off;
                 }
             }
         }
@@ -81,7 +84,7 @@ namespace BlaisePascal.SmartHouse.Domain
             {
                 if (_lampsRow[i].Name == name)
                 {
-                    _lampsRow[i].IsOn = true;
+                    _lampsRow[i].lampStatus = DeviceStatus.Off;
                 }
             }
         }
@@ -93,17 +96,24 @@ namespace BlaisePascal.SmartHouse.Domain
         {
             _lampsRow.Insert(position, lamp);
         }
+        //Metodo privato per poter individuare una lamp in base al guid
+        private int GetPositionOfLamp(Guid id)
+        {
+            int pos = 0;
+            for (int i = 0; i < _lampsRow.Count; i++)
+            {
+                if (_lampsRow[i].ID == id)
+                    pos = i;
+            }
+            return pos;
+        }
         /// <summary>
         /// Elimina lampada in base all'ID
         /// </summary>
         /// <param name="Id"></param>
         public void RemoveLamp(Guid Id)
         {
-            for (int i = 0; i < _lampsRow.Count; i++)
-            {
-                if (_lampsRow[i].ID == Id)
-                    _lampsRow.RemoveAt(i);
-            }
+            _lampsRow.RemoveAt(GetPositionOfLamp(Id));
         }
         /// <summary>
         /// Elimina lampada in base all'ID
@@ -126,7 +136,7 @@ namespace BlaisePascal.SmartHouse.Domain
         {
             for (int i = 0; i > _lampsRow.Count(); i++)
             {
-                _lampsRow[i].Brightness = BrightnessGestor.ValidateNewBrightness(intensity, _lampsRow[i].MaxBrightness);
+                _lampsRow[i].Intensity = BrightnessGestor.ValidateNewBrightness(intensity, _lampsRow[i].MaxIntensity);
             }
         }
         /// <summary>
@@ -135,11 +145,7 @@ namespace BlaisePascal.SmartHouse.Domain
         /// <param name="Id"></param>
         public void SetIntensityForLamp(int intensity, Guid Id)
         {
-            for (int i = 0; i < _lampsRow.Count; i++)
-            {
-                if (_lampsRow[i].ID == Id)
-                    _lampsRow[i].Brightness = BrightnessGestor.ValidateNewBrightness(intensity, _lampsRow[i].MaxBrightness);
-            }
+            _lampsRow[GetPositionOfLamp(Id)].Intensity = BrightnessGestor.ValidateNewBrightness(intensity, _lampsRow[GetPositionOfLamp(Id)].MaxIntensity);
         }
         /// <summary>
         /// Cambia inenistà lampada in base al nome
@@ -151,7 +157,7 @@ namespace BlaisePascal.SmartHouse.Domain
             {
                 if (_lampsRow[i].Name == name)
                 {
-                    _lampsRow[i].Brightness = BrightnessGestor.ValidateNewBrightness(intensity, _lampsRow[i].MaxBrightness);
+                    _lampsRow[i].Intensity = BrightnessGestor.ValidateNewBrightness(intensity, _lampsRow[i].MaxIntensity);
                 }
             }
         }

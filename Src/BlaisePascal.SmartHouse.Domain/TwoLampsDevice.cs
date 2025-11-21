@@ -9,9 +9,11 @@ namespace BlaisePascal.SmartHouse.Domain
 {
     public class TwoLampsDevice
     {
+        //-------ATTRIBUTES AND PROPERTY-------
         public AbstractLamp FirstLamp { get; set; }
         public AbstractLamp SecondLamp { get; set; }
-
+        
+        //------CONSTRUCTORS------
         public TwoLampsDevice()
         {
             FirstLamp = new Lamp();
@@ -23,43 +25,37 @@ namespace BlaisePascal.SmartHouse.Domain
             SecondLamp = secondLamp;
         }
 
-        public  void TurnOnFirstLamp()
+        //------METHODS------
+        public void TurnOnFirstLamp()
         {
-            FirstLamp.TurnOn();
+            FirstLamp.SwitchOn();
         }
         public void TurnOnSecondLamp()
         {
-            SecondLamp.TurnOn();
+            SecondLamp.SwitchOn();
         }
         public void TurnOnAllLamps()
         {
-            FirstLamp.TurnOn();
-            SecondLamp.TurnOn();
+            FirstLamp.SwitchOn();
+            SecondLamp.SwitchOn();
         }
         public void TurnOffFirstLamp()
         {
-            FirstLamp.TurnOff();
+            FirstLamp.SwitchOff();
         }
         public void TurnOffSecondLamp()
         {
-            FirstLamp.TurnOff();
+            FirstLamp.SwitchOff();
         }
         public void TurnOffAllLamps()
         {
-            FirstLamp.TurnOff();
-            SecondLamp.TurnOff();
+            FirstLamp.SwitchOff();
+            SecondLamp.SwitchOff();
         }
-        /// <summary>
-        /// Cambia la brightness a tutte e due
-        /// </summary>
-        /// <param name="brightnessToAdd"></param>
-        public void ChangeBrightnessOfLamps(int brightnessToAdd) 
+        public void ChangeBrightnessOfLamps(int value)
         {
-            if (FirstLamp.IsOn && SecondLamp.IsOn)
-            {
-                FirstLamp.ChangeBrightness(brightnessToAdd);
-                SecondLamp.ChangeBrightness(brightnessToAdd);
-            }
+            FirstLamp.SetIntensity(value);
+            SecondLamp.SetIntensity(value);
         }
     }
 }

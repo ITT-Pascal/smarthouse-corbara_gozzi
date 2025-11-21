@@ -160,8 +160,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
 
             newLampsRow.SetIntensityForLamp(30, "Beta");
 
-            Assert.Equal(0, newLampsRow._lampsRow.First(l => l.Name == "Alpha").Brightness);
-            Assert.Equal(30, newLampsRow._lampsRow.First(l => l.Name == "Beta").Brightness);
+            Assert.Equal(0, newLampsRow._lampsRow.First(l => l.Name == "Alpha").Intensity);
+            Assert.Equal(30, newLampsRow._lampsRow.First(l => l.Name == "Beta").Intensity);
         }
     }
 }
