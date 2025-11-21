@@ -4,27 +4,13 @@
     {
         
         [Fact]
-        public void Lamp_StatusAndBrightness_WhenCreatedIsOffAndIsOff()
+        public void Lamp_StatusAndBrightness_WhenCreatedIsOffA()
         {
             var lamp = new Lamp();
             Assert.Equal(0, lamp.Brightness);
             Assert.False(lamp.IsOn);
         }
 
-        [Fact]
-        public void Lamp_Brightness_WhenCreatedIsOffAndIsOff()
-        {
-            var lamp = new Lamp();
-            Assert.Equal(0, lamp.Brightness);
-        }
-
-        [Fact]
-        public void Lamp_Status_WhenCreatedIsOffAndIsOff()
-        {
-            var lamp = new Lamp();
-            
-            Assert.False(lamp.IsOn);
-        }
 
         [Fact]
         public void Lamp_TurnOn_WhenTurnedOnTheBrightnessIs50AndIsOn()

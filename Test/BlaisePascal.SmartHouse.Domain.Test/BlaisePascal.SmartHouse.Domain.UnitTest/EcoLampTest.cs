@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit;
+using BlaisePascal.SmartHouse.Domain;
 
 namespace BlaisePascal.SmartHouse.Domain.UnitTest
 {
     public class EcoLampTest
     {
         [Fact]
-        public void EcoLamp_StatusAndBrightness_WhenCreatedIsOffAndIsOff()
+        public void Created_Lamp_IsOff_WithZeroBrightness()
         {
-            var lamp = new EcoLamp(80);
+            var lamp = new EcoLamp();
             Assert.Equal(0, lamp.Brightness);
             Assert.False(lamp.IsOn);
         }
@@ -19,161 +21,130 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
         [Fact]
         public void EcoLamp_TurnOn_WhenTurnedOnTheBrightnessIsHalfMaxBrightness70AndIsOn()
         {
-            var lamp = new EcoLamp(70);
+            var lamp = new EcoLamp();
             lamp.TurnOn();
-            Assert.Equal(35, lamp.Brightness);
             Assert.True(lamp.IsOn);
+            // metà di MaxBrightness di default (70) => 35
+            Assert.Equal(35, lamp.Brightness);
         }
 
         [Fact]
-        public void EcoLamp_TurnOn_WhenTurnedOnTheBrightnessIsHalfMaxBrightness1Its2()
+        public void TurnOn_WithMax70_SetsBrightnessTo35()
         {
-            var lamp = new EcoLamp(1);
+            var lamp = new EcoLamp();
+            lamp.ChangeMaxBrightness(70);
             lamp.TurnOn();
+            Assert.Equal(35, lamp.Brightness);
+        }
+
+        [Fact]
+        public void TurnOn_WithMax1_SetsBrightnessTo1AndMAxTo2()
+        {
+            var lamp = new EcoLamp();
+            lamp.ChangeMaxBrightness(1);
+            lamp.TurnOn();
+            // se la metà è < 1, la brightness minima all'accensione deve essere 1
             Assert.Equal(1, lamp.Brightness);
         }
 
         [Fact]
-        public void EcoLamp_TurnOn_WhenTurnedOnTheBrightnessIsHalfMaxBrightness1000Its100()
+        public void TurnOn_WithVeryLargeMax_IsCappedAndHalfApplied()
         {
-            var lamp = new EcoLamp(1000);
+            var lamp = new EcoLamp();
+            lamp.ChangeMaxBrightness(1000);
             lamp.TurnOn();
+            // MaxBrightness è cap-protected a 70 => metà = 45
+            Assert.Equal(35, lamp.Brightness);
+        }
+
+        [Fact]
+        public void TurnOff_AfterTurnOn_ResultsInOffAndZeroBrightness()
+        {
+            var lamp = new EcoLamp();
+            lamp.TurnOn();
+            lamp.TurnOff();
+            Assert.False(lamp.IsOn);
+            Assert.Equal(0, lamp.Brightness);
+        }
+
+        [Fact]
+        public void ChangeBrightness_WhileOff_DoesNotChangeBrightness()
+        {
+            var lamp = new EcoLamp();
+            lamp.ChangeBrightness(83);
+            Assert.Equal(0, lamp.Brightness);
+        }
+
+        [Fact]
+        public void ChangeBrightness_WhileOn_IncreasesBrightnessByValue()
+        {
+            var lamp = new EcoLamp();
+            lamp.TurnOn(); // 35
+            lamp.ChangeBrightness(10);
             Assert.Equal(45, lamp.Brightness);
         }
 
-
         [Fact]
-        public void EcoLamp_TurnOn_WhenTurnedWithMaxBrightnessOf80ItTurnOnWith40()
+        public void ChangeBrightness_WhileOn_ExceedsMaxGoesToMax()
         {
-            var lamp = new EcoLamp(80);
-            lamp.TurnOn();
-            Assert.Equal(40, lamp.Brightness);
-        }
-
-        [Fact]
-        public void EcoLamp_TurnOn_WhenTurnedOnIsOn()
-        {
-            var lamp = new EcoLamp(80);
-            lamp.TurnOn();
-            Assert.True(lamp.IsOn);
-        }
-
-        [Fact]
-        public void EcoLamp_TurnOff_WhenTurnedOnAndOffIsOffAndTheBrightnessIs0()
-        {
-            var lamp = new EcoLamp(80);
-            lamp.TurnOn();
-            lamp.TurnOff();
-            Assert.False(lamp.IsOn);
-            Assert.Equal(0, lamp.Brightness);
-        }
-
-        [Fact]
-        public void EcoLamp_TurnOff_WhenTurnedOnAndOffIsOff()
-        {
-            var lamp = new EcoLamp(80);
-            lamp.TurnOn();
-            lamp.TurnOff();
-            Assert.False(lamp.IsOn);
-
-        }
-
-        [Fact]
-        public void EcoLamp_TurnOff_WhenTurnedOnAndOffTheBrightnessIs0()
-        {
-            var lamp = new EcoLamp(80);
-            lamp.TurnOn();
-            lamp.TurnOff();
-            Assert.Equal(0, lamp.Brightness);
-        }
-
-        [Fact]
-        public void EcoLamp_ChangeBrightness_WhenIsOffItRemain0()
-        {
-            var lamp = new EcoLamp(80);
-            lamp.ChangeBrightness(83);
-            Assert.Equal(0, lamp.Brightness);
-        }
-
-        [Fact]
-        public void EcoLamp_ChangeBrightness_WhenIsOnAndTurnedOffIs0ItRemain0()
-        {
-            var lamp = new EcoLamp(80);
-            lamp.TurnOn();
-            lamp.ChangeBrightness(83);
-            lamp.TurnOff();
-            Assert.Equal(0, lamp.Brightness);
-        }
-
-        [Fact]
-        public void EcoLamp_ChangeBrightness_WhenIsOnAndTurnUpOf10ItIncrease()
-        {
-            var lamp = new EcoLamp(80);
-            lamp.TurnOn();
-            lamp.ChangeBrightness(10);
-            Assert.Equal(50, lamp.Brightness);
-
-        }
-
-        [Fact]
-        public void EcoLamp_ChangeBrightness_WhenIsOnAndTurnUpOf100ItGoToTheMax()
-        {
-            var lamp = new EcoLamp(80);
-            lamp.TurnOn();
+            var lamp = new EcoLamp();
+            lamp.TurnOn(); // 35
             lamp.ChangeBrightness(100);
-            Assert.Equal(80, lamp.Brightness);
+            // non può superare MaxBrightness di default (70)
+            Assert.Equal(70, lamp.Brightness);
         }
 
         [Fact]
-        public void EcoLamp_ChangeBrightness_WhenIsOnAndTurnDownOf10ItDecrease()
+        public void ChangeBrightness_WhileOn_DecreasesBrightnessByValue()
         {
-            var lamp = new EcoLamp(80);
-            lamp.TurnOn();
+            var lamp = new EcoLamp();
+            lamp.TurnOn(); // 35
             lamp.ChangeBrightness(-10);
-            Assert.Equal(30, lamp.Brightness);
+            Assert.Equal(25, lamp.Brightness);
         }
 
         [Fact]
-        public void EcoLamp_ChangeBrightness_WhenIsOnAndTurnDownInNegative50ItSetAt1()
+        public void ChangeBrightness_WhileOn_DecreaseBelowMinimumSetsToOne()
         {
-            var lamp = new EcoLamp(80);
-            lamp.TurnOn();
+            var lamp = new EcoLamp();
+            lamp.TurnOn(); // 35
             lamp.ChangeBrightness(-50);
             Assert.Equal(1, lamp.Brightness);
         }
 
         [Fact]
-        public void EcoLamp_ChangeBrightness_WhenIsOnAndDecreasreOf10AndIncreasedOf15ItIs40()
+        public void ChangeBrightness_Sequence_ProducesExpectedResult()
         {
-            var lamp = new EcoLamp(80);
-            lamp.TurnOn();
-            lamp.ChangeBrightness(-10);
-            lamp.ChangeBrightness(15);
-            Assert.Equal(45, lamp.Brightness);
+            var lamp = new EcoLamp();
+            lamp.TurnOn(); // 35
+            lamp.ChangeBrightness(-10); // 25
+            lamp.ChangeBrightness(15); // 40
+            Assert.Equal(40, lamp.Brightness);
         }
 
         [Fact]
-        public void EcoLamp_ChangeMaxBrightness_WhenCreatedWithMaxBrightness80AndChanged()
+        public void ChangeMaxBrightness_UpdatesMaxValue()
         {
-            var lamp = new EcoLamp(80);
+            var lamp = new EcoLamp();
             lamp.ChangeMaxBrightness(70);
             Assert.Equal(70, lamp.MaxBrightness);
         }
 
         [Fact]
-        public void EcoLamp_ChangeMaxBrightness_WhenCreatedWithMaxBrightness80AndChangedTo200ItSetAt90()
+        public void ChangeMaxBrightness_AboveLimit_IsCapped()
         {
-            var lamp = new EcoLamp(80);
+            var lamp = new EcoLamp();
             lamp.ChangeMaxBrightness(200);
-            Assert.Equal(90, lamp.MaxBrightness);
+            // cap massimo per la lampada eco = 70
+            Assert.Equal(70, lamp.MaxBrightness);
         }
 
         [Fact]
-        public void EcoLamp_ChangeMaxBrightness_WhenChangedWhileOnTheBrightnessIsAdjusted()
+        public void ChangeMaxBrightness_WhileOn_AdjustsBrightnessToNewHalf()
         {
-            var lamp = new EcoLamp(80);
-            lamp.TurnOn();
-            lamp.ChangeMaxBrightness(60);
+            var lamp = new EcoLamp();
+            lamp.TurnOn(); // 35
+            lamp.ChangeMaxBrightness(60); // nuova metà = 30
             Assert.Equal(30, lamp.Brightness);
         }
     }

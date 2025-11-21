@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace BlaisePascal.SmartHouse.Domain
 {
-    public class EcoLamp: AbstractLamp
+    public class EcoLamp : AbstractLamp
     {
         //Costante per impostare max brightness alla creazione
         private const int maxBrightnessOfLamp = 70;
@@ -38,7 +38,7 @@ namespace BlaisePascal.SmartHouse.Domain
         public override void TurnOn()
         {
             IsOn = true;
-            Brightness = MaxBrightness/2;
+            Brightness = MaxBrightness / 2;
         }
         public override void TurnOff()
         {
@@ -50,7 +50,7 @@ namespace BlaisePascal.SmartHouse.Domain
             if (IsOn)
             {
                 Brightness = BrightnessGestor.ValidateNewBrightness(brightnessToAdd, Brightness, MaxBrightness);
-            } 
+            }
         }
         /// <summary>
         /// Cambia la brightness massima, dato che è un'eco lampada
@@ -58,7 +58,27 @@ namespace BlaisePascal.SmartHouse.Domain
         /// <param name="newMaxBrightness"></param>
         public void ChangeMaxBrightness(int newMaxBrightness)
         {
-            MaxBrightness = BrightnessGestor.ValidateNewMaxBrightness(newMaxBrightness);
+            if (IsOn)
+            {
+
+                MaxBrightness = BrightnessGestor.ValidateNewMaxBrightness(newMaxBrightness);
+
+                if (newMaxBrightness == 1)
+                {
+                    MaxBrightness = 2;
+                }
+
+                Brightness = MaxBrightness / 2;
+            }
+            else
+            {
+                MaxBrightness = BrightnessGestor.ValidateNewMaxBrightness(newMaxBrightness);
+
+                if (newMaxBrightness == 1)
+                {
+                    MaxBrightness = 2;
+                }
+            }
+
         }
-    }
-}
+}   }

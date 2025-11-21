@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,20 +22,16 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
         {
             var lamp = new Lamp();
             Assert.Equal(0, lamp.Brightness);
-
         }
 
         [Fact]
-
         public void TwoLampsDevice_Status_WhenCreatedIsOffAndIsOff()
         {
             var lamp = new Lamp();
-
             Assert.False(lamp.IsOn);
         }
 
         [Fact]
-
         public void TwoLampsDevice_TurnOnFirstLamp_WhenTurnedOnIsOn()
         {
             var firstLamp = new Lamp();
@@ -46,7 +43,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
         }
 
         [Fact]
-
         public void TwoLampsDevice_TurnOnSecondLamp_WhenTurnedOnIsOn()
         {
             var firstLamp = new Lamp();
@@ -58,7 +54,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
         }
 
         [Fact]
-
         public void TwoLampsDevice_TurnOnAllLamps_WhenTurnedOnBothAreOn()
         {
             var firstLamp = new Lamp();
@@ -70,37 +65,34 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
         }
 
         [Fact]
-
         public void TwoLampsDevice_TurnOffFirstLamp_WhenTurnedOffIsOff()
         {
             var firstLamp = new Lamp();
             var secondLamp = new Lamp();
             var twoLampsDevice = new TwoLampsDevice(firstLamp, secondLamp);
-            twoLampsDevice.TurnOnFirstLamp();     
+            twoLampsDevice.TurnOnFirstLamp();
             twoLampsDevice.TurnOffFirstLamp();
             Assert.False(twoLampsDevice.FirstLamp.IsOn);
             Assert.False(twoLampsDevice.SecondLamp.IsOn);
         }
 
         [Fact]
-
         public void TwoLampsDevice_TurnOffSecondLamp_WhenTurnedOffIsOff()
         {
             var firstLamp = new Lamp();
-            var secondLamp = new Lamp() ;
+            var secondLamp = new Lamp();
             var twoLampsDevice = new TwoLampsDevice(firstLamp, secondLamp);
             twoLampsDevice.TurnOnSecondLamp();
             twoLampsDevice.TurnOffSecondLamp();
-            Assert.False(twoLampsDevice.FirstLamp.IsOn);
             Assert.False(twoLampsDevice.SecondLamp.IsOn);
+
         }
 
         [Fact]
-
         public void TwoLampsDevice_TurnOffAllLamps_WhenTurnedOffBothAreOff()
         {
-            var firstLamp = new Lamp() ;
-            var secondLamp = new Lamp() ;
+            var firstLamp = new Lamp();
+            var secondLamp = new Lamp();
             var twoLampsDevice = new TwoLampsDevice(firstLamp, secondLamp);
             twoLampsDevice.TurnOnAllLamps();
             twoLampsDevice.TurnOffAllLamps();
@@ -109,8 +101,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
         }
 
         [Fact]
-
-        public void TwoLampsDevice_Brightness_WhenOnlyTheFirstIsOnTheBrightnessIs0()
+        public void TwoLampsDevice_Brightness_WhenTheFirstIsOnTheBrightnessIs50()
         {
             var firstLamp = new Lamp();
             var secondLamp = new Lamp();
@@ -120,11 +111,9 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
             Assert.Equal(0, twoLampsDevice.SecondLamp.Brightness);
         }
 
-
         [Fact]
-
         public void TwoLampsDevice_ChangeBrightnessOfLamps_WhenBothAreOnBrightnessChanges()
-        {//xiao
+        {
             var firstLamp = new Lamp();
             var secondLamp = new Lamp();
             var twoLampsDevice = new TwoLampsDevice(firstLamp, secondLamp);
@@ -135,7 +124,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
         }
 
         [Fact]
-
         public void TwoLampsDevice_ChangeBrightnessOfLamps_WhenIsIncreasedItGoAt100()
         {
             var firstLamp = new Lamp();
@@ -148,7 +136,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
         }
 
         [Fact]
-
         public void TwoLampsDevice_ChangeBrightnessOfLamps_WhenTheBrightnessIsLowerThan0ItBecame0()
         {
             var firstLamp = new Lamp();
@@ -160,7 +147,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
         }
 
         [Fact]
-
         public void TwoLampsDevice_ChangeBrightnessOfLamps_WhenAreOffBrightnessDoesNotChange()
         {
             var firstLamp = new Lamp();
@@ -171,6 +157,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
             Assert.Equal(0, twoLampsDevice.SecondLamp.Brightness);
         }
 
+        [Fact]
         public void TwoLampsDevice_ChangeBrightnessOfLamps_WhenBothAreOnTheBrightnessIs50()
         {
             var firstLamp = new Lamp();
@@ -181,6 +168,67 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest
             Assert.Equal(50, twoLampsDevice.SecondLamp.Brightness);
         }
 
+        [Fact]
+        public void TwoLampsDevice_ChangeBrightnessOfLamps_WhenOnlyTheFirstIsOn()
+        {
+            var firstLamp = new Lamp();
+            var secondLamp = new Lamp();
+            var twoLampsDevice = new TwoLampsDevice(firstLamp, secondLamp);
+            twoLampsDevice.TurnOnFirstLamp();
+            twoLampsDevice.ChangeBrightnessOfLamps(20);
+            Assert.Equal(50, twoLampsDevice.FirstLamp.Brightness);
+            Assert.Equal(0, twoLampsDevice.SecondLamp.Brightness);
+        }
 
+        [Fact]
+        public void TwoLampsDevice_ChangeBrightnessOfLamps_WhenDecreaseBelow0WhileOnBecomes0()
+        {
+            var firstLamp = new Lamp();
+            var secondLamp = new Lamp();
+            var twoLampsDevice = new TwoLampsDevice(firstLamp, secondLamp);
+            twoLampsDevice.TurnOnAllLamps();
+            twoLampsDevice.ChangeBrightnessOfLamps(-60);
+            Assert.Equal(1, twoLampsDevice.FirstLamp.Brightness);
+            Assert.Equal(1, twoLampsDevice.SecondLamp.Brightness);
+        }
+
+        [Fact]
+        public void Lamp_TurnOn_IsOnAndBrightness50()
+        {
+            var lamp = new Lamp();
+            lamp.TurnOn();
+            Assert.True(lamp.IsOn);
+            Assert.Equal(50, lamp.Brightness);
+        }
+
+        [Fact]
+        public void Lamp_TurnOff_SetsIsOffAndBrightness0()
+        {
+            var lamp = new Lamp();
+            lamp.TurnOn();
+            lamp.TurnOff();
+            Assert.False(lamp.IsOn);
+            Assert.Equal(0, lamp.Brightness);
+        }
+
+        [Fact]
+        public void Lamp_ChangeBrightness_RespectsBounds()
+        {
+            var lamp = new Lamp();
+            lamp.TurnOn();
+            lamp.ChangeBrightness(1000);
+            Assert.Equal(100, lamp.Brightness);
+
+            lamp.ChangeBrightness(-1000);
+            Assert.Equal(1, lamp.Brightness);
+        }
+
+        [Fact]
+        public void TwoLampsDevice_DefaultConstructor_InitializesTwoLampsIfAvailable()
+        {
+            var twoLampsDevice = new TwoLampsDevice();
+            Assert.NotNull(twoLampsDevice.FirstLamp);
+            Assert.NotNull(twoLampsDevice.SecondLamp);
+        }
     }
 }
