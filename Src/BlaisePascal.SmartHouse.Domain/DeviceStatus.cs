@@ -11,6 +11,7 @@ namespace BlaisePascal.SmartHouse.Domain
         Unknown = 1,
         On = 2,
         Off = 3,
-        Error = 4
+        Error = 4,
+        Stanby = 5
     }
 }

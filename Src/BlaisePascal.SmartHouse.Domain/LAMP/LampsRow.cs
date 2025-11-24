@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlaisePascal.SmartHouse.Domain
+namespace BlaisePascal.SmartHouse.Domain.LAMP
 {
     public class LampsRow
     {
@@ -31,13 +31,7 @@ namespace BlaisePascal.SmartHouse.Domain
         /// <param name="guid"></param>
         public void SwitchOn(Guid guid)
         {
-            for (int i = 0; i < _lampsRow.Count; i++)
-            {
-                if (_lampsRow[i].ID == guid)
-                {
-                    _lampsRow[i].lampStatus = DeviceStatus.On;
-                }
-            }
+            _lampsRow[GetPositionOfLamp(guid)].SwitchOn();
         }
         /// <summary>
         /// Accende lampada in base al nome
@@ -49,7 +43,7 @@ namespace BlaisePascal.SmartHouse.Domain
             {
                 if (_lampsRow[i].Name == name)
                 {
-                    _lampsRow[i].lampStatus = DeviceStatus.On;
+                    _lampsRow[i].SwitchOn();
                 }
             }
         }
@@ -57,7 +51,7 @@ namespace BlaisePascal.SmartHouse.Domain
         {
             for (int i = 0; i < _lampsRow.Count; i++)
             {
-                _lampsRow[i].lampStatus = DeviceStatus.Off;
+                _lampsRow[i].SwitchOff();
             }
         }
         /// <summary>
@@ -66,13 +60,7 @@ namespace BlaisePascal.SmartHouse.Domain
         /// <param name="guid"></param>
         public void SwitchOff(Guid guid)
         {
-            for (int i = 0; i < _lampsRow.Count; i++)
-            {
-                if (_lampsRow[i].ID == guid)
-                {
-                    _lampsRow[i].lampStatus = DeviceStatus.Off;
-                }
-            }
+            _lampsRow[GetPositionOfLamp(guid)].SwitchOff();
         }
         /// <summary>
         /// Spegne lampada in base al nome
@@ -84,7 +72,7 @@ namespace BlaisePascal.SmartHouse.Domain
             {
                 if (_lampsRow[i].Name == name)
                 {
-                    _lampsRow[i].lampStatus = DeviceStatus.Off;
+                    _lampsRow[i].SwitchOff();
                 }
             }
         }
@@ -136,7 +124,7 @@ namespace BlaisePascal.SmartHouse.Domain
         {
             for (int i = 0; i > _lampsRow.Count(); i++)
             {
-                _lampsRow[i].Intensity = BrightnessGestor.ValidateNewBrightness(intensity, _lampsRow[i].MaxIntensity);
+                _lampsRow[i].SetIntensity(intensity);
             }
         }
         /// <summary>
@@ -145,7 +133,7 @@ namespace BlaisePascal.SmartHouse.Domain
         /// <param name="Id"></param>
         public void SetIntensityForLamp(int intensity, Guid Id)
         {
-            _lampsRow[GetPositionOfLamp(Id)].Intensity = BrightnessGestor.ValidateNewBrightness(intensity, _lampsRow[GetPositionOfLamp(Id)].MaxIntensity);
+            _lampsRow[GetPositionOfLamp(Id)].SetIntensity(intensity);
         }
         /// <summary>
         /// Cambia inenistà lampada in base al nome
@@ -157,7 +145,7 @@ namespace BlaisePascal.SmartHouse.Domain
             {
                 if (_lampsRow[i].Name == name)
                 {
-                    _lampsRow[i].Intensity = BrightnessGestor.ValidateNewBrightness(intensity, _lampsRow[i].MaxIntensity);
+                    _lampsRow[i].SetIntensity(intensity);
                 }
             }
         }
