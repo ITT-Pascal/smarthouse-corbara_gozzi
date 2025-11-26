@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace BlaisePascal.SmartHouse.Domain.LAMP
+namespace BlaisePascal.SmartHouse.Domain.LampClasses
 {
     public class TwoLampsDevice
     {
@@ -26,36 +26,29 @@ namespace BlaisePascal.SmartHouse.Domain.LAMP
         }
 
         //------METHODS------
-        public void TurnOnFirstLamp()
-        {
-            FirstLamp.SwitchOn();
-        }
-        public void TurnOnSecondLamp()
-        {
-            SecondLamp.SwitchOn();
-        }
-        public void TurnOnAllLamps()
+        public void SwitchOnFirstLamp() {FirstLamp.SwitchOn();}
+        public void SwitchOnSecondLamp() { SecondLamp.SwitchOn(); }
+         
+        public void SwitchOnAllLamps()
         {
             FirstLamp.SwitchOn();
             SecondLamp.SwitchOn();
         }
-        public void TurnOffFirstLamp()
-        {
-            FirstLamp.SwitchOff();
-        }
-        public void TurnOffSecondLamp()
-        {
-            FirstLamp.SwitchOff();
-        }
-        public void TurnOffAllLamps()
+        public void SwitchOffFirstLamp() { FirstLamp.SwitchOff(); }
+        public void SwitchOffSecondLamp(){ SecondLamp.SwitchOff(); }
+        public void SwitchOffAllLamps()
         {
             FirstLamp.SwitchOff();
             SecondLamp.SwitchOff();
         }
+        //Set new intensity by a new value
         public void ChangeBrightnessOfLamps(int value)
         {
-            FirstLamp.SetIntensity(value);
-            SecondLamp.SetIntensity(value);
+            if (FirstLamp.LampStatus == DeviceStatus.On && SecondLamp.LampStatus == DeviceStatus.On)
+            {
+                FirstLamp.SetIntensity(value);
+                SecondLamp.SetIntensity(value);
+            }
         }
     }
 }

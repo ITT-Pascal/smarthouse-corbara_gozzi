@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BlaisePascal.SmartHouse.Domain.LAMP;
+using BlaisePascal.SmartHouse.Domain.LampClasses;
 
-namespace BlaisePascal.SmartHouse.Domain.CCTV
+namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
 {
     public class CCTV
     {
@@ -24,14 +24,14 @@ namespace BlaisePascal.SmartHouse.Domain.CCTV
             CameraStatus = DeviceStatus.Off;
             ID = new Guid();
             CameraLed = new Lamp("CameraLed");
-            CameraLed.lampStatus = DeviceStatus.Off;
+            CameraLed.LampStatus = DeviceStatus.Off;
         }
         public CCTV(Guid id)
         {
             CameraStatus = DeviceStatus.Off;
             ID = id;
             CameraLed = new Lamp("CameraLed");
-            CameraLed.lampStatus = DeviceStatus.Off;
+            CameraLed.LampStatus = DeviceStatus.Off;
         }
         public CCTV(Guid id, string name)
         {
@@ -39,7 +39,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTV
             ID = id;
             CameraName = name;
             CameraLed = new Lamp("CameraLed");
-            CameraLed.lampStatus = DeviceStatus.Off;
+            CameraLed.LampStatus = DeviceStatus.Off;
         }
 
         //------METHODS------
@@ -63,12 +63,6 @@ namespace BlaisePascal.SmartHouse.Domain.CCTV
                 CameraLed.Intensity = intesnityOfLedOnStanby;
             }
         }
-        public void ChangeQualityOfVideo(VideoQuality newQuality)
-        {
-            if (QualityOfVideo != newQuality)
-            {
-                QualityOfVideo = newQuality;
-            }
-        }
+        public void ChangeQualityOfVideo(VideoQuality newQuality){ QualityOfVideo = newQuality;}
     }
 }

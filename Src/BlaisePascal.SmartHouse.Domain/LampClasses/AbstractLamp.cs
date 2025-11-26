@@ -1,11 +1,11 @@
 ﻿using System.Xml.Linq;
 
-namespace BlaisePascal.SmartHouse.Domain.LAMP
+namespace BlaisePascal.SmartHouse.Domain.LampClasses
 {
     public abstract class AbstractLamp
     {
         //-------ATTRIBUTES AND PROPERTY-------
-        public DeviceStatus lampStatus { get; set; }
+        public DeviceStatus LampStatus { get; set; }
         public int Intensity { get; set; }
         public Guid ID { get; set; }
         public string Name { get; set; }
@@ -19,23 +19,36 @@ namespace BlaisePascal.SmartHouse.Domain.LAMP
         //------CONSTRUCTORS------
         protected AbstractLamp()
         {
-            lampStatus = DeviceStatus.Off;
+            LampStatus = DeviceStatus.Off;
             ID = new Guid();
             Intensity = 0;
             Name = "Lamp";
             DateTimeAtCreationUtc = DateTime.UtcNow;
+            ValueOfIncreaseAndDescrease = 10;
         }
         protected AbstractLamp(string name)
         {
-            lampStatus = DeviceStatus.Off;
+            LampStatus = DeviceStatus.Off;
             ID = new Guid();
             Intensity = 0;
             Name = name;
             DateTimeAtCreationUtc = DateTime.UtcNow;
+            ValueOfIncreaseAndDescrease = 10;
+
         }
         protected AbstractLamp(string name, Guid guid)
         {
-            lampStatus = DeviceStatus.Off;
+            LampStatus = DeviceStatus.Off;
+            ID = guid;
+            Intensity = 0;
+            Name = name;
+            DateTimeAtCreationUtc = DateTime.UtcNow;
+            ValueOfIncreaseAndDescrease = 10;
+
+        }
+        protected AbstractLamp(string name, Guid guid, int valOfIncreaseAndDecrease)
+        {
+            LampStatus = DeviceStatus.Off;
             ID = guid;
             Intensity = 0;
             Name = name;
@@ -45,19 +58,19 @@ namespace BlaisePascal.SmartHouse.Domain.LAMP
         //------METHODS------
         public virtual void SwitchOn()
         {
-            lampStatus = DeviceStatus.On;
+            LampStatus = DeviceStatus.On;
             Intensity = IntensityAtOn;
             LastModifierAtUtc = DateTime.UtcNow;
         }
         public virtual void SwitchOff()
         {
-            lampStatus = DeviceStatus.Off;
+            LampStatus = DeviceStatus.Off;
             Intensity = 0;
             LastModifierAtUtc = DateTime.UtcNow;
         }
         public virtual void Toggle()
         {
-            if (lampStatus == DeviceStatus.On)
+            if (LampStatus == DeviceStatus.On)
                 SwitchOff();
 
             else
@@ -76,8 +89,12 @@ namespace BlaisePascal.SmartHouse.Domain.LAMP
         }
         public virtual void SetIntensity(int value)
         {
-            Intensity = BrightnessGestor.ValidateNewBrightness(value, Intensity, MaxIntensity);
+            Intensity = BrightnessGestor.ValidatIntensityBetweenRange(value, MaxIntensity);
             LastModifierAtUtc = DateTime.UtcNow;
+        }
+        public virtual void ChangeValueOfIncreaseAndDecrease(int val)
+        {
+            ValueOfIncreaseAndDescrease = BrightnessGestor.ValidatIntensityBetweenRange(val, MaxIntensity);
         }
     }
 }

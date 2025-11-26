@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using BlaisePascal.SmartHouse.Domain.LAMP;
+using BlaisePascal.SmartHouse.Domain.LampClasses;
 
-namespace BlaisePascal.SmartHouse.Domain.CCTV
+namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
 {
     public class CCTVSet
     {
@@ -15,10 +15,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTV
         private string ?AdminPassword;
 
         //------CONSTRUCTORS------
-        public CCTVSet()
-        {
-            CCTVset = new List<CCTV>();
-        }
+        public CCTVSet(){CCTVset = new List<CCTV>();}
         public CCTVSet(string adminPassword)
         {
             CCTVset = new List<CCTV>();
@@ -26,14 +23,8 @@ namespace BlaisePascal.SmartHouse.Domain.CCTV
         }
 
         //------METHODS------
-        public void AddCCTV(CCTV camera)
-        {
-            CCTVset.Add(camera);
-        }
-        public void AddCCTV(CCTV camera, int pos)
-        {
-            CCTVset.Insert(pos, camera);
-        }
+        public void AddCCTV(CCTV camera){ CCTVset.Add(camera); }
+        public void AddCCTV(CCTV camera, int pos){ CCTVset.Insert(pos, camera);}
         public void RemoveCCTV(int pos, string adminPassword)
         {
             if (AdminPassword == adminPassword)
@@ -58,7 +49,6 @@ namespace BlaisePascal.SmartHouse.Domain.CCTV
                 CCTVset.Remove(CCTVset[GetPositionOfCCTV(id)]);
             else
                 throw new ArgumentException("Password errata");
-            
         }
         public void RemoveCCTV(string name, string adminPassword)
         {
@@ -71,10 +61,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTV
                 }
             }
             else
-            {
                 throw new ArgumentException("Password errata");
-            }
-            
         }
         public void SwitchOn()
         {
@@ -133,9 +120,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTV
                 }
             }
             else
-            {
                 throw new ArgumentException("Password errata");
-            }
         }
     }
 }

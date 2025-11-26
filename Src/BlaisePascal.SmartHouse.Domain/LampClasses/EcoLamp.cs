@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace BlaisePascal.SmartHouse.Domain.LAMP
+namespace BlaisePascal.SmartHouse.Domain.LampClasses
 {
     public class EcoLamp : AbstractLamp
     {
@@ -26,11 +26,18 @@ namespace BlaisePascal.SmartHouse.Domain.LAMP
             MinIntensity = minIntensity;
             IntensityAtOn = intensityAtOn;
         }
-        public EcoLamp(Guid Id, string name) : base(name, Id)
+        public EcoLamp(string name, Guid Id) : base(name, Id)
         {
             MaxIntensity = maxIntensity;
             MinIntensity = minIntensity;
             IntensityAtOn = intensityAtOn;
+        }
+        public EcoLamp(string name, Guid Id, int valOfIncreaseAndDecrease) : base(name, Id, valOfIncreaseAndDecrease)
+        {
+            MaxIntensity = maxIntensity;
+            MinIntensity = minIntensity;
+            IntensityAtOn = intensityAtOn;
+            ValueOfIncreaseAndDescrease = BrightnessGestor.ValidatIntensityBetweenRange(valOfIncreaseAndDecrease, MaxIntensity);
         }
     }
 }
