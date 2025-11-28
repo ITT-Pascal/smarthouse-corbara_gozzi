@@ -32,7 +32,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
             MaxIntensity = maxIntensity;
             MinIntensity = minIntensity;
             IntensityAtOn = intensityAtOn;
-            ValueOfIncreaseAndDescrease = BrightnessGestor.ValidatIntensityBetweenRange(valOfIncreaseAndDecrease, MaxIntensity);
+            ValueOfIncreaseAndDescrease = DeviceGestor.ValidatIntensityBetweenRange(valOfIncreaseAndDecrease, MaxIntensity);
         }
     }
 }

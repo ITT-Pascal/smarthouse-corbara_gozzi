@@ -1,104 +1,78 @@
 ﻿using BlaisePascal.SmartHouse.Domain.Conditioner;
+using BlaisePascal.SmartHouse.Domain.Abstractions;
 
 namespace BlaisePascal.SmartHouse.Domain
 {
-    public class AirConditioners
+    public class AirConditioner: AbstractDevice
     {
         private const int minPower = 1;
         private const int maxPower = 10;
         private const int minHeat = 5;
         private const int maxHeat = 45;
 
-        public Guid ID { get; set; }
-        public DeviceStatus ConditionerStatus { get; set; }
-        public string Name { get; set; }
         public int PowerIntensity { get; set; }
         public int Heat { get; set; }
-        public AcMode Status { get; set; }
+        public AcMode AcStatus { get; set; }
 
         //------CONSTRUCTORS------
-        public AirConditioners()
+        public AirConditioner()
         {
-            ConditionerStatus = DeviceStatus.Off;
+            DeviceStatus = DeviceStatus.Off;
             ID = new Guid();
             Name = "Conditioner";
         }
 
-        public AirConditioners(string name, Guid guid)
+        public AirConditioner(string name, Guid guid)
         {
-            ConditionerStatus = DeviceStatus.Off;
+            DeviceStatus = DeviceStatus.Off;
             ID = guid;
             Name = name;
         }
 
         //------METHODS------
-        public void SwitchOn()
+        public override void SwitchOn()
         {
-            this.StartStatus();
+            this.PutStarterStatus();
         }
-
-        public void SwitchOn(string name)
+        public override void SwitchOff()
         {
-            this.StartStatus();
-        }
-
-        public void SwitchOn(Guid guid)
-        {
-            this.StartStatus();
-        }
-
-        public void SwitchOff()
-        {
-            ConditionerStatus = DeviceStatus.Off;
             Heat = 0;
             PowerIntensity = 0;
         }
 
         public void ChangePower(int amount)
         {           
-            if (ConditionerStatus == DeviceStatus.On)
-                {
-                if (amount > 10)
-               {
-                    PowerIntensity = Math.Min(maxPower, amount);                      
-                }
-                else if(amount <= 0)
-                {
-                    PowerIntensity = Math.Max(minPower, amount);
-                }
-                else
-                {
-                PowerIntensity = amount;
-                }
+            if (DeviceStatus == DeviceStatus.On)
+            {
+                PowerIntensity = DeviceGestor.ValidatePowerAc(amount, maxPower);
+                LastModifierAtUtc = DateTime.UtcNow;
             }
             else
-            {
-            throw new ArgumentException("You have to turn it on.");
-            }                    
+                throw new ArgumentException("You have to turn it on.");                  
         }
 
         public void ChangeMode(AcMode mode)
         {
-            if (ConditionerStatus == DeviceStatus.On)
+            if (DeviceStatus == DeviceStatus.On)
             {
                 if (mode == AcMode.FAN)
                 {
                     Heat = 20;
-                    Status = (AcMode)AcMode.FAN;
+                    AcStatus = (AcMode)AcMode.FAN;
                 }
                 else if (mode == AcMode.COOL)
                 {
                     Heat = 10;
-                    Status = (AcMode)AcMode.COOL;
+                    AcStatus = (AcMode)AcMode.COOL;
                 }
                 else if (mode == AcMode.HEAT)
                 {
                     Heat = 30;
-                    Status = (AcMode)AcMode.HEAT;
+                    AcStatus = (AcMode)AcMode.HEAT;
                 }
                 else if (mode == AcMode.CUSTOM)
                 {
-                    this.CustomMode();
+                    this.PutCustomMode();
                 }
                 else
                 {
@@ -113,20 +87,10 @@ namespace BlaisePascal.SmartHouse.Domain
 
         public void ChangeHeatCustomMode(int heat)
         {            
-            if (ConditionerStatus == DeviceStatus.On)
+            if (DeviceStatus == DeviceStatus.On)
             {
-                if (heat > 10)
-                {
-                    Heat = Math.Min(maxHeat, heat);
-                }
-                else if (heat <= 0)
-                {
-                    Heat = Math.Max(minHeat, heat);
-                }
-                else
-                {
-                    Heat = heat;
-                }
+                Heat = DeviceGestor.ValidateHeatInCustomMode(heat, minHeat, maxHeat);
+                LastModifierAtUtc = DateTime.UtcNow;
             }
             else
             {
@@ -134,27 +98,16 @@ namespace BlaisePascal.SmartHouse.Domain
             }
         }      
 
-        public DeviceStatus State()
+        private void PutStarterStatus()
         {
-            return ConditionerStatus;
-        }
-
-        public AcMode ModeState()
-        {
-            return (AcMode)Status;
-        }
-
-        private void StartStatus()
-        {
-            Status = AcMode.FAN;
+            AcStatus = AcMode.FAN;
             Heat = 20;
             PowerIntensity = 5;
-            ConditionerStatus = DeviceStatus.On;
         }
 
-        private void CustomMode()
+        private void PutCustomMode()
         {
-            Status = (AcMode)AcMode.CUSTOM;
+            AcStatus = (AcMode)AcMode.CUSTOM;
             Heat = 25;
         }
     }

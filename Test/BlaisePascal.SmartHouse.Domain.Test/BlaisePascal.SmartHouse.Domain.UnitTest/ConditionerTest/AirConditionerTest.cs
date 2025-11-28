@@ -10,7 +10,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
 {
     public class AirConditionersTest
     {
-        AirConditioners cond = new AirConditioners();
+        AirConditioner cond = new AirConditioner();
 
         [Fact]
 
@@ -24,7 +24,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
 
         public void AirConditioner_SwitchOn_ItTurnOnAlsoWithName()
         {
-            AirConditioners cond = new AirConditioners("Cond", new Guid());
+            AirConditioner cond = new AirConditioner("Cond", new Guid());
             cond.SwitchOn("Cond");
             Assert.Equal(DeviceStatus.On, cond.State());
         }
@@ -32,7 +32,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
 
         public void AirConditioner_SwitchOn_ItTurnOnAlsoWithGuid()
         {
-            AirConditioners cond = new AirConditioners("Cond", new Guid());
+            AirConditioner cond = new AirConditioner("Cond", new Guid());
             cond.SwitchOn(); // TODO : TESTARE GUID
             Assert.Equal(DeviceStatus.On, cond.State());
         }
@@ -168,12 +168,5 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
             cond.ChangeHeatCustomMode(1000);
             Assert.Equal(45, cond.Heat);
         }
-
-
-
-
-
-
-
     }
 }

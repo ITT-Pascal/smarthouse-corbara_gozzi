@@ -13,7 +13,6 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         private const int intensityOfLed = 100;
         private const int intesnityOfLedOnStanby = 20;
         //-------ATTRIBUTES AND PROPERTY-------
-        public DeviceStatus CameraStatus { get; set; }
         public Lamp CameraLed { get; set; }
         public VideoQuality QualityOfVideo { get; set; }
 
@@ -51,11 +50,13 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         }
         public void PutInStanby()
         {
-            if (CameraStatus == DeviceStatus.On)
+            if (DeviceStatus == DeviceStatus.On)
             {
-                CameraStatus = DeviceStatus.Stanby;
+                DeviceStatus = DeviceStatus.Stanby;
                 CameraLed.Intensity = intesnityOfLedOnStanby;
+                LastModifierAtUtc = DateTime.UtcNow;
             }
+            
         }
         public void ChangeQualityOfVideo(VideoQuality newQuality){ QualityOfVideo = newQuality;}
     }

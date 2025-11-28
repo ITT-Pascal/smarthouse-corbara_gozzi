@@ -75,12 +75,12 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         }
         public virtual void SetIntensity(int value)
         {
-            Intensity = BrightnessGestor.ValidatIntensityBetweenRange(value, MaxIntensity);
+            Intensity = DeviceGestor.ValidatIntensityBetweenRange(value, MaxIntensity);
             LastModifierAtUtc = DateTime.UtcNow;
         }
         public virtual void ChangeValueOfIncreaseAndDecrease(int val)
         {
-            ValueOfIncreaseAndDescrease = BrightnessGestor.ValidatIntensityBetweenRange(val, MaxIntensity);
+            ValueOfIncreaseAndDescrease = DeviceGestor.ValidatIntensityBetweenRange(val, MaxIntensity);
         }
     }
 }

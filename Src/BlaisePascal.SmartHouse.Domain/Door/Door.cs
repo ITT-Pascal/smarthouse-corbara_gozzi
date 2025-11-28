@@ -4,15 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BlaisePascal.SmartHouse.Domain.Abstractions;
 
 namespace BlaisePascal.SmartHouse.Domain.Door
 {
-    public class Door
+    public class Door: AbstractDevice
     {
-        public Guid ID { get; set; }
         public DMode DoorStatus { get; set; }
-        public string Name { get; set; }
-        public int Heat { get; set; }
 
         public Door()
         {

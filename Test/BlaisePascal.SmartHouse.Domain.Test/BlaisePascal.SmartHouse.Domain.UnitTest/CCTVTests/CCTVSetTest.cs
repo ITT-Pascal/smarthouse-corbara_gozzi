@@ -81,8 +81,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.CCTVTests
             TestCCTVset.AddCCTV(new CCTV(new Guid(), "CCTV"));
             TestCCTVset.AddCCTV(new CCTV(new Guid(), "Braso controllore"));
             TestCCTVset.SwitchOn();
-            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[0].CameraStatus);
-            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[1].CameraStatus);
+            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[0].DeviceStatus);
+            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[1].DeviceStatus);
         }
 
         [Fact]
@@ -93,8 +93,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.CCTVTests
             TestCCTVset.AddCCTV(new CCTV(testId, "CCTV"));
             TestCCTVset.AddCCTV(new CCTV(testId2, "CCTV"));
             TestCCTVset.SwitchOn(testId2);
-            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[0].CameraStatus);
-            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[1].CameraStatus);
+            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[0].DeviceStatus);
+            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[1].DeviceStatus);
         }
 
         [Fact]
@@ -103,8 +103,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.CCTVTests
             TestCCTVset.AddCCTV(new CCTV(new Guid(), "CCTV"));
             TestCCTVset.AddCCTV(new CCTV(new Guid(), "Sas"));
             TestCCTVset.SwitchOn("Sas");
-            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[0].CameraStatus);
-            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[1].CameraStatus);
+            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[0].DeviceStatus);
+            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[1].DeviceStatus);
         }
 
         [Fact]
@@ -116,11 +116,11 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.CCTVTests
             TestCCTVset.AddCCTV(new CCTV(new Guid(), "Sas"));
             TestCCTVset.AddCCTV(new CCTV(new Guid(), "Sas"));
             TestCCTVset.SwitchOn("Sas");
-            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[0].CameraStatus);
-            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[1].CameraStatus);
-            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[2].CameraStatus);
-            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[1].CameraStatus);
-            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[1].CameraStatus);
+            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[0].DeviceStatus);
+            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[1].DeviceStatus);
+            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[2].DeviceStatus);
+            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[1].DeviceStatus);
+            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[1].DeviceStatus);
         }
 
         [Fact]
@@ -130,8 +130,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.CCTVTests
             TestCCTVset.AddCCTV(new CCTV(new Guid(), "Sas"));
             TestCCTVset.SwitchOn();
             TestCCTVset.SwitchOff("123456");
-            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[0].CameraStatus);
-            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[1].CameraStatus);
+            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[0].DeviceStatus);
+            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[1].DeviceStatus);
         }
 
         [Fact]
@@ -143,8 +143,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.CCTVTests
             TestCCTVset.AddCCTV(new CCTV(testId2, "CCTV"));
             TestCCTVset.SwitchOn();
             TestCCTVset.SwitchOff(testId, "123456");
-            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[0].CameraStatus);
-            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[1].CameraStatus);
+            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[0].DeviceStatus);
+            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[1].DeviceStatus);
         }
 
         [Fact]
@@ -153,8 +153,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.CCTVTests
             TestCCTVset.AddCCTV(new CCTV(new Guid(), "CCTV"));
             TestCCTVset.AddCCTV(new CCTV(new Guid(), "Sas"));
             TestCCTVset.SwitchOn("Sas");
-            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[0].CameraStatus);
-            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[1].CameraStatus);
+            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[0].DeviceStatus);
+            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[1].DeviceStatus);
         }
 
         [Fact]
@@ -167,11 +167,11 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.CCTVTests
             TestCCTVset.AddCCTV(new CCTV(new Guid(), "Sas"));
             TestCCTVset.SwitchOn();
             TestCCTVset.SwitchOff("Sas", "123456");
-            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[0].CameraStatus);
-            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[1].CameraStatus);
-            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[2].CameraStatus);
-            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[1].CameraStatus);
-            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[1].CameraStatus);
+            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[0].DeviceStatus);
+            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[1].DeviceStatus);
+            Assert.Equal(DeviceStatus.On, TestCCTVset.CCTVset[2].DeviceStatus);
+            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[1].DeviceStatus);
+            Assert.Equal(DeviceStatus.Off, TestCCTVset.CCTVset[1].DeviceStatus);
         }
     }
 }
