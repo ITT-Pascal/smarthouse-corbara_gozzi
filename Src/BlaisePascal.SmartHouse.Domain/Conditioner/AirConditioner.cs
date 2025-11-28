@@ -1,24 +1,20 @@
-﻿using BlaisePascal.SmartHouse.Domain.AirConditioner;
-using BlaisePascal.SmartHouse.Domain.LampClasses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using BlaisePascal.SmartHouse.Domain.Conditioner;
 
 namespace BlaisePascal.SmartHouse.Domain
 {
-    public enum ModeTypes
+    public class AirConditioners
     {
-        COOL, FAN, HEAT, CUSTOM, OFF
-    }
-    public class AirConditioners : ConditionerMode
-    {
-        private const int minPower = 10;
+        private const int minPower = 1;
         private const int maxPower = 10;
         private const int minHeat = 5;
         private const int maxHeat = 45;
+
+        public Guid ID { get; set; }
+        public DeviceStatus ConditionerStatus { get; set; }
+        public string Name { get; set; }
+        public int PowerIntensity { get; set; }
+        public int Heat { get; set; }
+        public AcMode Status { get; set; }
 
         //------CONSTRUCTORS------
         public AirConditioners()
@@ -28,7 +24,7 @@ namespace BlaisePascal.SmartHouse.Domain
             Name = "Conditioner";
         }
 
-        public AirConditioners(string name, Guid guid) : base(name, guid)
+        public AirConditioners(string name, Guid guid)
         {
             ConditionerStatus = DeviceStatus.Off;
             ID = guid;
@@ -59,49 +55,107 @@ namespace BlaisePascal.SmartHouse.Domain
         }
 
         public void ChangePower(int amount)
-        {
+        {           
             if (ConditionerStatus == DeviceStatus.On)
-                PowerIntensity = Math.Min(maxPower, amount);
-            PowerIntensity = Math.Max(minPower, amount);
+                {
+                if (amount > 10)
+               {
+                    PowerIntensity = Math.Min(maxPower, amount);                      
+                }
+                else if(amount <= 0)
+                {
+                    PowerIntensity = Math.Max(minPower, amount);
+                }
+                else
+                {
+                PowerIntensity = amount;
+                }
+            }
+            else
+            {
+            throw new ArgumentException("You have to turn it on.");
+            }                    
         }
 
-        public void ChangeMode(ModeTypes mode)
+        public void ChangeMode(AcMode mode)
         {
             if (ConditionerStatus == DeviceStatus.On)
             {
-                if (mode == ModeTypes.FAN)
+                if (mode == AcMode.FAN)
                 {
                     Heat = 20;
+                    Status = (AcMode)AcMode.FAN;
                 }
-                else if (mode == ModeTypes.COOL)
+                else if (mode == AcMode.COOL)
                 {
                     Heat = 10;
+                    Status = (AcMode)AcMode.COOL;
                 }
-                else if (mode == ModeTypes.HEAT)
+                else if (mode == AcMode.HEAT)
                 {
                     Heat = 30;
+                    Status = (AcMode)AcMode.HEAT;
                 }
-                else if (mode == ModeTypes.CUSTOM)
+                else if (mode == AcMode.CUSTOM)
                 {
                     this.CustomMode();
                 }
+                else
+                {
+                    throw new ArgumentException("You havent say any mode , so it still the actual one");
+                }
+            }
+            else
+            {
+                throw new ArgumentException("You have to turn it on.");
             }
         }
 
-        public virtual void ChangeHeatCustomMode(int heat)
-        {
-            Heat = Math.Min(maxHeat, heat);
-            Heat = Math.Max(minHeat, heat);
-        }
+        public void ChangeHeatCustomMode(int heat)
+        {            
+            if (ConditionerStatus == DeviceStatus.On)
+            {
+                if (heat > 10)
+                {
+                    Heat = Math.Min(maxHeat, heat);
+                }
+                else if (heat <= 0)
+                {
+                    Heat = Math.Max(minHeat, heat);
+                }
+                else
+                {
+                    Heat = heat;
+                }
+            }
+            else
+            {
+                throw new ArgumentException("You have to turn it on.");
+            }
+        }      
 
         public DeviceStatus State()
         {
             return ConditionerStatus;
         }
 
-        public ModeTypes ModeState()
+        public AcMode ModeState()
         {
-            return (ModeTypes)Status;
+            return (AcMode)Status;
+        }
+
+        private void StartStatus()
+        {
+            Status = AcMode.FAN;
+            Heat = 20;
+            PowerIntensity = 5;
+            ConditionerStatus = DeviceStatus.On;
+        }
+
+        private void CustomMode()
+        {
+            Status = (AcMode)AcMode.CUSTOM;
+            Heat = 25;
         }
     }
 

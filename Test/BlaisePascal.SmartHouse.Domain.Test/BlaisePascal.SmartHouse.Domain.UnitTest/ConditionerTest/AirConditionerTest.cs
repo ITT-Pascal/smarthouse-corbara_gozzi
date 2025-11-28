@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlaisePascal.SmartHouse.Domain.Conditioner;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -61,7 +62,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
             cond.SwitchOn();
             cond.SwitchOff();
             Assert.Equal(0, cond.Heat);
-            Assert.Equal(0, cond.PowerIntensity); //agagga
+            Assert.Equal(0, cond.PowerIntensity); 
         }
 
         [Fact]
@@ -69,7 +70,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
         public void AirConditioner_SwitchOn_ModeIsFan()
         {
             cond.SwitchOn();
-            Assert.Equal(ModeTypes.FAN, cond.ModeState());
+            Assert.Equal(AcMode.FAN, cond.ModeState());
         }
 
         [Fact]
@@ -114,8 +115,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
         public void AirConditioner_ChangeMode_ItBecameCool()
         {
             cond.SwitchOn();
-            cond.ChangeMode(ModeTypes.COOL);
-            Assert.Equal(ModeTypes.COOL, cond.ModeState());
+            cond.ChangeMode(AcMode.COOL);
+            Assert.Equal(AcMode.COOL, cond.ModeState());
             Assert.Equal(10, cond.Heat);
         }
 
@@ -124,8 +125,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
         public void AirConditioner_ChangeMode_ItBecameHeat()
         {
             cond.SwitchOn();
-            cond.ChangeMode(ModeTypes.HEAT);
-            Assert.Equal(ModeTypes.HEAT, cond.ModeState());
+            cond.ChangeMode(AcMode.HEAT);
+            Assert.Equal(AcMode.HEAT, cond.ModeState());
             Assert.Equal(30, cond.Heat);
         }
 
@@ -134,8 +135,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
         public void AirConditioner_ChangeMode_ItBecameCustom()
         {
             cond.SwitchOn();
-            cond.ChangeMode(ModeTypes.CUSTOM);
-            Assert.Equal(ModeTypes.CUSTOM, cond.ModeState());
+            cond.ChangeMode(AcMode.CUSTOM);
+            Assert.Equal(AcMode.CUSTOM, cond.ModeState());
         }
 
         [Fact]
@@ -143,7 +144,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
         public void AirConditioner_ChangeHeatCustomMode_ItChange()
         {
             cond.SwitchOn();
-            cond.ChangeMode(ModeTypes.CUSTOM);
+            cond.ChangeMode(AcMode.CUSTOM);
             cond.ChangeHeatCustomMode(10);
             Assert.Equal(10, cond.Heat);
         }
@@ -153,9 +154,9 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
         public void AirConditioner_ChangeHeatCustomMode_ItChangeAtMin()
         {
             cond.SwitchOn();
-            cond.ChangeMode(ModeTypes.CUSTOM);
+            cond.ChangeMode(AcMode.CUSTOM);
             cond.ChangeHeatCustomMode(-110);
-            Assert.Equal(1, cond.Heat);
+            Assert.Equal(5, cond.Heat);
         }
 
         [Fact]
@@ -163,7 +164,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
         public void AirConditioner_ChangeHeatCustomMode_ItChangeAtMax()
         {
             cond.SwitchOn();
-            cond.ChangeMode(ModeTypes.CUSTOM);
+            cond.ChangeMode(AcMode.CUSTOM);
             cond.ChangeHeatCustomMode(1000);
             Assert.Equal(45, cond.Heat);
         }
