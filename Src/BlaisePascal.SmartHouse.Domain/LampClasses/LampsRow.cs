@@ -113,7 +113,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         public void SetIntensityForAllLamps(int intensity)
         {
             for (int i = 0; i < LampRow.Count; i++)
-                if (LampRow[i].LampStatus == DeviceStatus.On)
+                if (LampRow[i].DeviceStatus == DeviceStatus.On)
                     LampRow[i].SetIntensity(intensity);
         }
         /// <summary>
@@ -124,7 +124,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         {
             if (GetPositionOfLamp(Id) == -1)
                 throw new ArgumentException("Guid not found");
-            else if (LampRow[GetPositionOfLamp(Id)].LampStatus == DeviceStatus.On)
+            else if (LampRow[GetPositionOfLamp(Id)].DeviceStatus == DeviceStatus.On)
                 LampRow[GetPositionOfLamp(Id)].SetIntensity(intensity);
         }
         /// <summary>
@@ -137,7 +137,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
             {
                 if (LampRow[i].Name == name)
                 {
-                    if (LampRow[i].LampStatus == DeviceStatus.On)
+                    if (LampRow[i].DeviceStatus == DeviceStatus.On)
                         LampRow[i].SetIntensity(intensity);
                 }
             }
@@ -148,7 +148,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
             bool isLampFound = false;
             while (!isLampFound && i < LampRow.Count) 
             {
-                if (LampRow[i].LampStatus == DeviceStatus.On)
+                if (LampRow[i].DeviceStatus == DeviceStatus.On)
                 {
                     if (LampRow[i] is Lamp)
                         isLampFound = LampRow[i].Intensity == 100;
@@ -168,7 +168,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
             bool isLampFound = false;
             while (!isLampFound && i < LampRow.Count)
             {
-                if (LampRow[i].LampStatus == DeviceStatus.On)
+                if (LampRow[i].DeviceStatus == DeviceStatus.On)
                 {
                     isLampFound = LampRow[i].Intensity == 1;
                 }
@@ -195,7 +195,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
 
             for (int i = 0; i < LampRow.Count; i++)
             {
-                if (LampRow[i].LampStatus == DeviceStatus.On)
+                if (LampRow[i].DeviceStatus == DeviceStatus.On)
                     ListOfLamp.Add(LampRow[i]);
             }
             return ListOfLamp;
@@ -206,7 +206,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
 
             for (int i = 0; i < LampRow.Count; i++)
             {
-                if (LampRow[i].LampStatus == DeviceStatus.Off)
+                if (LampRow[i].DeviceStatus == DeviceStatus.Off)
                     ListOfLamp.Add(LampRow[i]);
             }
             return ListOfLamp;

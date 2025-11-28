@@ -4,55 +4,49 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.LampClasses;
+using BlaisePascal.SmartHouse.Domain.Abstractions;
 
 namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
 {
-    public class CCTV
+    public class CCTV : AbstractDevice
     {
         private const int intensityOfLed = 100;
         private const int intesnityOfLedOnStanby = 20;
         //-------ATTRIBUTES AND PROPERTY-------
         public DeviceStatus CameraStatus { get; set; }
-        public string ?CameraName { get; set; }
-        public Guid ID { get; set; }
         public Lamp CameraLed { get; set; }
         public VideoQuality QualityOfVideo { get; set; }
 
         //------CONSTRUCTORS------
-        public CCTV()
+        public CCTV(): base()
         {
-            CameraStatus = DeviceStatus.Off;
             ID = new Guid();
             CameraLed = new Lamp("CameraLed");
-            CameraLed.LampStatus = DeviceStatus.Off;
+            CameraLed.DeviceStatus = DeviceStatus.Off;
         }
         public CCTV(Guid id)
         {
-            CameraStatus = DeviceStatus.Off;
             ID = id;
             CameraLed = new Lamp("CameraLed");
-            CameraLed.LampStatus = DeviceStatus.Off;
+            CameraLed.DeviceStatus = DeviceStatus.Off;
         }
         public CCTV(Guid id, string name)
         {
-            CameraStatus = DeviceStatus.Off;
             ID = id;
-            CameraName = name;
+            Name = name;
             CameraLed = new Lamp("CameraLed");
-            CameraLed.LampStatus = DeviceStatus.Off;
+            CameraLed.DeviceStatus = DeviceStatus.Off;
         }
 
         //------METHODS------
-        public void SwitchOnCCTV()
+        public override void SwitchOn()
         {
-            CameraStatus = DeviceStatus.On;
             CameraLed.SwitchOn();
             CameraLed.Intensity = intensityOfLed;
             QualityOfVideo = VideoQuality._720P_60;
         }
-        public void SwitchOffCCTV()
+        public override void SwitchOff()
         {
-            CameraStatus = DeviceStatus.Off;
             CameraLed.SwitchOff();
         }
         public void PutInStanby()

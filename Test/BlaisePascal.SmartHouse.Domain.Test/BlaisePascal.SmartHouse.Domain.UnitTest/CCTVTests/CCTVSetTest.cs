@@ -40,7 +40,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.CCTVTests
             TestCCTVset.AddCCTV(new CCTV());
             TestCCTVset.AddCCTV(new CCTV());
             TestCCTVset.AddCCTV(new CCTV(new Guid(), "Braso"), 1);
-            Assert.Equal("Braso", TestCCTVset.CCTVset[1].CameraName);
+            Assert.Equal("Braso", TestCCTVset.CCTVset[1].Name);
         }
 
         [Fact]
@@ -50,7 +50,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.CCTVTests
             TestCCTVset.AddCCTV(new CCTV(new Guid(), "Ciao"));
             TestCCTVset.AddCCTV(new CCTV(new Guid(), "Braso"), 1);
             TestCCTVset.RemoveCCTV(1, "123456");
-            Assert.Equal("Ciao", TestCCTVset.CCTVset[1].CameraName);
+            Assert.Equal("Ciao", TestCCTVset.CCTVset[1].Name);
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.CCTVTests
             TestCCTVset.AddCCTV(new CCTV(new Guid(), "Braso controllore"));
             TestCCTVset.RemoveCCTV("Braso controllore", "123456");
             Assert.Single(TestCCTVset.CCTVset);
-            Assert.Equal("CCTV", TestCCTVset.CCTVset[0].CameraName);
+            Assert.Equal("CCTV", TestCCTVset.CCTVset[0].Name);
         }
 
         [Fact]

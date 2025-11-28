@@ -56,7 +56,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
             {
                 for (int i = 0; i < CCTVset.Count; i++)
                 {
-                    if (CCTVset[i].CameraName == name)
+                    if (CCTVset[i].Name == name)
                         CCTVset.RemoveAt(i);
                 }
             }
@@ -66,13 +66,13 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         public void SwitchOn()
         {
             for (int i = 0; i < CCTVset.Count; i++)
-                CCTVset[i].SwitchOnCCTV();
+                CCTVset[i].SwitchOn();
         }
         /// <summary>
         /// Accende telecamera in base all'ID
         /// </summary>
         /// <param name="guid"></param>
-        public void SwitchOn(Guid guid) { CCTVset[GetPositionOfCCTV(guid)].SwitchOnCCTV(); }
+        public void SwitchOn(Guid guid) { CCTVset[GetPositionOfCCTV(guid)].SwitchOn(); }
        
         /// <summary>
         /// Accende telecamera in base al nome
@@ -82,15 +82,15 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         {
             for (int i = 0; i < CCTVset.Count; i++)
             {
-                if (CCTVset[i].CameraName == name)
-                    CCTVset[i].SwitchOnCCTV();
+                if (CCTVset[i].Name == name)
+                    CCTVset[i].SwitchOn();
             }
         }
         public void SwitchOff(string adminPassword)
         {
             if (AdminPassword == adminPassword)
                 for (int i = 0; i < CCTVset.Count; i++)
-                    CCTVset[i].SwitchOffCCTV();
+                    CCTVset[i].SwitchOff();
             else
                 throw new ArgumentException("Password errata");
         }
@@ -101,7 +101,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         public void SwitchOff(Guid guid, string adminPassword)
         {
             if (AdminPassword == adminPassword)
-                CCTVset[GetPositionOfCCTV(guid)].SwitchOffCCTV();
+                CCTVset[GetPositionOfCCTV(guid)].SwitchOff();
             else
                 throw new ArgumentException("Password errata");
         }
@@ -115,8 +115,8 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
             {
                 for (int i = 0; i < CCTVset.Count; i++)
                 {
-                    if (CCTVset[i].CameraName == name)
-                        CCTVset[i].SwitchOffCCTV();
+                    if (CCTVset[i].Name == name)
+                        CCTVset[i].SwitchOff();
                 }
             }
             else

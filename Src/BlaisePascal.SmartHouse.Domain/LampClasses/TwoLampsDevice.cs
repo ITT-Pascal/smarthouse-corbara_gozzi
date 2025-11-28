@@ -44,7 +44,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         //Set new intensity by a new value
         public void ChangeBrightnessOfLamps(int value)
         {
-            if (FirstLamp.LampStatus == DeviceStatus.On && SecondLamp.LampStatus == DeviceStatus.On)
+            if (FirstLamp.DeviceStatus == DeviceStatus.On && SecondLamp.DeviceStatus == DeviceStatus.On)
             {
                 FirstLamp.SetIntensity(value);
                 SecondLamp.SetIntensity(value);

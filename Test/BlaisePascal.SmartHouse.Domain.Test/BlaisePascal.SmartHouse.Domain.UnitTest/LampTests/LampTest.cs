@@ -9,7 +9,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         {
             Lamp lamp = new Lamp();
             Assert.Equal(0, lamp.Intensity);
-            Assert.Equal(DeviceStatus.Off, lamp.LampStatus);
+            Assert.Equal(DeviceStatus.Off, lamp.DeviceStatus);
         }
 
         [Fact]
@@ -18,7 +18,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
             Lamp lamp = new Lamp();
             lamp.SwitchOn();
             //BrightnessAtOn = 30
-            Assert.Equal(DeviceStatus.On, lamp.LampStatus);
+            Assert.Equal(DeviceStatus.On, lamp.DeviceStatus);
             Assert.Equal(50, lamp.Intensity);
         }
 
@@ -27,7 +27,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         {
             Lamp lamp = new Lamp();
             lamp.SwitchOff();
-            Assert.Equal(DeviceStatus.Off, lamp.LampStatus);
+            Assert.Equal(DeviceStatus.Off, lamp.DeviceStatus);
             Assert.Equal(0, lamp.Intensity);
         }
 
@@ -36,7 +36,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         {
             Lamp lamp = new Lamp();
             lamp.Toggle();
-            Assert.Equal(DeviceStatus.On, lamp.LampStatus);
+            Assert.Equal(DeviceStatus.On, lamp.DeviceStatus);
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
             Lamp lamp = new Lamp();
             lamp.SwitchOn();
             lamp.Toggle();
-            Assert.Equal(DeviceStatus.Off, lamp.LampStatus);
+            Assert.Equal(DeviceStatus.Off, lamp.DeviceStatus);
         }
 
         [Fact]

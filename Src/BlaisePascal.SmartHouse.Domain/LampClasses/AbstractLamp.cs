@@ -1,76 +1,62 @@
-﻿using System.Xml.Linq;
+﻿using BlaisePascal.SmartHouse.Domain.Abstractions;
+using System.Xml.Linq;
 
 namespace BlaisePascal.SmartHouse.Domain.LampClasses
 {
-    public abstract class AbstractLamp
+    public abstract class AbstractLamp: AbstractDevice
     {
         //-------ATTRIBUTES AND PROPERTY-------
-        public DeviceStatus LampStatus { get; set; }
         public int Intensity { get; set; }
-        public Guid ID { get; set; }
-        public string Name { get; set; }
         public int MaxIntensity { get; set; }
         public int MinIntensity { get; set; }
         public int IntensityAtOn { get; set; }
-        public DateTime DateTimeAtCreationUtc { get; set; }
-        public DateTime ?LastModifierAtUtc { get; set; }
         public int ValueOfIncreaseAndDescrease { get; set; }
 
         //------CONSTRUCTORS------
-        protected AbstractLamp()
+        protected AbstractLamp(): base()
         {
-            LampStatus = DeviceStatus.Off;
             ID = new Guid();
             Intensity = 0;
             Name = "Lamp";
-            DateTimeAtCreationUtc = DateTime.UtcNow;
             ValueOfIncreaseAndDescrease = 10;
         }
-        protected AbstractLamp(string name)
+        protected AbstractLamp(string name) : base()
         {
-            LampStatus = DeviceStatus.Off;
             ID = new Guid();
             Intensity = 0;
             Name = name;
-            DateTimeAtCreationUtc = DateTime.UtcNow;
             ValueOfIncreaseAndDescrease = 10;
-
         }
-        protected AbstractLamp(string name, Guid guid)
+        protected AbstractLamp(string name, Guid guid) : base()
         {
-            LampStatus = DeviceStatus.Off;
             ID = guid;
             Intensity = 0;
             Name = name;
-            DateTimeAtCreationUtc = DateTime.UtcNow;
             ValueOfIncreaseAndDescrease = 10;
-
         }
-        protected AbstractLamp(string name, Guid guid, int valOfIncreaseAndDecrease)
+        protected AbstractLamp(string name, Guid guid, int valOfIncreaseAndDecrease) : base()
         {
-            LampStatus = DeviceStatus.Off;
             ID = guid;
             Intensity = 0;
             Name = name;
-            DateTimeAtCreationUtc = DateTime.UtcNow;
         }
 
         //------METHODS------
-        public virtual void SwitchOn()
+        public override void SwitchOn()
         {
-            LampStatus = DeviceStatus.On;
+            DeviceStatus = DeviceStatus.On;
             Intensity = IntensityAtOn;
             LastModifierAtUtc = DateTime.UtcNow;
         }
-        public virtual void SwitchOff()
+        public override void SwitchOff()
         {
-            LampStatus = DeviceStatus.Off;
+            DeviceStatus = DeviceStatus.Off;
             Intensity = 0;
             LastModifierAtUtc = DateTime.UtcNow;
         }
         public virtual void Toggle()
         {
-            if (LampStatus == DeviceStatus.On)
+            if (DeviceStatus == DeviceStatus.On)
                 SwitchOff();
 
             else
