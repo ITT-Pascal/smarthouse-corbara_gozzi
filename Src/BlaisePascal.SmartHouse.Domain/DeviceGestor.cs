@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,6 +35,16 @@ namespace BlaisePascal.SmartHouse.Domain
                 return minValueOfDevices;
             else
                 return amount;
+        }
+        public static int ValidateTargetTemperature(int temp)
+        {
+            int maxTemp = 36; //TEMPERATURA PER NON CAUSARE DANNI CORPOREI
+            if (temp > maxTemp)
+                return maxTemp;
+            else if (temp < minValueOfDevices)
+                return minValueOfDevices;
+            else
+                return temp;
         }
     }
 }

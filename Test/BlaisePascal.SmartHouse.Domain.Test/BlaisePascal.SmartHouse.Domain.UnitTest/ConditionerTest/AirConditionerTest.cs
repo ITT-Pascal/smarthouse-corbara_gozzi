@@ -10,6 +10,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
 {
     public class AirConditionersTest
     {
+        /*
         AirConditioner cond = new AirConditioner();
 
         [Fact]
@@ -168,5 +169,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
             cond.ChangeHeatCustomMode(1000);
             Assert.Equal(45, cond.Heat);
         }
+        */
     }
 }

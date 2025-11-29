@@ -40,12 +40,14 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         //------METHODS------
         public override void SwitchOn()
         {
+            base.SwitchOn();
             CameraLed.SwitchOn();
             CameraLed.Intensity = intensityOfLed;
             QualityOfVideo = VideoQuality._720P_60;
         }
         public override void SwitchOff()
         {
+            base.SwitchOff();
             CameraLed.SwitchOff();
         }
         public void PutInStanby()

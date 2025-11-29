@@ -75,7 +75,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         {
             if (DeviceStatus == DeviceStatus.On)
             {
-                Intensity = Math.Max(Intensity + ValueOfIncreaseAndDescrease, MinIntensity);
+                Intensity = Math.Max(Intensity - ValueOfIncreaseAndDescrease, MinIntensity);
                 LastModifierAtUtc = DateTime.UtcNow;
             }
         }
