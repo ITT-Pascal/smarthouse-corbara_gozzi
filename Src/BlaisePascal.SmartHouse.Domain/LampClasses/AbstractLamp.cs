@@ -65,18 +65,27 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         }
         public virtual void IncreaseBy()
         {
-            Intensity = Math.Min(Intensity + ValueOfIncreaseAndDescrease, MaxIntensity);
-            LastModifierAtUtc = DateTime.UtcNow;
+            if (DeviceStatus == DeviceStatus.On)
+            {
+                Intensity = Math.Min(Intensity + ValueOfIncreaseAndDescrease, MaxIntensity);
+                LastModifierAtUtc = DateTime.UtcNow;
+            }
         }
         public virtual void DecreaseBy()
         {
-            Intensity = Math.Max(Intensity - ValueOfIncreaseAndDescrease, MinIntensity);
-            LastModifierAtUtc = DateTime.UtcNow;
+            if (DeviceStatus == DeviceStatus.On)
+            {
+                Intensity = Math.Max(Intensity + ValueOfIncreaseAndDescrease, MinIntensity);
+                LastModifierAtUtc = DateTime.UtcNow;
+            }
         }
         public virtual void SetIntensity(int value)
         {
-            Intensity = DeviceGestor.ValidatIntensityBetweenRange(value, MaxIntensity);
-            LastModifierAtUtc = DateTime.UtcNow;
+            if (DeviceStatus == DeviceStatus.On)
+            {
+                Intensity = DeviceGestor.ValidatIntensityBetweenRange(value, MaxIntensity);
+                LastModifierAtUtc = DateTime.UtcNow;
+            }
         }
         public virtual void ChangeValueOfIncreaseAndDecrease(int val)
         {
