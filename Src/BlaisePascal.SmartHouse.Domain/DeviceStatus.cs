@@ -8,10 +8,10 @@ namespace BlaisePascal.SmartHouse.Domain
 {
     public enum DeviceStatus
     {
-        Unknown = 1,
-        On = 2,
-        Off = 3,
-        Error = 4,
-        Stanby = 5
+        Unknown,
+        On,
+        Off,
+        Error,
+        Stanby
     }
 }

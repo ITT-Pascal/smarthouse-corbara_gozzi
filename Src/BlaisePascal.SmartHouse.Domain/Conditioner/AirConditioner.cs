@@ -12,7 +12,7 @@ namespace BlaisePascal.SmartHouse.Domain
 
         public int PowerIntensity { get; set; }
         public int Heat { get; set; }
-        public AcMode AcStatus { get; set; }
+        public AcMode ModeOfAc { get; set; }
 
         //------CONSTRUCTORS------
         public AirConditioner()
@@ -30,10 +30,7 @@ namespace BlaisePascal.SmartHouse.Domain
         }
 
         //------METHODS------
-        public override void SwitchOn()
-        {
-            this.PutStarterStatus();
-        }
+        public override void SwitchOn(){this.PutStarterStatus();}
         public override void SwitchOff()
         {
             Heat = 0;
@@ -58,31 +55,25 @@ namespace BlaisePascal.SmartHouse.Domain
                 if (mode == AcMode.FAN)
                 {
                     Heat = 20;
-                    AcStatus = (AcMode)AcMode.FAN;
+                    ModeOfAc = (AcMode)AcMode.FAN;
                 }
                 else if (mode == AcMode.COOL)
                 {
                     Heat = 10;
-                    AcStatus = (AcMode)AcMode.COOL;
+                    ModeOfAc = (AcMode)AcMode.COOL;
                 }
                 else if (mode == AcMode.HEAT)
                 {
                     Heat = 30;
-                    AcStatus = (AcMode)AcMode.HEAT;
+                    ModeOfAc = (AcMode)AcMode.HEAT;
                 }
                 else if (mode == AcMode.CUSTOM)
-                {
                     this.PutCustomMode();
-                }
                 else
-                {
                     throw new ArgumentException("You havent say any mode , so it still the actual one");
-                }
             }
             else
-            {
                 throw new ArgumentException("You have to turn it on.");
-            }
         }
 
         public void ChangeHeatCustomMode(int heat)
@@ -93,27 +84,21 @@ namespace BlaisePascal.SmartHouse.Domain
                 LastModifierAtUtc = DateTime.UtcNow;
             }
             else
-            {
                 throw new ArgumentException("You have to turn it on.");
-            }
         }      
 
         private void PutStarterStatus()
         {
-            AcStatus = AcMode.FAN;
+            ModeOfAc = AcMode.FAN;
             Heat = 20;
             PowerIntensity = 5;
         }
 
         private void PutCustomMode()
         {
-            AcStatus = (AcMode)AcMode.CUSTOM;
+            ModeOfAc = (AcMode)AcMode.CUSTOM;
             Heat = 25;
         }
     }
-
-
-
-
 }
 

@@ -10,6 +10,4 @@ namespace BlaisePascal.SmartHouse.Domain.Conditioner
     {
         COOL, FAN, HEAT, CUSTOM, OFF
     }
-
-
 }
