@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlaisePascal.SmartHouse.Domain.Conditioner
+namespace BlaisePascal.SmartHouse.Domain.ConditionerClasses
 {
     public enum AcMode
     {

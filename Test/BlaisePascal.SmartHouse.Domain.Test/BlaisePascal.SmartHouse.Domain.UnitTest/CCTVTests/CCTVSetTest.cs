@@ -13,10 +13,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.CCTVTests
         CCTVSet TestCCTVset = new CCTVSet("123456");
 
         [Fact]
-        public void CCTVSet_Created_CCTVSetIsEmpty()
-        {
-            Assert.Empty(TestCCTVset.CCTVset);
-        }
+        public void CCTVSet_Created_CCTVSetIsEmpty(){ Assert.Empty(TestCCTVset.CCTVset); }
 
         [Fact]
         public void CCTVSet_AddCCTV_ANewCCTVIsAdded()

@@ -1,4 +1,4 @@
-﻿using BlaisePascal.SmartHouse.Domain.Conditioner;
+﻿using BlaisePascal.SmartHouse.Domain.ConditionerClasses;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
 
 namespace BlaisePascal.SmartHouse.Domain
@@ -30,9 +30,14 @@ namespace BlaisePascal.SmartHouse.Domain
         }
 
         //------METHODS------
-        public override void SwitchOn(){this.PutStarterStatus();}
+        public override void SwitchOn()
+        {
+            base.SwitchOn();
+            this.PutStarterStatus();
+        }
         public override void SwitchOff()
         {
+            base.SwitchOff();
             Heat = 0;
             PowerIntensity = 0;
         }
