@@ -1,4 +1,5 @@
 ﻿using BlaisePascal.SmartHouse.Domain.Abstractions;
+using System.Reflection.Metadata.Ecma335;
 using System.Xml.Linq;
 
 namespace BlaisePascal.SmartHouse.Domain.LampClasses
@@ -87,9 +88,10 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
                 LastModifierAtUtc = DateTime.UtcNow;
             }
         }
-        public virtual void ChangeValueOfIncreaseAndDecrease(int val)
+        public virtual void ChangeValueOfIncreaseAndDecrease(int newVal)
         {
-            ValueOfIncreaseAndDescrease = DeviceGestor.ValidatIntensityBetweenRange(val, MaxIntensity);
+            ValueOfIncreaseAndDescrease = ReturnValidation(newVal);
         }
+        protected int ReturnValidation(int val) { return DeviceGestor.ValidatIntensityBetweenRange(val, MaxIntensity); }
     }
 }
