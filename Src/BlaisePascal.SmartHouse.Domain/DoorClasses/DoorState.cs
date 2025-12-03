@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlaisePascal.SmartHouse.Domain.Door
+namespace BlaisePascal.SmartHouse.Domain.DoorClasses
 {   
         public enum DMode
         {
-            OPEN , CLOSEDANDLOCKED , CLOSEDANDUNLOCKED
+            OPEN , 
+            CLOSEDANDLOCKED ,
+            CLOSEDANDUNLOCKED  //# FOCA :3
         }
-    
 }
