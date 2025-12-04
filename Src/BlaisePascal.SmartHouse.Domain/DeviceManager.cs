@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BlaisePascal.SmartHouse.Domain
+﻿namespace BlaisePascal.SmartHouse.Domain
 {
     public static class DeviceManager
     {
@@ -14,7 +7,7 @@ namespace BlaisePascal.SmartHouse.Domain
         {
             if (valChanger < minValueOfDevices)
                 throw new ArgumentException("Negative number can't be avariable");
-            else if(valChanger > maxBrightness)
+            else if (valChanger > maxBrightness)
                 throw new ArgumentException("Can't be a number greater than max brightness of lamp");
             return valChanger;
         }

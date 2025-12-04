@@ -1,15 +1,8 @@
-﻿using BlaisePascal.SmartHouse.Domain.ConditionerClasses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BlaisePascal.SmartHouse.Domain.Abstractions;
-using System.Runtime.InteropServices;
+﻿using BlaisePascal.SmartHouse.Domain.Abstractions;
 
 namespace BlaisePascal.SmartHouse.Domain.DoorClasses
 {
-    public class Door: AbstractDevice
+    public class Door : AbstractDevice
     {
         //-------ATTRIBUTES AND PROPERTY-------
         public int Code { get; set; }
@@ -23,7 +16,7 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
             Code = code;
             DateTimeAtCreationUtc = DateTime.UtcNow;
         }
-        public Door(string name,int code)
+        public Door(string name, int code)
         {
             DeviceStatus = DeviceStatus.Locked;
             ID = new Guid();
@@ -31,7 +24,7 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
             Code = code;
             DateTimeAtCreationUtc = DateTime.UtcNow;
         }
-        public Door(string name, Guid guid , int code)
+        public Door(string name, Guid guid, int code)
         {
             DeviceStatus = DeviceStatus.Locked;
             ID = guid;
@@ -43,17 +36,17 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
         //------METHODS------
         public void OpenDoor()
         {
-            if(DeviceStatus != DeviceStatus.Locked)
-                DeviceStatus = DeviceStatus.Open; 
+            if (DeviceStatus != DeviceStatus.Locked)
+                DeviceStatus = DeviceStatus.Open;
             else
                 throw new ArgumentException("For Open the locked door you need to insert the code");
             LastModifierAtUtc = DateTime.UtcNow;
         }
         public void OpenDoor(int codeValidator)
         {
-            if (DeviceStatus == DeviceStatus.Closed  || DeviceStatus == DeviceStatus.Open)
+            if (DeviceStatus == DeviceStatus.Closed || DeviceStatus == DeviceStatus.Open)
                 DeviceStatus = DeviceStatus.Open;
-            else 
+            else
             {
                 if (codeValidator == Code)
                     DeviceStatus = DeviceStatus.Open;
@@ -62,7 +55,7 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
             }
             LastModifierAtUtc = DateTime.UtcNow;
         }
-        public void CloseDoor() 
+        public void CloseDoor()
         {
             if (DeviceStatus != DeviceStatus.Locked)
             {
@@ -80,7 +73,7 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
                 throw new ArgumentException("If You want to lock the door it has to be closed , remember to insert right code");
             LastModifierAtUtc = DateTime.UtcNow;
         }
-        public void UnlockLockDoor(int codeValidator)
+        public void UnlockDoor(int codeValidator)
         {
             if (DeviceStatus == DeviceStatus.Locked && codeValidator == Code)
                 DeviceStatus = DeviceStatus.Closed;

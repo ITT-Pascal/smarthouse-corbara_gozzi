@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using BlaisePascal.SmartHouse.Domain.LampClasses;
-
-namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
+﻿namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
 {
     public class CCTVSet
     {
         //-------ATTRIBUTES AND PROPERTY-------
         public List<CCTV> CCTVset { get; set; }
-        private string ?AdminPassword;
+        private string? AdminPassword;
 
         //------CONSTRUCTORS------
-        public CCTVSet(){CCTVset = new List<CCTV>();}
+        public CCTVSet() { CCTVset = new List<CCTV>(); }
         public CCTVSet(string adminPassword)
         {
             CCTVset = new List<CCTV>();
@@ -23,15 +15,15 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         }
 
         //------METHODS------
-        public void AddCCTV(CCTV camera){ CCTVset.Add(camera); }
-        public void AddCCTV(CCTV camera, int pos){ CCTVset.Insert(pos, camera);}
+        public void AddCCTV(CCTV camera) { CCTVset.Add(camera); }
+        public void AddCCTV(CCTV camera, int pos) { CCTVset.Insert(pos, camera); }
         public void RemoveCCTV(int pos, string adminPassword)
         {
             if (AdminPassword == adminPassword)
                 CCTVset.RemoveAt(pos);
             else
                 throw new ArgumentException("Password errata");
-                
+
         }
         private int GetPositionOfCCTV(Guid id)
         {
@@ -73,7 +65,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         /// </summary>
         /// <param name="guid"></param>
         public void SwitchOn(Guid guid) { CCTVset[GetPositionOfCCTV(guid)].SwitchOn(); }
-       
+
         /// <summary>
         /// Accende telecamera in base al nome
         /// </summary>
