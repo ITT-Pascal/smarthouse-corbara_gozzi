@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BlaisePascal.SmartHouse.Domain
 {
-    public static class DeviceGestor
+    public static class DeviceManager
     {
         private const int minValueOfDevices = 1;
         public static int ValidatIntensityBetweenRange(int valChanger, int maxBrightness)

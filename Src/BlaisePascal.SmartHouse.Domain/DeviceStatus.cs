@@ -12,6 +12,9 @@ namespace BlaisePascal.SmartHouse.Domain
         On,
         Off,
         Error,
-        Stanby
+        Stanby,
+        Open,
+        Closed,
+        Locked
     }
 }

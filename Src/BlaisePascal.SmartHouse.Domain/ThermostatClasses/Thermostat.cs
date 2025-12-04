@@ -52,7 +52,7 @@ namespace BlaisePascal.SmartHouse.Domain.ThermostatClasses
         private void AddTemperature(){ CurrentTemperature += 2; }
         public void ChangeTargetTemperature(int temp)
         {
-            TargetTemperature = DeviceGestor.ValidateTargetTemperature(temp);
+            TargetTemperature = DeviceManager.ValidateTargetTemperature(temp);
             LastModifierAtUtc = DateTime.UtcNow;
         }
     }

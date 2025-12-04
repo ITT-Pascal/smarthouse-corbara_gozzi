@@ -40,6 +40,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
             ID = guid;
             Intensity = 0;
             Name = name;
+            ValueOfIncreaseAndDescrease = valOfIncreaseAndDecrease;
         }
 
         //------METHODS------
@@ -84,7 +85,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         {
             if (DeviceStatus == DeviceStatus.On)
             {
-                Intensity = DeviceGestor.ValidatIntensityBetweenRange(value, MaxIntensity);
+                Intensity = DeviceManager.ValidatIntensityBetweenRange(value, MaxIntensity);
                 LastModifierAtUtc = DateTime.UtcNow;
             }
         }
@@ -92,6 +93,6 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         {
             ValueOfIncreaseAndDescrease = ReturnValidation(newVal);
         }
-        protected int ReturnValidation(int val) { return DeviceGestor.ValidatIntensityBetweenRange(val, MaxIntensity); }
+        protected int ReturnValidation(int val) { return DeviceManager.ValidatIntensityBetweenRange(val, MaxIntensity); }
     }
 }

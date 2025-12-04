@@ -136,6 +136,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
             lamp.SwitchOn();
             lamp.ChangeValueOfIncreaseAndDecrease(1);
             lamp.IncreaseBy();
+            Assert.Equal(DeviceStatus.On, lamp.DeviceStatus);
             Assert.Equal(1, lamp.ValueOfIncreaseAndDescrease);
             Assert.Equal(31, lamp.Intensity);
         }

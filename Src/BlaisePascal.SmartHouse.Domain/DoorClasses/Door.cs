@@ -11,106 +11,82 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
 {
     public class Door: AbstractDevice
     {
-        public DMode DoorStatus { get; set; }
-        public int Code { get; set; }        
+        //-------ATTRIBUTES AND PROPERTY-------
+        public int Code { get; set; }
 
+        //------CONSTRUCTORS------
         public Door(int code)
         {
-            DoorStatus = DMode.CLOSEDANDLOCKED;
+            DeviceStatus = DeviceStatus.Locked;
             ID = new Guid();
-            Name = "Conditioner";
+            Name = "Door";
             Code = code;
+            DateTimeAtCreationUtc = DateTime.UtcNow;
         }
-
         public Door(string name,int code)
         {
-            DoorStatus = DMode.CLOSEDANDLOCKED;
-            Code = code;
+            DeviceStatus = DeviceStatus.Locked;
+            ID = new Guid();
             Name = name;
+            Code = code;
+            DateTimeAtCreationUtc = DateTime.UtcNow;
         }
-
         public Door(string name, Guid guid , int code)
         {
-            DoorStatus = DMode.CLOSEDANDLOCKED;
+            DeviceStatus = DeviceStatus.Locked;
             ID = guid;
             Name = name;
             Code = code;
+            DateTimeAtCreationUtc = DateTime.UtcNow;
         }
 
+        //------METHODS------
         public void OpenDoor()
         {
-            if(DoorStatus == DMode.CLOSEDANDUNLOCKED)
-            {
-                DoorStatus = DMode.OPEN;
-            } else if(DoorStatus == DMode.CLOSEDANDLOCKED) {
+            if(DeviceStatus != DeviceStatus.Locked)
+                DeviceStatus = DeviceStatus.Open; 
+            else
                 throw new ArgumentException("For Open the locked door you need to insert the code");
-            } else
-            {
-                DoorStatus = DMode.OPEN;
-            }
-
+            LastModifierAtUtc = DateTime.UtcNow;
         }
-
         public void OpenDoor(int codeValidator)
         {
-            if (DoorStatus == DMode.CLOSEDANDUNLOCKED)
+            if (DeviceStatus == DeviceStatus.Closed  || DeviceStatus == DeviceStatus.Open)
+                DeviceStatus = DeviceStatus.Open;
+            else 
             {
-                DoorStatus = DMode.OPEN;
-            }
-            else if (DoorStatus == DMode.CLOSEDANDLOCKED)
-            {
-                if(codeValidator == Code)
-                {
-                    DoorStatus = DMode.OPEN;
-                }
+                if (codeValidator == Code)
+                    DeviceStatus = DeviceStatus.Open;
                 else
-                {
                     throw new ArgumentException("The Code Is Wrong");
-                }
             }
-            else
-            {
-                DoorStatus = DMode.OPEN;
-            }
+            LastModifierAtUtc = DateTime.UtcNow;
         }
-
-        public void CloseDoor()
+        public void CloseDoor() 
         {
-            if(DoorStatus == DMode.OPEN)
+            if (DeviceStatus != DeviceStatus.Locked)
             {
-                DoorStatus = DMode.CLOSEDANDUNLOCKED;
+                DeviceStatus = DeviceStatus.Closed;
+                LastModifierAtUtc = DateTime.UtcNow;
             }
             else
-            {
-                throw new ArgumentException("If You want to close the door it has to be opened , remember to insert right code");
-            }
+                throw new ArgumentException("You need to unlock the door");
         }
-
         public void LockDoor(int codeValidator)
         {
-            if (DoorStatus == DMode.CLOSEDANDUNLOCKED && codeValidator == Code)
-            {
-                DoorStatus = DMode.CLOSEDANDLOCKED;
-            } else
-            {
+            if (DeviceStatus == DeviceStatus.Closed && codeValidator == Code)
+                DeviceStatus = DeviceStatus.Locked;
+            else
                 throw new ArgumentException("If You want to lock the door it has to be closed , remember to insert right code");
-            }
+            LastModifierAtUtc = DateTime.UtcNow;
         }
-
         public void UnlockLockDoor(int codeValidator)
         {
-            if (DoorStatus == DMode.CLOSEDANDLOCKED && codeValidator == Code)
-            {
-                DoorStatus = DMode.CLOSEDANDUNLOCKED;
-            }
+            if (DeviceStatus == DeviceStatus.Locked && codeValidator == Code)
+                DeviceStatus = DeviceStatus.Closed;
             else
-            {
                 throw new ArgumentException("If You want to unlock the door it has to be locked , remember to insert right code");
-            }
+            LastModifierAtUtc = DateTime.UtcNow;
         }
-              
-        
-
-       
     }
 }
