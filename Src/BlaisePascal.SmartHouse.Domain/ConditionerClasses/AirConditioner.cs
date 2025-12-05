@@ -46,7 +46,7 @@ namespace BlaisePascal.SmartHouse.Domain
         {           
             if (DeviceStatus == DeviceStatus.On)
             {
-                PowerIntensity = DeviceManager.ValidatePowerAc(amount, maxPower);
+                PowerIntensity = DeviceValidator.ValidatePowerAc(amount, maxPower);
                 LastModifierAtUtc = DateTime.UtcNow;
             }
             else
@@ -85,7 +85,7 @@ namespace BlaisePascal.SmartHouse.Domain
         {            
             if (DeviceStatus == DeviceStatus.On)
             {
-                Heat = DeviceManager.ValidateHeatInCustomMode(heat, minHeat, maxHeat);
+                Heat = DeviceValidator.ValidateHeatInCustomMode(heat, minHeat, maxHeat);
                 LastModifierAtUtc = DateTime.UtcNow;
             }
             else

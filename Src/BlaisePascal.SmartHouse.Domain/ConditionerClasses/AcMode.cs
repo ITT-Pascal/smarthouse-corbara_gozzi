@@ -2,6 +2,10 @@
 {
     public enum AcMode
     {
-        COOL, FAN, HEAT, CUSTOM, OFF
+        COOL,
+        FAN,
+        HEAT,
+        CUSTOM,
+        OFF
     }
 }

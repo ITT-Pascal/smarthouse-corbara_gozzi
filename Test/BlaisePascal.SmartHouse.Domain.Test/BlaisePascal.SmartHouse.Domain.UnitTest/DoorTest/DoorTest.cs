@@ -32,13 +32,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.DoorTest
             Assert.Equal(id, doorWhitGuid.ID);
         }
 
-        //[Fact]
-        //public void Door_OpenDoor_WithoutCode()
-        //{
-        //    door.OpenDoor();
-        //    Assert.Throws<ArgumentException>( door.OpenDoor());
-        //}
-
         [Fact]
         public void Door_OpenDoor_WithCode()
         {
@@ -95,6 +88,5 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.DoorTest
             door.LockDoor(1234);
             Assert.Equal(DeviceStatus.Locked, door.DeviceStatus);
         }
-
     }
 }

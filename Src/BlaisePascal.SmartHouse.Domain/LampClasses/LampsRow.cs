@@ -72,7 +72,10 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
                     LampRow[i].SwitchOff();
             }
         }
-        public void AddLamp(AbstractLamp lamp) { LampRow.Add(lamp);}
+        public void AddLamp(AbstractLamp lamp) 
+        { 
+            LampRow.Add(lamp);
+        }
         public void AddLampInPosition(AbstractLamp lamp, int position) {LampRow.Insert(position, lamp);}
         //Metodo privato per poter individuare una lamp in base al guid
         private int GetPositionOfLamp(Guid id)
@@ -108,7 +111,10 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
                     LampRow.RemoveAt(i);
             }
         }
-        public void RemoveLampInPosition(int position) {LampRow.RemoveAt(position);}
+        public void RemoveLampInPosition(int position) 
+        {
+            LampRow.RemoveAt(position);
+        }
         
         public void SetIntensityForAllLamps(int intensity)
         {

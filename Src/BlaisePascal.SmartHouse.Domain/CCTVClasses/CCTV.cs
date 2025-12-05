@@ -21,20 +21,17 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         {
             ID = new Guid();
             CameraLed = new Lamp("CameraLed");
-            CameraLed.DeviceStatus = DeviceStatus.Off;
         }
-        public CCTV(Guid id)
+        public CCTV(Guid id): base()
         {
             ID = id;
             CameraLed = new Lamp("CameraLed");
-            CameraLed.DeviceStatus = DeviceStatus.Off;
         }
-        public CCTV(Guid id, string name)
+        public CCTV(Guid id, string name): base()
         {
             ID = id;
             Name = name;
             CameraLed = new Lamp("CameraLed");
-            CameraLed.DeviceStatus = DeviceStatus.Off;
         }
 
         //------METHODS------
@@ -45,11 +42,13 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
             CameraLed.Intensity = intensityOfLed;
             QualityOfVideo = VideoQuality._720P_60;
         }
+
         public override void SwitchOff()
         {
             base.SwitchOff();
             CameraLed.SwitchOff();
         }
+
         public void PutInStanby()
         {
             if (DeviceStatus == DeviceStatus.On)
@@ -58,8 +57,8 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
                 CameraLed.Intensity = intesnityOfLedOnStanby;
                 LastModifierAtUtc = DateTime.UtcNow;
             }
-            
         }
+
         public void ChangeQualityOfVideo(VideoQuality newQuality){ QualityOfVideo = newQuality;}
     }
 }

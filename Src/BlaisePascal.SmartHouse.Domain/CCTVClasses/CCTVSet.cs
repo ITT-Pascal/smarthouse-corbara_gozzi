@@ -15,8 +15,16 @@
         }
 
         //------METHODS------
-        public void AddCCTV(CCTV camera) { CCTVset.Add(camera); }
-        public void AddCCTV(CCTV camera, int pos) { CCTVset.Insert(pos, camera); }
+        public void AddCCTV(CCTV camera) 
+        { 
+            CCTVset.Add(camera); 
+        }
+
+        public void AddCCTV(CCTV camera, int pos)
+        {
+            CCTVset.Insert(pos, camera);
+        }
+
         public void RemoveCCTV(int pos, string adminPassword)
         {
             if (AdminPassword == adminPassword)
@@ -64,7 +72,10 @@
         /// Accende telecamera in base all'ID
         /// </summary>
         /// <param name="guid"></param>
-        public void SwitchOn(Guid guid) { CCTVset[GetPositionOfCCTV(guid)].SwitchOn(); }
+        public void SwitchOn(Guid guid) 
+        { 
+            CCTVset[GetPositionOfCCTV(guid)].SwitchOn(); 
+        }
 
         /// <summary>
         /// Accende telecamera in base al nome
@@ -86,6 +97,7 @@
             else
                 throw new ArgumentException("Password errata");
         }
+
         /// <summary>
         /// Spegne telecamera in base all'ID
         /// </summary>
@@ -97,6 +109,7 @@
             else
                 throw new ArgumentException("Password errata");
         }
+
         /// <summary>
         /// Spegne telecamera in base al nome
         /// </summary>

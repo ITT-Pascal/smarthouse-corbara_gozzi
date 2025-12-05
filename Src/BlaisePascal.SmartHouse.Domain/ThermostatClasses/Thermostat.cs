@@ -9,38 +9,39 @@ namespace BlaisePascal.SmartHouse.Domain.ThermostatClasses
 {
     public class Thermostat : AbstractDevice
     {
-        public float CurrentTemperature { get; set; }
-        public float TargetTemperature { get; set; }
+        public float CurrentTemperature { get; private set; }
+        public float TargetTemperature { get; private set; }
 
-        public Thermostat()
+        public Thermostat():base()
         {
-
+            CurrentTemperature = 0;
+            TargetTemperature = 20;
         }
-        public Thermostat(Guid Id)
+        public Thermostat(Guid Id): base()
         {
-            DeviceStatus = DeviceStatus.Off;
-            DateTimeAtCreationUtc = DateTime.UtcNow;
             CurrentTemperature = 0;
             TargetTemperature = 20;
             ID = Id;
         }
-        public Thermostat(Guid Id, string name)
+        public Thermostat(Guid Id, string name): base()
         {
-            DeviceStatus = DeviceStatus.Off;
-            DateTimeAtCreationUtc = DateTime.UtcNow;
             CurrentTemperature = 0;
             TargetTemperature = 20;
             ID = new Guid();
             Name = name;
         }
-        public Thermostat(Guid Id, string name, int targetTemperature)
+        public Thermostat(Guid Id, string name, int targetTemperature):base()
         {
-            DeviceStatus = DeviceStatus.Off;
-            DateTimeAtCreationUtc = DateTime.UtcNow;
             CurrentTemperature = 0;
             TargetTemperature = targetTemperature;
             ID = new Guid();
             Name = name;
+        }
+        public Thermostat(int currenteTemperature) : base()
+        {
+            CurrentTemperature = currenteTemperature;
+            TargetTemperature = 20;
+            ID = new Guid();
         }
         public override void SwitchOn()
         {
@@ -48,11 +49,18 @@ namespace BlaisePascal.SmartHouse.Domain.ThermostatClasses
                 AddTemperature();
             SwitchOff();
         }
-        public bool IsTemperatureEquals(){ return CurrentTemperature == TargetTemperature; }
-        private void AddTemperature(){ CurrentTemperature += 2; }
+
+        public bool IsTemperatureEquals()
+        { 
+            return CurrentTemperature == TargetTemperature; 
+        }
+        private void AddTemperature()
+        { 
+            CurrentTemperature += 2; 
+        }
         public void ChangeTargetTemperature(int temp)
         {
-            TargetTemperature = DeviceManager.ValidateTargetTemperature(temp);
+            TargetTemperature = DeviceValidator.ValidateTargetTemperature(temp);
             LastModifierAtUtc = DateTime.UtcNow;
         }
     }

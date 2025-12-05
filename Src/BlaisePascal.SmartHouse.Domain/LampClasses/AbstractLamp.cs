@@ -60,7 +60,6 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         {
             if (DeviceStatus == DeviceStatus.On)
                 SwitchOff();
-
             else
                 SwitchOn();
             LastModifierAtUtc = DateTime.UtcNow;
@@ -85,7 +84,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         {
             if (DeviceStatus == DeviceStatus.On)
             {
-                Intensity = DeviceManager.ValidatIntensityBetweenRange(value, MaxIntensity);
+                Intensity = DeviceValidator.ValidateIntensityBetweenRange(value, MaxIntensity);
                 LastModifierAtUtc = DateTime.UtcNow;
             }
         }
@@ -93,6 +92,6 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         {
             ValueOfIncreaseAndDescrease = ReturnValidation(newVal);
         }
-        protected int ReturnValidation(int val) { return DeviceManager.ValidatIntensityBetweenRange(val, MaxIntensity); }
+        protected int ReturnValidation(int val) { return DeviceValidator.ValidateIntensityBetweenRange(val, MaxIntensity); }
     }
 }

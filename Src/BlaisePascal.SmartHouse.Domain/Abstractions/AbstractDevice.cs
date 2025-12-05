@@ -9,11 +9,11 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
     public abstract class AbstractDevice
     {
         //-------ATTRIBUTES AND PROPERTY-------
-        public DeviceStatus DeviceStatus { get; set; }
-        public Guid ID { get; set; }
-        public DateTime DateTimeAtCreationUtc { get; set; }
-        public string ?Name { get; set; }
-        public DateTime? LastModifierAtUtc { get; set; }
+        public Guid ID { get; protected set; }
+        public DeviceStatus DeviceStatus { get; protected set; }
+        public string ?Name { get; protected set; }
+        public DateTime DateTimeAtCreationUtc { get; protected set; }
+        public DateTime? LastModifierAtUtc { get; protected set; }
 
         //------CONSTRUCTORS------
         public AbstractDevice()
@@ -28,6 +28,7 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
             DeviceStatus = DeviceStatus.On;
             LastModifierAtUtc = DateTime.UtcNow;
         }
+
         public virtual void SwitchOff()
         {
             DeviceStatus = DeviceStatus.Off;

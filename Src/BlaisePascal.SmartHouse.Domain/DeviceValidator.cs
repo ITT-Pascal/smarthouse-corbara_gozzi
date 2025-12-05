@@ -1,9 +1,9 @@
 ﻿namespace BlaisePascal.SmartHouse.Domain
 {
-    public static class DeviceManager
+    public static class DeviceValidator
     {
         private const int minValueOfDevices = 1;
-        public static int ValidatIntensityBetweenRange(int valChanger, int maxBrightness)
+        public static int ValidateIntensityBetweenRange(int valChanger, int maxBrightness)
         {
             if (valChanger < minValueOfDevices)
                 throw new ArgumentException("Negative number can't be avariable");
