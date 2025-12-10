@@ -10,7 +10,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
     public class LampsRow
     {
         //-------ATTRIBUTES AND PROPERTY-------
-        public List<AbstractLamp> LampRow { get; set; }
+        public List<AbstractLamp> LampRow { get; private set; }
 
         //------CONSTRUCTORS------
         public LampsRow(){ LampRow = new List<AbstractLamp>(); }

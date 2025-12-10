@@ -5,7 +5,8 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
     public class Door : AbstractDevice
     {
         //-------ATTRIBUTES AND PROPERTY-------
-        public int Code { get; set; }
+        private int Code { get; set; }
+        private string? AdminPassword;
 
         //------CONSTRUCTORS------
         public Door(int code)
@@ -32,8 +33,24 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
             Code = code;
             DateTimeAtCreationUtc = DateTime.UtcNow;
         }
+        public Door(string name, Guid guid, int code, string adminCode)
+        {
+            DeviceStatus = DeviceStatus.Locked;
+            ID = guid;
+            Name = name;
+            Code = code;
+            DateTimeAtCreationUtc = DateTime.UtcNow;
+            AdminPassword = adminCode;
+        }
 
         //------METHODS------
+        public int ReturnCode(string adminCode)
+        {
+            if (AdminPassword == adminCode)
+                return Code;
+            else
+                throw new ArgumentException("Password errata");
+        }
         public void OpenDoor()
         {
             if (DeviceStatus != DeviceStatus.Locked)

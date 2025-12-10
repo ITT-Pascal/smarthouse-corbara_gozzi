@@ -3,7 +3,7 @@
     public class CCTVSet
     {
         //-------ATTRIBUTES AND PROPERTY-------
-        public List<CCTV> CCTVset { get; set; }
+        public List<CCTV> CCTVset { get; private set; }
         private string? AdminPassword;
 
         //------CONSTRUCTORS------

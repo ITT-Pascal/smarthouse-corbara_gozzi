@@ -10,8 +10,8 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
     public class TwoLampsDevice
     {
         //-------ATTRIBUTES AND PROPERTY-------
-        public AbstractLamp FirstLamp { get; set; }
-        public AbstractLamp SecondLamp { get; set; }
+        public AbstractLamp FirstLamp { get; private set; }
+        public AbstractLamp SecondLamp { get; private set; }
         
         //------CONSTRUCTORS------
         public TwoLampsDevice()

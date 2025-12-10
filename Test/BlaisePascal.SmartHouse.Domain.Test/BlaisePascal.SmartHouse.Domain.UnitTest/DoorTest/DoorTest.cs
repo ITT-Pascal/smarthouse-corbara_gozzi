@@ -1,24 +1,24 @@
-﻿using BlaisePascal.SmartHouse.Domain.DoorClasses;
+﻿
+using BlaisePascal.SmartHouse.Domain.DoorClasses;
 namespace BlaisePascal.SmartHouse.Domain.UnitTest.DoorTest
 {
     public class DoorTest
     {
-        Door door = new Door(1234);
-        Door doorWhitName = new Door("Braso", 1234);
+        Door Door = new Door("Braso", new Guid(), 1234, "PASSWORD");
 
         [Fact]
 
         public void Door_Constructor_Code()
         {
-            Assert.Equal(1234, door.Code);
+            Assert.Equal(1234, Door.ReturnCode("PASSWORD"));
         }
 
         [Fact]
 
         public void Door_Constructor_CodeAndName()
         {
-            Assert.Equal(1234, doorWhitName.Code);
-            Assert.Equal("Braso", doorWhitName.Name);
+            Assert.Equal(1234, Door.ReturnCode("PASSWORD"));
+            Assert.Equal("Braso", Door.Name);
         }
 
         [Fact]
@@ -26,67 +26,66 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.DoorTest
         public void Door_Constructor_CodeNameAndGuid()
         {
             Guid id = new Guid();
-            Door doorWhitGuid = new Door("Braso", id, 1234);
-            Assert.Equal(1234, doorWhitGuid.Code);
-            Assert.Equal("Braso", doorWhitGuid.Name);
-            Assert.Equal(id, doorWhitGuid.ID);
+            Assert.Equal(1234, Door.ReturnCode("PASSWORD"));
+            Assert.Equal("Braso", Door.Name);
+            Assert.Equal(id,Door.ID);
         }
 
         [Fact]
         public void Door_OpenDoor_WithCode()
         {
-            door.OpenDoor(1234);
-            Assert.Equal(DeviceStatus.Open, door.DeviceStatus);
+            Door.OpenDoor(1234);
+            Assert.Equal(DeviceStatus.Open, Door.DeviceStatus);
         }
 
         [Fact]
         public void Door_OpenDoor_NoCodeAndClosed()
         {
-            door.UnlockDoor(1234);
-            door.OpenDoor();
-            Assert.Equal(DeviceStatus.Open, door.DeviceStatus);
+            Door.UnlockDoor(1234);
+            Door.OpenDoor();
+            Assert.Equal(DeviceStatus.Open, Door.DeviceStatus);
         }
 
         [Fact]
         public void Door_OpenDoor_IsJustOpen()
         {
-            door.OpenDoor(1234);
-            door.OpenDoor(1234);
-            Assert.Equal(DeviceStatus.Open, door.DeviceStatus);
+            Door.OpenDoor(1234);
+            Door.OpenDoor(1234);
+            Assert.Equal(DeviceStatus.Open, Door.DeviceStatus);
         }
 
         [Fact]
         public void Door_CloseDoor_IsOpen()
         {
-            door.OpenDoor(1234);
-            door.CloseDoor();
-            Assert.Equal(DeviceStatus.Closed, door.DeviceStatus);
+            Door.OpenDoor(1234);
+            Door.CloseDoor();
+            Assert.Equal(DeviceStatus.Closed, Door.DeviceStatus);
         }
 
         [Fact]
         public void Door_CloseDoor_IsJustClosed()
         {
-            door.OpenDoor(1234);
-            door.CloseDoor();
-            door.CloseDoor();
-            Assert.Equal(DeviceStatus.Closed, door.DeviceStatus);
+            Door.OpenDoor(1234);
+            Door.CloseDoor();
+            Door.CloseDoor();
+            Assert.Equal(DeviceStatus.Closed, Door.DeviceStatus);
         }
 
         [Fact]
         public void Door_LockDoor_IsClosed()
         {
-            door.OpenDoor(1234);
-            door.CloseDoor();
-            door.LockDoor(1234);
-            Assert.Equal(DeviceStatus.Locked, door.DeviceStatus);
+            Door.OpenDoor(1234);
+            Door.CloseDoor();
+            Door.LockDoor(1234);
+            Assert.Equal(DeviceStatus.Locked, Door.DeviceStatus);
         }
 
         [Fact]
         public void Door_LockDoor_Islocked()
         {           
-            door.UnlockDoor(1234);
-            door.LockDoor(1234);
-            Assert.Equal(DeviceStatus.Locked, door.DeviceStatus);
+            Door.UnlockDoor(1234);
+            Door.LockDoor(1234);
+            Assert.Equal(DeviceStatus.Locked, Door.DeviceStatus);
         }
     }
 }

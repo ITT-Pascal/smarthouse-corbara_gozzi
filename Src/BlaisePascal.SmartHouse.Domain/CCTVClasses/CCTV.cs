@@ -11,10 +11,10 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
     public class CCTV : AbstractDevice
     {
         private const int intensityOfLed = 100;
-        private const int intesnityOfLedOnStanby = 20;
+        private const int intensityOfLedOnStandby = 20;
         //-------ATTRIBUTES AND PROPERTY-------
         public Lamp CameraLed { get; set; }
-        public VideoQuality QualityOfVideo { get; set; }
+        public VideoQuality QualityOfVideo { get; private set; }
 
         //------CONSTRUCTORS------
         public CCTV(): base()
@@ -39,7 +39,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         {
             base.SwitchOn();
             CameraLed.SwitchOn();
-            CameraLed.Intensity = intensityOfLed;
+            CameraLed.SetIntensity(intensityOfLed);
             QualityOfVideo = VideoQuality._720P_60;
         }
 
@@ -54,7 +54,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
             if (DeviceStatus == DeviceStatus.On)
             {
                 DeviceStatus = DeviceStatus.Stanby;
-                CameraLed.Intensity = intesnityOfLedOnStanby;
+                CameraLed.SetIntensity(intensityOfLedOnStandby);
                 LastModifierAtUtc = DateTime.UtcNow;
             }
         }

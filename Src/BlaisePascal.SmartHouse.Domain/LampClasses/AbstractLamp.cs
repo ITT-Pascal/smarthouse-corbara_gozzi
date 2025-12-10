@@ -7,11 +7,11 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
     public abstract class AbstractLamp: AbstractDevice
     {
         //-------ATTRIBUTES AND PROPERTY-------
-        public int Intensity { get; set; }
-        public int MaxIntensity { get; set; }
-        public int MinIntensity { get; set; }
-        public int IntensityAtOn { get; set; }
-        public int ValueOfIncreaseAndDescrease { get; set; }
+        public int Intensity { get;  protected set; }
+        public int MaxIntensity { get; protected set; }
+        public int MinIntensity { get; protected set; }
+        public int IntensityAtOn { get; protected set; }
+        public int ValueOfIncreaseAndDescrease { get; protected set; }
 
         //------CONSTRUCTORS------
         protected AbstractLamp(): base()

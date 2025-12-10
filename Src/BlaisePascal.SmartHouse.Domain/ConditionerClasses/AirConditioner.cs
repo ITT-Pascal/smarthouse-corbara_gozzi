@@ -10,9 +10,9 @@ namespace BlaisePascal.SmartHouse.Domain
         private const int minHeat = 5;
         private const int maxHeat = 45;
 
-        public int PowerIntensity { get; set; }
-        public int Heat { get; set; }
-        public AcMode ModeOfAc { get; set; }
+        public int PowerIntensity { get; private set; }
+        public int Heat { get; private set; }
+        public AcMode ModeOfAc { get; private set; }
 
         //------CONSTRUCTORS------
         public AirConditioner()
