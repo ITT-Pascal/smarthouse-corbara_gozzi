@@ -60,8 +60,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
             TestLampsRow.AddLamp(new EcoLamp("Ciao"));
             TestLampsRow.AddLamp(new Lamp("Sas"));
             TestLampsRow.RemoveLamp("Ciao");
-            Assert.Single(TestLampsRow.LampRow);
             Assert.Equal("Sas", TestLampsRow.LampRow[0].Name);
+            Assert.Single(TestLampsRow.LampRow);
         }
 
         [Fact]
