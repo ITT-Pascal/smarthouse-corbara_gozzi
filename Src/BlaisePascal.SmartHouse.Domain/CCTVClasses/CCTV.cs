@@ -59,6 +59,9 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
             }
         }
 
-        public void ChangeQualityOfVideo(VideoQuality newQuality){ QualityOfVideo = newQuality;}
+        public void ChangeQualityOfVideo(VideoQuality newQuality)
+        { 
+            QualityOfVideo = newQuality;
+        }
     }
 }

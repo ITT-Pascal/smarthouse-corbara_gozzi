@@ -1,4 +1,6 @@
-﻿namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
+﻿using BlaisePascal.SmartHouse.Domain.LampClasses;
+
+namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
 {
     public class CCTVSet
     {
@@ -65,9 +67,12 @@
         }
         public void SwitchOn()
         {
-            for (int i = 0; i < CCTVset.Count; i++)
-                CCTVset[i].SwitchOn();
+            foreach (CCTV cam in CCTVset)
+            {
+                cam.SwitchOn();
+            }
         }
+
         /// <summary>
         /// Accende telecamera in base all'ID
         /// </summary>
@@ -83,17 +88,29 @@
         /// <param name="name"></param>
         public void SwitchOn(string name)
         {
-            for (int i = 0; i < CCTVset.Count; i++)
+            foreach (CCTV cam in CCTVset)
             {
-                if (CCTVset[i].Name == name)
-                    CCTVset[i].SwitchOn();
+                if (GetCCTVWithName(name).Contains(cam))
+                    cam.SwitchOn();
             }
+        }
+        private List<CCTV> GetCCTVWithName(string name)
+        {
+            List<CCTV> cams = new List<CCTV>();
+            foreach (CCTV cam in CCTVset)
+            {
+                if (cam.Name == name)
+                    cams.Add(cam);
+            }
+            return cams;
         }
         public void SwitchOff(string adminPassword)
         {
             if (AdminPassword == adminPassword)
-                for (int i = 0; i < CCTVset.Count; i++)
-                    CCTVset[i].SwitchOff();
+                foreach (CCTV cam in CCTVset)
+                {
+                    cam.SwitchOff();
+                }
             else
                 throw new ArgumentException("Password errata");
         }
@@ -118,10 +135,10 @@
         {
             if (AdminPassword == adminPassword)
             {
-                for (int i = 0; i < CCTVset.Count; i++)
+                foreach (CCTV cam in CCTVset)
                 {
-                    if (CCTVset[i].Name == name)
-                        CCTVset[i].SwitchOff();
+                    if (GetCCTVWithName(name).Contains(cam))
+                        cam.SwitchOff();
                 }
             }
             else
