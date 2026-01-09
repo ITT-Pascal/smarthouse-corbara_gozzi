@@ -43,7 +43,7 @@ namespace BlaisePascal.SmartHouse.Domain.ThermostatClasses
             TargetTemperature = 20;
             ID = new Guid();
         }
-        public override void SwitchOn()
+        public sealed override void SwitchOn()
         {
             while (!IsTemperatureEquals())
                 AddTemperature();

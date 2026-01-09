@@ -44,17 +44,15 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         }
 
         //------METHODS------
-        public override void SwitchOn()
+        public sealed override void SwitchOn()
         {
-            DeviceStatus = DeviceStatus.On;
+            base.SwitchOn();
             Intensity = IntensityAtOn;
-            LastModifierAtUtc = DateTime.UtcNow;
         }
-        public override void SwitchOff()
+        public sealed override void SwitchOff()
         {
-            DeviceStatus = DeviceStatus.Off;
+            base.SwitchOff();
             Intensity = 0;
-            LastModifierAtUtc = DateTime.UtcNow;
         }
         public virtual void Toggle()
         {

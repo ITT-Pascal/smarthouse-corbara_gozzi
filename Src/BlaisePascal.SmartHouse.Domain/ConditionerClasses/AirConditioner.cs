@@ -30,12 +30,12 @@ namespace BlaisePascal.SmartHouse.Domain
         }
 
         //------METHODS------
-        public override void SwitchOn()
+        public sealed override void SwitchOn()
         {
             base.SwitchOn();
             this.PutStarterStatus();
         }
-        public override void SwitchOff()
+        public sealed override void SwitchOff()
         {
             base.SwitchOff();
             Heat = 0;

@@ -42,11 +42,6 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
             MinIntensity = minIntensity;
             IntensityAtOn = intensityAtOn;
         }
-
-        public override void SwitchOn()
-        {
-            base.SwitchOn();
-        }
         public void SwitchOn(bool enableAutoOff)
         {
             base.SwitchOn();
@@ -76,7 +71,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
             base.DecreaseBy();
             ResetAutoOffIfNeeded();
         }
-        public override void SwitchOff()
+        public void SwitchOff()
         {
             base.SwitchOff();
             autoOffAtUtc = null;

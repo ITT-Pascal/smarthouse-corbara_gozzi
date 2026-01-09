@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlaisePascal.SmartHouse.Domain.Abstractions
 {
-    public abstract class AbstractDevice
+    public abstract class AbstractDevice: IDevice
     {
         //-------ATTRIBUTES AND PROPERTY-------
         public Guid ID { get; protected set; }
