@@ -61,17 +61,17 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
             base.SetIntensity(value);
             ResetAutoOffIfNeeded();
         }
-        public override void IncreaseBy()
+        public sealed override void IncreaseBy()
         {
             base.IncreaseBy();
             ResetAutoOffIfNeeded();
         }
-        public override void DecreaseBy()
+        public sealed override void DecreaseBy()
         {
             base.DecreaseBy();
             ResetAutoOffIfNeeded();
         }
-        public void SwitchOff()
+        public sealed override void SwitchOff()
         {
             base.SwitchOff();
             autoOffAtUtc = null;

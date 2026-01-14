@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace BlaisePascal.SmartHouse.Domain.LampClasses
 {
-    public class TwoLampsDevice
+    public sealed class TwoLampsDevice
     {
         //-------ATTRIBUTES AND PROPERTY-------
         public AbstractLamp FirstLamp { get; private set; }

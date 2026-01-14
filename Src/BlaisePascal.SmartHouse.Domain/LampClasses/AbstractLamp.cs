@@ -4,7 +4,7 @@ using System.Xml.Linq;
 
 namespace BlaisePascal.SmartHouse.Domain.LampClasses
 {
-    public abstract class AbstractLamp: AbstractDevice
+    public abstract class AbstractLamp: AbstractDevice, ISwitchable
     {
         //-------ATTRIBUTES AND PROPERTY-------
         public int Intensity { get;  protected set; }
@@ -49,7 +49,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
             base.SwitchOn();
             Intensity = IntensityAtOn;
         }
-        public sealed override void SwitchOff()
+        public override void SwitchOff()
         {
             base.SwitchOff();
             Intensity = 0;

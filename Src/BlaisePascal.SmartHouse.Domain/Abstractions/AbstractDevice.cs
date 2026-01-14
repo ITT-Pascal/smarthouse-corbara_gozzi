@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlaisePascal.SmartHouse.Domain.Abstractions
 {
-    public abstract class AbstractDevice: IDevice
+    public abstract class AbstractDevice
     {
         //-------ATTRIBUTES AND PROPERTY-------
         public Guid ID { get; protected set; }
@@ -34,5 +34,7 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
             DeviceStatus = DeviceStatus.Off;
             LastModifierAtUtc = DateTime.UtcNow;
         }
+
+        //TODO: metodo fix per far tornare lo stato da errore a normale
     }
 }

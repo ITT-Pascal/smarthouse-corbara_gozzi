@@ -8,7 +8,7 @@ using BlaisePascal.SmartHouse.Domain.Abstractions;
 
 namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
 {
-    public class CCTV : AbstractDevice
+    public class CCTV : AbstractDevice, ISwitchable
     {
         private const int intensityOfLed = 100;
         private const int intensityOfLedOnStandby = 20;
@@ -63,5 +63,8 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         { 
             QualityOfVideo = newQuality;
         }
+
+        //TODO: possibilità di farla girare di tot gradi
+
     }
 }

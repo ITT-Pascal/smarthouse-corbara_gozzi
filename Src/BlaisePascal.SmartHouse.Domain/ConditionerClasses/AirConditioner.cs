@@ -3,7 +3,7 @@ using BlaisePascal.SmartHouse.Domain.Abstractions;
 
 namespace BlaisePascal.SmartHouse.Domain
 {
-    public class AirConditioner: AbstractDevice
+    public class AirConditioner: AbstractDevice, ISwitchable
     {
         private const int minPower = 1;
         private const int maxPower = 10;
@@ -52,7 +52,7 @@ namespace BlaisePascal.SmartHouse.Domain
             else
                 throw new ArgumentException("You have to turn it on.");                  
         }
-
+        //TODO: ricontrollare meglio il funzionamento del metodo
         public void ChangeMode(AcMode mode)
         {
             if (DeviceStatus == DeviceStatus.On)

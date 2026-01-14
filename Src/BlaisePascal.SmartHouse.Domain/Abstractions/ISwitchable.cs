@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlaisePascal.SmartHouse.Domain.Abstractions
 {
-    public interface IDevice
+    public interface ISwitchable
     {
         void SwitchOn();
         void SwitchOff();
