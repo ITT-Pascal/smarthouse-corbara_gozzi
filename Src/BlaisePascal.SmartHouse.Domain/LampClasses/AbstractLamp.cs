@@ -6,41 +6,31 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
 {
     public abstract class AbstractLamp: AbstractDevice, ISwitchable
     {
+        private int minIntensity = 1;
+        private int intensityAtOff = 0;
+        private int valOfIncreaseAndDecrease = 10;
         //-------ATTRIBUTES AND PROPERTY-------
         public int Intensity { get;  protected set; }
-        public int MaxIntensity { get; protected set; }
-        public int MinIntensity { get; protected set; }
-        public int IntensityAtOn { get; protected set; }
-        public int ValueOfIncreaseAndDescrease { get; protected set; }
+        public int MaxIntensity;
+        public int IntensityAtOn;
 
         //------CONSTRUCTORS------
         protected AbstractLamp(): base()
         {
-            ID = new Guid();
-            Intensity = 0;
-            Name = "Lamp";
-            ValueOfIncreaseAndDescrease = 10;
+            Intensity = intensityAtOff;
         }
         protected AbstractLamp(string name) : base()
         {
-            ID = new Guid();
-            Intensity = 0;
             Name = name;
-            ValueOfIncreaseAndDescrease = 10;
+            Intensity = intensityAtOff;
         }
-        protected AbstractLamp(string name, Guid guid) : base()
+        protected AbstractLamp(Guid id) : base(id)
         {
-            ID = guid;
-            Intensity = 0;
-            Name = name;
-            ValueOfIncreaseAndDescrease = 10;
+            Intensity = intensityAtOff;
         }
-        protected AbstractLamp(string name, Guid guid, int valOfIncreaseAndDecrease) : base()
+        protected AbstractLamp( Guid guid, string name) : base(guid, name)
         {
-            ID = guid;
-            Intensity = 0;
-            Name = name;
-            ValueOfIncreaseAndDescrease = valOfIncreaseAndDecrease;
+            Intensity = intensityAtOff;
         }
 
         //------METHODS------
@@ -52,7 +42,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         public override void SwitchOff()
         {
             base.SwitchOff();
-            Intensity = 0;
+            Intensity = intensityAtOff;
         }
         public virtual void Toggle()
         {
@@ -66,7 +56,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         {
             if (DeviceStatus == DeviceStatus.On)
             {
-                Intensity = Math.Min(Intensity + ValueOfIncreaseAndDescrease, MaxIntensity);
+                Intensity = Math.Min(Intensity + valOfIncreaseAndDecrease, maxIntensity);
                 LastModifierAtUtc = DateTime.UtcNow;
             }
         }
@@ -74,7 +64,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         {
             if (DeviceStatus == DeviceStatus.On)
             {
-                Intensity = Math.Max(Intensity - ValueOfIncreaseAndDescrease, MinIntensity);
+                Intensity = Math.Max(Intensity - valOfIncreaseAndDecrease, minIntensity);
                 LastModifierAtUtc = DateTime.UtcNow;
             }
         }
@@ -82,14 +72,9 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         {
             if (DeviceStatus == DeviceStatus.On)
             {
-                Intensity = DeviceValidator.ValidateIntensityBetweenRange(value, MaxIntensity);
+                Intensity = DeviceValidator.ValidateIntensityBetweenRange(value);
                 LastModifierAtUtc = DateTime.UtcNow;
             }
         }
-        public virtual void ChangeValueOfIncreaseAndDecrease(int newVal)
-        {
-            ValueOfIncreaseAndDescrease = ReturnValidation(newVal);
-        }
-        protected int ReturnValidation(int val) { return DeviceValidator.ValidateIntensityBetweenRange(val, MaxIntensity); }
     }
 }

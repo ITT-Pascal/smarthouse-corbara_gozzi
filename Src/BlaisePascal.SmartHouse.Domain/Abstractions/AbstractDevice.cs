@@ -20,6 +20,22 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
         {
             DeviceStatus = DeviceStatus.Off;
             DateTimeAtCreationUtc = DateTime.UtcNow;
+            ID = new Guid();
+            Name = "Device";
+        }
+        public AbstractDevice(Guid guid)
+        {
+            DeviceStatus = DeviceStatus.Off;
+            DateTimeAtCreationUtc = DateTime.UtcNow;
+            ID = guid;
+            Name = "Device";
+        }
+        public AbstractDevice(Guid guid, string name)
+        {
+            DeviceStatus = DeviceStatus.Off;
+            DateTimeAtCreationUtc = DateTime.UtcNow;
+            ID = guid;
+            Name = name;
         }
 
         //------METHODS------
@@ -34,7 +50,12 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
             DeviceStatus = DeviceStatus.Off;
             LastModifierAtUtc = DateTime.UtcNow;
         }
-
-        //TODO: metodo fix per far tornare lo stato da errore a normale
+        public void FixErrors()
+        {
+            if (DeviceStatus == DeviceStatus.Error)
+            {
+                DeviceStatus = DeviceStatus.On;
+            }
+        }
     }
 }

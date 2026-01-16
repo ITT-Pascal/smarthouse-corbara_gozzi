@@ -10,7 +10,6 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
     public class EcoLamp : AbstractLamp
     {
         private const int maxIntensity = 70;
-        private const int minIntensity = 1;
         private const int intensityAtOn = 30;
         private const int DefaultAutoOffMinutes = 10;
         private const int MinAutoOffMinutes = 1;
@@ -18,30 +17,23 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         private DateTime? autoOffAtUtc;
 
         //------CONSTRUCTORS------
-        public EcoLamp(string name) : base(name)
+        public EcoLamp() : base()
         {
             MaxIntensity = maxIntensity;
-            MinIntensity = minIntensity;
             IntensityAtOn = intensityAtOn;
         }
-        public EcoLamp()
+        public EcoLamp(Guid Id) : base(Id)
         {
             MaxIntensity = maxIntensity;
-            MinIntensity = minIntensity;
             IntensityAtOn = intensityAtOn;
         }
-        public EcoLamp(string name, Guid id):base(name,id)
+        public EcoLamp(Guid id, string name):base(id, name)
         {
             MaxIntensity = maxIntensity;
-            MinIntensity = minIntensity;
             IntensityAtOn = intensityAtOn;
         }
-        public EcoLamp(string name, Guid id, int valueOfIncreaseAndDecrease):base(name, id, valueOfIncreaseAndDecrease)
-        {
-            MaxIntensity = maxIntensity;
-            MinIntensity = minIntensity;
-            IntensityAtOn = intensityAtOn;
-        }
+
+        //--------METHODS-------
         public void SwitchOn(bool enableAutoOff)
         {
             base.SwitchOn();
@@ -56,7 +48,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
             autoOffAtUtc = DateTime.UtcNow.AddMinutes(autoOffMinutes);
         }
 
-        public override void SetIntensity(int value)
+        public sealed override void SetIntensity(int value)
         {
             base.SetIntensity(value);
             ResetAutoOffIfNeeded();

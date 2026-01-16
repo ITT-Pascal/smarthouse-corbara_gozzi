@@ -84,7 +84,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         public void TwoLampsDevice_ChangeBrightnessOfLamps_IfLampsAreOffWeCannotChangeBrightness()
         {
             TwoLampsDevice twoLampsDevice = new TwoLampsDevice(lamp1, lamp2);
-            twoLampsDevice.ChangeBrightnessOfLamps(10);
+            twoLampsDevice.SetIntensityOfLamps(10);
             Assert.Equal(0, lamp1.Intensity);
             Assert.Equal(0, lamp2.Intensity);
         }
@@ -94,7 +94,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         {
             TwoLampsDevice twoLampsDevice = new TwoLampsDevice(lamp1, lamp2);
             twoLampsDevice.SwitchOnAllLamps();
-            twoLampsDevice.ChangeBrightnessOfLamps(10);
+            twoLampsDevice.SetIntensityOfLamps(10);
             Assert.Equal(10, lamp1.Intensity);
             Assert.Equal(10, lamp2.Intensity);
         }

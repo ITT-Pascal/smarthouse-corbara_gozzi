@@ -5,28 +5,31 @@ namespace BlaisePascal.SmartHouse.Domain
 {
     public class AirConditioner: AbstractDevice, ISwitchable
     {
-        private const int minPower = 1;
+        private const int minPower = 0;
         private const int maxPower = 10;
-        private const int minHeat = 5;
+        private const int minHeat = 0;
         private const int maxHeat = 45;
 
-        public int PowerIntensity { get; private set; }
+        public int Power { get; private set; }
         public int Heat { get; private set; }
         public AcMode ModeOfAc { get; private set; }
 
         //------CONSTRUCTORS------
-        public AirConditioner()
+        public AirConditioner(): base()
         {
-            DeviceStatus = DeviceStatus.Off;
-            ID = new Guid();
-            Name = "Conditioner";
+            Power = minPower;
+            Heat = minHeat;
+        }
+        public AirConditioner(Guid id) : base(id)
+        {
+            Power = minPower;
+            Heat = minHeat;
         }
 
-        public AirConditioner(string name, Guid guid)
+        public AirConditioner(string name, Guid guid): base(guid, name)
         {
-            DeviceStatus = DeviceStatus.Off;
-            ID = guid;
-            Name = name;
+            Power = minPower;
+            Heat = minHeat;
         }
 
         //------METHODS------
@@ -39,14 +42,14 @@ namespace BlaisePascal.SmartHouse.Domain
         {
             base.SwitchOff();
             Heat = 0;
-            PowerIntensity = 0;
+            Power = 0;
         }
 
         public void ChangePower(int amount)
         {           
             if (DeviceStatus == DeviceStatus.On)
             {
-                PowerIntensity = DeviceValidator.ValidatePowerAc(amount, maxPower);
+                Power = DeviceValidator.ValidatePowerAc(amount, maxPower);
                 LastModifierAtUtc = DateTime.UtcNow;
             }
             else
@@ -96,7 +99,7 @@ namespace BlaisePascal.SmartHouse.Domain
         {
             ModeOfAc = AcMode.FAN;
             Heat = 20;
-            PowerIntensity = 5;
+            Power = 5;
         }
 
         private void PutCustomMode()

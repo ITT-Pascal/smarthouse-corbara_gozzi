@@ -17,40 +17,31 @@ namespace BlaisePascal.SmartHouse.Domain.ThermostatClasses
             CurrentTemperature = 0;
             TargetTemperature = 20;
         }
-        public Thermostat(Guid Id): base()
+        public Thermostat(Guid Id): base(Id)
         {
             CurrentTemperature = 0;
             TargetTemperature = 20;
-            ID = Id;
         }
-        public Thermostat(Guid Id, string name): base()
+        public Thermostat(Guid Id, string name): base(Id, name)
         {
             CurrentTemperature = 0;
             TargetTemperature = 20;
-            ID = new Guid();
-            Name = name;
         }
-        public Thermostat(Guid Id, string name, int targetTemperature):base()
+        public Thermostat(Guid Id, string name, int targetTemperature):base(Id, name)
         {
             CurrentTemperature = 0;
             TargetTemperature = targetTemperature;
-            ID = new Guid();
-            Name = name;
         }
-        public Thermostat(int currenteTemperature) : base()
-        {
-            CurrentTemperature = currenteTemperature;
-            TargetTemperature = 20;
-            ID = new Guid();
-        }
+
         public sealed override void SwitchOn()
         {
             while (!IsTemperatureEquals())
                 AddTemperature();
             SwitchOff();
+            LastModifierAtUtc = DateTime.UtcNow;
         }
 
-        public bool IsTemperatureEquals()
+        private bool IsTemperatureEquals()
         { 
             return CurrentTemperature == TargetTemperature; 
         }

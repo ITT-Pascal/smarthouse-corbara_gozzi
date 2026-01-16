@@ -41,18 +41,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.CCTVTests
         }
 
         [Fact]
-        public void CCTV_PutInStanby_IfPutInStanbyTheStatusIsStanbyAndLedIntensityIs20()
-        {
-            CCTV TestCCTV = new CCTV();
-            TestCCTV.SwitchOn();
-            TestCCTV.PutInStanby();
-            Assert.Equal(DeviceStatus.Stanby, TestCCTV.DeviceStatus);
-            Assert.Equal(DeviceStatus.On, TestCCTV.CameraLed.DeviceStatus);
-            Assert.Equal(20, TestCCTV.CameraLed.Intensity);
-            Assert.Equal(VideoQuality._720P_60, TestCCTV.QualityOfVideo);
-        }
-
-        [Fact]
         public void CCTV_ChangeQualityOfVideo_IfQualityIsSameItDoesNotChange()
         {
             CCTV TestCCTV = new CCTV();

@@ -5,10 +5,6 @@
         Unknown,
         On,
         Off,
-        Error,
-        Stanby,
-        Open,
-        Closed,
-        Locked
+        Error
     }
 }

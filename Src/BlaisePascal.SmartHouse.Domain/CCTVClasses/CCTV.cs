@@ -11,27 +11,27 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
     public class CCTV : AbstractDevice, ISwitchable
     {
         private const int intensityOfLed = 100;
-        private const int intensityOfLedOnStandby = 20;
+        private const int degreesAtCreation = 90;
         //-------ATTRIBUTES AND PROPERTY-------
         public Lamp CameraLed { get; set; }
         public VideoQuality QualityOfVideo { get; private set; }
+        public int Degrees { get; set; }
 
         //------CONSTRUCTORS------
         public CCTV(): base()
         {
-            ID = new Guid();
             CameraLed = new Lamp("CameraLed");
+            Degrees = degreesAtCreation;
         }
-        public CCTV(Guid id): base()
+        public CCTV(Guid id): base(id)
         {
-            ID = id;
             CameraLed = new Lamp("CameraLed");
+            Degrees = degreesAtCreation;
         }
-        public CCTV(Guid id, string name): base()
+        public CCTV(Guid id, string name): base(id, name)
         {
-            ID = id;
-            Name = name;
             CameraLed = new Lamp("CameraLed");
+            Degrees = degreesAtCreation;
         }
 
         //------METHODS------
@@ -49,22 +49,14 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
             CameraLed.SwitchOff();
         }
 
-        public void PutInStanby()
-        {
-            if (DeviceStatus == DeviceStatus.On)
-            {
-                DeviceStatus = DeviceStatus.Stanby;
-                CameraLed.SetIntensity(intensityOfLedOnStandby);
-                LastModifierAtUtc = DateTime.UtcNow;
-            }
-        }
-
         public void ChangeQualityOfVideo(VideoQuality newQuality)
         { 
             QualityOfVideo = newQuality;
         }
 
-        //TODO: possibilità di farla girare di tot gradi
-
+        public void SetCCTVDegrees(int degrees)
+        {
+            Degrees = CCTVValidator.ValidateDegrees(degrees);
+        }
     }
 }

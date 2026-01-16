@@ -34,25 +34,27 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         {
             SecondLamp.SwitchOn(); 
         }
-         
         public void SwitchOnAllLamps()
         {
             FirstLamp.SwitchOn();
             SecondLamp.SwitchOn();
-        }
-        public void SwitchOffFirstLamp() { 
-            FirstLamp.SwitchOff(); 
-        }
-        public void SwitchOffSecondLamp(){ 
-            SecondLamp.SwitchOff(); 
         }
         public void SwitchOffAllLamps()
         {
             FirstLamp.SwitchOff();
             SecondLamp.SwitchOff();
         }
+        public void SwitchOffFirstLamp() 
+        { 
+            FirstLamp.SwitchOff(); 
+        }
+        public void SwitchOffSecondLamp()
+        { 
+            SecondLamp.SwitchOff(); 
+        }
+        
         //Set new intensity by a new value
-        public void ChangeBrightnessOfLamps(int value)
+        public void SetIntensityOfLamps(int value)
         {
             if (FirstLamp.DeviceStatus == DeviceStatus.On && SecondLamp.DeviceStatus == DeviceStatus.On)
             {
