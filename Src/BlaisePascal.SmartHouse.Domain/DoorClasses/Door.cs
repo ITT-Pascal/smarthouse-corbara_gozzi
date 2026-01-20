@@ -4,19 +4,14 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
 {
     public class Door
     {
-        //-------ENUM CLASS-------
-        public enum DoorStatus 
-        {
-            Open,
-            Closed,
-            Locked
-        }
 
         //-------ATTRIBUTES AND PROPERTY-------
         private int Code { get; set; }
         public DoorStatus Status { get; private set; }
         public DateTime DateTimeAtCreationUtc { get; private set;}
         public DateTime? LastModifierAtUtc { get; protected set; }
+
+        public List<DateTime> HistoryOfDoorMod = new List<DateTime>();
 
         //------CONSTRUCTORS------
         public Door()
@@ -34,16 +29,23 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
         public void OpenDoor()
         {
             if (Status != DoorStatus.Locked)
+            {
                 Status = DoorStatus.Open;
+                LastModifierAtUtc = DateTime.UtcNow;
+                HistoryOfDoorMod.Add(DateTime.UtcNow);
+            }
             else
                 throw new ArgumentException("For Open the locked door you need to insert the code");
-            LastModifierAtUtc = DateTime.UtcNow;
+            
         }
         public void UnlockDoor(int code)
         {
             if (code == Code)
+            {
                 Status = DoorStatus.Open;
-            LastModifierAtUtc = DateTime.UtcNow;
+                LastModifierAtUtc = DateTime.UtcNow;
+                HistoryOfDoorMod.Add(DateTime.UtcNow);
+            }
         }
         public void CloseDoor()
         {
@@ -51,20 +53,22 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
             {
                 Status = DoorStatus.Closed;
                 LastModifierAtUtc = DateTime.UtcNow;
+                HistoryOfDoorMod.Add(DateTime.UtcNow);
             }
             else
                 throw new ArgumentException("You need to unlock the door");
-            LastModifierAtUtc = DateTime.UtcNow;
         }
         public void LockDoor()
         {
             Status = DoorStatus.Locked;
             LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfDoorMod.Add(DateTime.UtcNow);
         }
         public void ChangeCode(int code)
         {
             Code = code;
             LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfDoorMod.Add(DateTime.UtcNow);
         }
     }
 }

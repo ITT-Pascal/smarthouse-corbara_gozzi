@@ -4,7 +4,7 @@ using System.Xml.Linq;
 
 namespace BlaisePascal.SmartHouse.Domain.LampClasses
 {
-    public abstract class AbstractLamp: AbstractDevice, ISwitchable
+    public abstract class AbstractLamp: AbstractDevice, ISwitchable, IToggable
     {
         private int minIntensity = 1;
         private int intensityAtOff = 0;
@@ -51,13 +51,15 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
             else
                 SwitchOn();
             LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
         }
         public virtual void IncreaseBy()
         {
             if (DeviceStatus == DeviceStatus.On)
             {
-                Intensity = Math.Min(Intensity + valOfIncreaseAndDecrease, maxIntensity);
+                Intensity = Math.Min(Intensity + valOfIncreaseAndDecrease, MaxIntensity);
                 LastModifierAtUtc = DateTime.UtcNow;
+                HistoryOfMod.Add(DateTime.UtcNow);
             }
         }
         public virtual void DecreaseBy()
@@ -66,14 +68,16 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
             {
                 Intensity = Math.Max(Intensity - valOfIncreaseAndDecrease, minIntensity);
                 LastModifierAtUtc = DateTime.UtcNow;
+                HistoryOfMod.Add(DateTime.UtcNow);
             }
         }
         public virtual void SetIntensity(int value)
         {
             if (DeviceStatus == DeviceStatus.On)
             {
-                Intensity = DeviceValidator.ValidateIntensityBetweenRange(value);
+                Intensity = DeviceValidator.ValidateNewIntensity(value, MaxIntensity);
                 LastModifierAtUtc = DateTime.UtcNow;
+                HistoryOfMod.Add(DateTime.UtcNow);
             }
         }
     }

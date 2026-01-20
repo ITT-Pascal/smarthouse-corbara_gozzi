@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlaisePascal.SmartHouse.Domain
+namespace BlaisePascal.SmartHouse.Domain.Abstractions
 {
-    public class ILuminous
+    public interface IToggable
     {
-        public void SetIntensity(int value)
-        {
-
-        }
+        void Toggle();
     }
 }

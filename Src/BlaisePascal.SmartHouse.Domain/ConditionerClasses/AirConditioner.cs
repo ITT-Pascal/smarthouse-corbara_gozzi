@@ -3,32 +3,41 @@ using BlaisePascal.SmartHouse.Domain.Abstractions;
 
 namespace BlaisePascal.SmartHouse.Domain
 {
-    public class AirConditioner: AbstractDevice, ISwitchable
+    public class AirConditioner: AbstractDevice, ISwitchable, IToggable
     {
-        private const int minPower = 0;
-        private const int maxPower = 10;
+        private const int minSpeed = 1;
+        private const int maxSpeed = 10;
         private const int minHeat = 0;
-        private const int maxHeat = 45;
+        private const int maxHeat = 0;
+        //-------ATTRIBUTES AND PROPERTY-------
 
-        public int Power { get; private set; }
+        public int Speed { get; private set; }
         public int Heat { get; private set; }
         public AcMode ModeOfAc { get; private set; }
+
+        public Dictionary<AcMode, int> HeatForAcModes = new Dictionary<AcMode, int>()
+        {
+            { AcMode.Heat, 30 },
+            { AcMode.Cool, 10 },
+            { AcMode.Dry, 0 }
+        };
 
         //------CONSTRUCTORS------
         public AirConditioner(): base()
         {
-            Power = minPower;
+            Speed = minSpeed;
             Heat = minHeat;
+            
         }
         public AirConditioner(Guid id) : base(id)
         {
-            Power = minPower;
+            Speed = minSpeed;
             Heat = minHeat;
         }
 
         public AirConditioner(string name, Guid guid): base(guid, name)
         {
-            Power = minPower;
+            Speed = minSpeed;
             Heat = minHeat;
         }
 
@@ -42,70 +51,47 @@ namespace BlaisePascal.SmartHouse.Domain
         {
             base.SwitchOff();
             Heat = 0;
-            Power = 0;
+            Speed = 0;
         }
-
-        public void ChangePower(int amount)
+        public void Toggle()
+        {
+            if (DeviceStatus == DeviceStatus.On)
+                SwitchOff();
+            else
+                SwitchOn();
+            LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
+        }
+        public void ChangeSpeed(int amount)
         {           
             if (DeviceStatus == DeviceStatus.On)
             {
-                Power = DeviceValidator.ValidatePowerAc(amount, maxPower);
+                if (ModeOfAc == AcMode.Dry)
+                    Speed = -(DeviceValidator.ValidateAcSpeed(amount, maxSpeed));
+                else
+                    Speed = DeviceValidator.ValidateAcSpeed(amount, maxSpeed);
                 LastModifierAtUtc = DateTime.UtcNow;
+                HistoryOfMod.Add(DateTime.UtcNow);
             }
             else
                 throw new ArgumentException("You have to turn it on.");                  
         }
-        //TODO: ricontrollare meglio il funzionamento del metodo
         public void ChangeMode(AcMode mode)
         {
             if (DeviceStatus == DeviceStatus.On)
             {
-                if (mode == AcMode.FAN)
-                {
-                    Heat = 20;
-                    ModeOfAc = (AcMode)AcMode.FAN;
-                }
-                else if (mode == AcMode.COOL)
-                {
-                    Heat = 10;
-                    ModeOfAc = (AcMode)AcMode.COOL;
-                }
-                else if (mode == AcMode.HEAT)
-                {
-                    Heat = 30;
-                    ModeOfAc = (AcMode)AcMode.HEAT;
-                }
-                else if (mode == AcMode.CUSTOM)
-                    this.PutCustomMode();
-                else
-                    throw new ArgumentException("You havent say any mode , so it still the actual one");
+                ModeOfAc = mode;
+                Heat = HeatForAcModes[ModeOfAc];
+                LastModifierAtUtc = DateTime.UtcNow;
+                HistoryOfMod.Add(DateTime.UtcNow);
             }
             else
                 throw new ArgumentException("You have to turn it on.");
         }
-
-        public void ChangeHeatCustomMode(int heat)
-        {            
-            if (DeviceStatus == DeviceStatus.On)
-            {
-                Heat = DeviceValidator.ValidateHeatInCustomMode(heat, minHeat, maxHeat);
-                LastModifierAtUtc = DateTime.UtcNow;
-            }
-            else
-                throw new ArgumentException("You have to turn it on.");
-        }      
-
         private void PutStarterStatus()
         {
-            ModeOfAc = AcMode.FAN;
-            Heat = 20;
-            Power = 5;
-        }
-
-        private void PutCustomMode()
-        {
-            ModeOfAc = (AcMode)AcMode.CUSTOM;
-            Heat = 25;
+            ModeOfAc = AcMode.Cool;
+            Heat = HeatForAcModes[ModeOfAc];
         }
     }
 }

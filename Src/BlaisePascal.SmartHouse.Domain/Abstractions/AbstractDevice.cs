@@ -12,8 +12,10 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
         public Guid ID { get; protected set; }
         public DeviceStatus DeviceStatus { get; protected set; }
         public string ?Name { get; protected set; }
-        public DateTime DateTimeAtCreationUtc { get; protected set; }
+        public DateTime DateTimeAtCreationUtc { get; private set; }
         public DateTime? LastModifierAtUtc { get; protected set; }
+
+        public List<DateTime> HistoryOfMod = new List<DateTime>();
 
         //------CONSTRUCTORS------
         public AbstractDevice()
@@ -43,12 +45,14 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
         {
             DeviceStatus = DeviceStatus.On;
             LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
         }
 
         public virtual void SwitchOff()
         {
             DeviceStatus = DeviceStatus.Off;
             LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void FixErrors()
         {
@@ -56,6 +60,8 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
             {
                 DeviceStatus = DeviceStatus.On;
             }
+            LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
         }
     }
 }

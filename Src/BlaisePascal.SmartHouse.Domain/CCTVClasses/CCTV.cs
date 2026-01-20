@@ -8,7 +8,7 @@ using BlaisePascal.SmartHouse.Domain.Abstractions;
 
 namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
 {
-    public class CCTV : AbstractDevice, ISwitchable
+    public class CCTV : AbstractDevice, ISwitchable, IToggable
     {
         private const int intensityOfLed = 100;
         private const int degreesAtCreation = 90;
@@ -42,21 +42,31 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
             CameraLed.SetIntensity(intensityOfLed);
             QualityOfVideo = VideoQuality._720P_60;
         }
-
         public override void SwitchOff()
         {
             base.SwitchOff();
             CameraLed.SwitchOff();
         }
-
         public void ChangeQualityOfVideo(VideoQuality newQuality)
         { 
             QualityOfVideo = newQuality;
+            LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
         }
-
         public void SetCCTVDegrees(int degrees)
         {
-            Degrees = CCTVValidator.ValidateDegrees(degrees);
+            Degrees = DeviceValidator.ValidateDegrees(degrees);
+            LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
+        }
+        public void Toggle()
+        {
+            if (DeviceStatus == DeviceStatus.On)
+                SwitchOff();
+            else
+                SwitchOn();
+            LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
         }
     }
 }

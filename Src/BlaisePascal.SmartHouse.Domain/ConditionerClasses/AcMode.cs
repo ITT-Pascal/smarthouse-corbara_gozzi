@@ -2,10 +2,8 @@
 {
     public enum AcMode
     {
-        COOL,
-        FAN,
-        HEAT,
-        CUSTOM,
-        OFF
+        Cool,//FREDDO
+        Heat,//CALDO
+        Dry //DEUMIDIFICATORE
     }
 }

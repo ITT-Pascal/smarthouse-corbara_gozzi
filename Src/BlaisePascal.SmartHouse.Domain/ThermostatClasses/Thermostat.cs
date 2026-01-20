@@ -9,38 +9,44 @@ namespace BlaisePascal.SmartHouse.Domain.ThermostatClasses
 {
     public class Thermostat : AbstractDevice
     {
+        private const int tempAtOn = 0;
+        private const int defaultTarget = 2;
+
+        //-------ATTRIBUTES AND PROPERTY-------
         public float CurrentTemperature { get; private set; }
         public float TargetTemperature { get; private set; }
 
+        //------CONSTRUCTORS------
         public Thermostat():base()
         {
-            CurrentTemperature = 0;
-            TargetTemperature = 20;
+            CurrentTemperature = tempAtOn;
+            TargetTemperature = defaultTarget;
         }
         public Thermostat(Guid Id): base(Id)
         {
-            CurrentTemperature = 0;
-            TargetTemperature = 20;
+            CurrentTemperature = tempAtOn;
+            TargetTemperature = defaultTarget;
         }
         public Thermostat(Guid Id, string name): base(Id, name)
         {
-            CurrentTemperature = 0;
-            TargetTemperature = 20;
+            CurrentTemperature = tempAtOn;
+            TargetTemperature = defaultTarget;
         }
         public Thermostat(Guid Id, string name, int targetTemperature):base(Id, name)
         {
-            CurrentTemperature = 0;
+            CurrentTemperature = tempAtOn;
             TargetTemperature = targetTemperature;
         }
-
+        
+        //------METHODS------
         public sealed override void SwitchOn()
         {
             while (!IsTemperatureEquals())
                 AddTemperature();
             SwitchOff();
             LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
         }
-
         private bool IsTemperatureEquals()
         { 
             return CurrentTemperature == TargetTemperature; 
@@ -53,6 +59,7 @@ namespace BlaisePascal.SmartHouse.Domain.ThermostatClasses
         {
             TargetTemperature = DeviceValidator.ValidateTargetTemperature(temp);
             LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
         }
     }
 }

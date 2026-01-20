@@ -3,32 +3,28 @@
     public static class DeviceValidator
     {
         private const int minValueOfDevices = 1;
-        public static int ValidateIntensityBetweenRange(int valChanger, int maxBrightness)
+        //VALIDA INTENSITA' IN ABSTRACT LAMP
+        public static int ValidateNewIntensity(int newIntensity, int maxBrightness)
         {
-            if (valChanger < minValueOfDevices)
+            if (newIntensity < minValueOfDevices)
                 throw new ArgumentException("Negative number can't be avariable");
-            else if (valChanger > maxBrightness)
+            else if (newIntensity > maxBrightness)
                 throw new ArgumentException("Can't be a number greater than max brightness of lamp");
-            return valChanger;
+            return newIntensity;
         }
-        public static int ValidateHeatInCustomMode(int heat, int minHeat, int maxHeat)
+
+        //VALIDA LA VELOCITA' NELL'AIR CONDITIONER
+        public static int ValidateAcSpeed(int amount, int maxSpeed)
         {
-            if (heat < minHeat)
-                return minHeat;
-            else if (heat > maxHeat)
-                return maxHeat;
-            else
-                return heat;
-        }
-        public static int ValidatePowerAc(int amount, int maxPower)
-        {
-            if (amount > maxPower)
-                return maxPower;
+            if (amount > maxSpeed)
+                return maxSpeed;
             else if (amount < minValueOfDevices)
                 return minValueOfDevices;
             else
                 return amount;
         }
+
+        //VALIDA LA TEMPERATURA TARGET NEL THERMOSTAT
         public static int ValidateTargetTemperature(int temp)
         {
             int maxTemp = 36; //TEMPERATURA PER NON CAUSARE DANNI CORPOREI
@@ -38,6 +34,17 @@
                 return minValueOfDevices;
             else
                 return temp;
+        }
+
+        //VALIDA GRADI NELLA CCTV
+        public static int ValidateDegrees(int degrees)
+        {
+            if (degrees < 0)
+                throw new ArgumentOutOfRangeException();
+            else if (degrees > 360)
+                throw new ArgumentOutOfRangeException();
+            else
+                return degrees;
         }
     }
 }
