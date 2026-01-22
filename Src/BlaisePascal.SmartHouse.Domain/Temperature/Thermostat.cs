@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
 
-namespace BlaisePascal.SmartHouse.Domain.ThermostatClasses
+namespace BlaisePascal.SmartHouse.Domain.Temperature
 {
-    public class Thermostat : AbstractDevice
+    public class Thermostat : AbstractDevice, IToggable
     {
         private const int tempAtOn = 0;
-        private const int defaultTarget = 2;
+        private const int defaultTarget = 20;
 
         //-------ATTRIBUTES AND PROPERTY-------
         public float CurrentTemperature { get; private set; }
@@ -43,9 +43,12 @@ namespace BlaisePascal.SmartHouse.Domain.ThermostatClasses
         {
             while (!IsTemperatureEquals())
                 AddTemperature();
-            SwitchOff();
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
+        }
+        public sealed override void SwitchOff()
+        {
+            base.SwitchOff();
         }
         private bool IsTemperatureEquals()
         { 
@@ -60,6 +63,13 @@ namespace BlaisePascal.SmartHouse.Domain.ThermostatClasses
             TargetTemperature = DeviceValidator.ValidateTargetTemperature(temp);
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
+        }
+        public void Toggle()
+        {
+            if (DeviceStatus == DeviceStatus.On)
+                SwitchOff();
+            else
+                SwitchOn();
         }
     }
 }

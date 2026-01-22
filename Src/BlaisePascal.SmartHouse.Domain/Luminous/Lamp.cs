@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace BlaisePascal.SmartHouse.Domain.LampClasses
+namespace BlaisePascal.SmartHouse.Domain.Luminous
 {
     public class Lamp:AbstractLamp
     {

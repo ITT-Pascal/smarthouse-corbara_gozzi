@@ -1,4 +1,4 @@
-﻿using BlaisePascal.SmartHouse.Domain.LampClasses;
+﻿using BlaisePascal.SmartHouse.Domain.Luminous;
 
 namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
 {

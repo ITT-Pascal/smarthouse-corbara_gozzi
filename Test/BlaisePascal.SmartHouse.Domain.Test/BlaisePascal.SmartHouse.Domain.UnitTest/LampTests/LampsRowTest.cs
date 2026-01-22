@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.LampClasses;
+using BlaisePascal.SmartHouse.Domain.Luminous;
 
 namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
 {

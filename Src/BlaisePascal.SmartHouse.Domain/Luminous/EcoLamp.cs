@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace BlaisePascal.SmartHouse.Domain.LampClasses
+namespace BlaisePascal.SmartHouse.Domain.Luminous
 {
     public class EcoLamp : AbstractLamp
     {
@@ -36,7 +36,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         //--------METHODS-------
         public void SwitchOn(bool enableAutoOff)
         {
-            base.SwitchOn();
+            SwitchOn();
             autoOffAtUtc = enableAutoOff
             ?DateTime.UtcNow.AddMinutes(DefaultAutoOffMinutes): null;
         }
@@ -44,7 +44,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         {
             if (autoOffMinutes < MinAutoOffMinutes)
                 throw new ArgumentOutOfRangeException(nameof(autoOffMinutes));
-            base.SwitchOn();
+            SwitchOn();
             autoOffAtUtc = DateTime.UtcNow.AddMinutes(autoOffMinutes);
         }
 

@@ -2,7 +2,7 @@
 using System.Reflection.Metadata.Ecma335;
 using System.Xml.Linq;
 
-namespace BlaisePascal.SmartHouse.Domain.LampClasses
+namespace BlaisePascal.SmartHouse.Domain.Luminous
 {
     public abstract class AbstractLamp: AbstractDevice, ISwitchable, IToggable
     {

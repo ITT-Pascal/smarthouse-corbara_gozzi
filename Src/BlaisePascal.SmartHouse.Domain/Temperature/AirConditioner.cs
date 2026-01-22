@@ -1,14 +1,12 @@
-﻿using BlaisePascal.SmartHouse.Domain.ConditionerClasses;
-using BlaisePascal.SmartHouse.Domain.Abstractions;
+﻿using BlaisePascal.SmartHouse.Domain.Abstractions;
 
-namespace BlaisePascal.SmartHouse.Domain
+namespace BlaisePascal.SmartHouse.Domain.Temperature
 {
     public class AirConditioner: AbstractDevice, ISwitchable, IToggable
     {
         private const int minSpeed = 1;
         private const int maxSpeed = 10;
         private const int minHeat = 0;
-        private const int maxHeat = 0;
         //-------ATTRIBUTES AND PROPERTY-------
 
         public int Speed { get; private set; }
@@ -45,7 +43,7 @@ namespace BlaisePascal.SmartHouse.Domain
         public sealed override void SwitchOn()
         {
             base.SwitchOn();
-            this.PutStarterStatus();
+            PutStarterStatus();
         }
         public sealed override void SwitchOff()
         {
@@ -67,7 +65,7 @@ namespace BlaisePascal.SmartHouse.Domain
             if (DeviceStatus == DeviceStatus.On)
             {
                 if (ModeOfAc == AcMode.Dry)
-                    Speed = -(DeviceValidator.ValidateAcSpeed(amount, maxSpeed));
+                    Speed = -DeviceValidator.ValidateAcSpeed(amount, maxSpeed);
                 else
                     Speed = DeviceValidator.ValidateAcSpeed(amount, maxSpeed);
                 LastModifierAtUtc = DateTime.UtcNow;
