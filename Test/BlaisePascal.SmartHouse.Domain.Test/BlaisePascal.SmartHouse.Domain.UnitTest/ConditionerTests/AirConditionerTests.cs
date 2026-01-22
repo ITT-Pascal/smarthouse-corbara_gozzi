@@ -1,4 +1,4 @@
-﻿using BlaisePascal.SmartHouse.Domain.ConditionerClasses;
+﻿using BlaisePascal.SmartHouse.Domain.Temperature;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BlaisePascal.SmartHouse.Domain.LampClasses;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
+using BlaisePascal.SmartHouse.Domain.Luminous;
 
 namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
 {
@@ -13,9 +13,9 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         private const int intensityOfLed = 100;
         private const int degreesAtCreation = 90;
         //-------ATTRIBUTES AND PROPERTY-------
-        public Lamp CameraLed { get; set; }
+        public Lamp CameraLed { get; private set; }
         public VideoQuality QualityOfVideo { get; private set; }
-        public int Degrees { get; set; }
+        public int Degrees { get; private set; }
 
         //------CONSTRUCTORS------
         public CCTV(): base()

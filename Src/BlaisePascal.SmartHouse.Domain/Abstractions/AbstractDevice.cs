@@ -9,10 +9,10 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
     public abstract class AbstractDevice
     {
         //-------ATTRIBUTES AND PROPERTY-------
-        public Guid ID { get; protected set; }
+        public Guid ID { get; init; }
         public DeviceStatus DeviceStatus { get; protected set; }
         public string ?Name { get; protected set; }
-        public DateTime DateTimeAtCreationUtc { get; private set; }
+        public DateTime DateTimeAtCreationUtc { get; init; }
         public DateTime? LastModifierAtUtc { get; protected set; }
 
         public List<DateTime> HistoryOfMod = new List<DateTime>();
@@ -47,7 +47,6 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
-
         public virtual void SwitchOff()
         {
             DeviceStatus = DeviceStatus.Off;
@@ -62,6 +61,23 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
             }
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
+        }
+        public void RenameDevice(string newName)
+        {
+            Name = newName;
+            LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
+        }
+        public string ReturnAllModifiesOfDevice(AbstractDevice device)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"----{device.GetType}----");
+            foreach (DateTime modifie in HistoryOfMod)
+            {
+                sb.Append(modifie);
+                sb.Append("\n");
+            }
+            return sb.ToString();
         }
     }
 }
