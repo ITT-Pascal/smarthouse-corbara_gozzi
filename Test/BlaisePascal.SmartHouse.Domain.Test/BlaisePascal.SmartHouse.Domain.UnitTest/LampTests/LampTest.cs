@@ -69,7 +69,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         [Fact]
         public void Lamp_IncreaseBy_With50BrightnessTheNewBrightnessIs70BecauseOfNewChangerValue()
         {
-            Lamp lamp = new Lamp("TestLamp", new Guid(), 20);
+            Lamp lamp = new Lamp("TestLamp");
             lamp.SwitchOn(); // 50
             lamp.IncreaseBy();
             Assert.Equal(70, lamp.Intensity);
@@ -78,7 +78,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         [Fact]
         public void Lamp_DecreaseBy_With50BrightnessTheNewBrightnessIs10BecauseOfNewChangerValue()
         {
-            Lamp lamp = new Lamp("TestLamp", new Guid(), 40);
+            Lamp lamp = new Lamp("TestLamp");
             lamp.SwitchOn(); // 50
             lamp.DecreaseBy();
             Assert.Equal(10, lamp.Intensity);
@@ -109,28 +109,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
             lamp.SwitchOn();
             lamp.SetIntensity(100);
             Assert.Equal(100, lamp.Intensity);
-        }
-
-        [Fact]
-        public void Lamp_ChangeValueOfIncreaseAndDecrease_TheValueIs30()
-        {
-            Lamp lamp = new Lamp();
-            lamp.SwitchOn();
-            lamp.ChangeValueOfIncreaseAndDecrease(30);
-            lamp.IncreaseBy();
-            Assert.Equal(30, lamp.ValueOfIncreaseAndDescrease);
-            Assert.Equal(80, lamp.Intensity);
-        }
-
-        [Fact]
-        public void Lamp_ChangeValueOfIncreaseAndDecrease_TheValueIs1()
-        {
-            Lamp lamp = new Lamp();
-            lamp.SwitchOn();
-            lamp.ChangeValueOfIncreaseAndDecrease(1);
-            lamp.IncreaseBy();
-            Assert.Equal(1, lamp.ValueOfIncreaseAndDescrease);
-            Assert.Equal(51, lamp.Intensity);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
 {
     public abstract class AbstractLamp: AbstractDevice, ISwitchable, IToggable
     {
-        private int minIntensity = 1;
+        public int minIntensity = 1; //Se private reca errori in lampsrow
         private int intensityAtOff = 0;
         private int valOfIncreaseAndDecrease = 10;
         //-------ATTRIBUTES AND PROPERTY-------

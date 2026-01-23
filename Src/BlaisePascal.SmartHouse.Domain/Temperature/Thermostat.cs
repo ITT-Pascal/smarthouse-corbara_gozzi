@@ -50,7 +50,7 @@ namespace BlaisePascal.SmartHouse.Domain.Temperature
         {
             base.SwitchOff();
         }
-        private bool IsTemperatureEquals()
+        public bool IsTemperatureEquals()
         { 
             return CurrentTemperature == TargetTemperature; 
         }

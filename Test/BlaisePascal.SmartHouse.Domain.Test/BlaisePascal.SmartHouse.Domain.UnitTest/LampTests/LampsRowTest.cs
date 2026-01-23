@@ -49,7 +49,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         [Fact]
         public void LampsRow_AddLampInPosition_WeAddALampNamedBrasoInPos1()
         {
-            TestLampsRow.AddLamp(new EcoLamp("Ciao"));
+            TestLampsRow.AddLamp(new EcoLamp());
             TestLampsRow.AddLamp(new Lamp("Sas"));
             TestLampsRow.AddLampInPosition(new Lamp("Braso"), 1);
             Assert.Equal("Braso", TestLampsRow.LampRow[1].Name);
@@ -58,7 +58,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         [Fact]
         public void LampsRow_RemoveLamp_RemoveTheLampFromName()
         {
-            TestLampsRow.AddLamp(new EcoLamp("Ciao"));
+            TestLampsRow.AddLamp(new EcoLamp());
             TestLampsRow.AddLamp(new Lamp("Sas"));
             TestLampsRow.RemoveLamp("Ciao");
             Assert.Equal("Sas", TestLampsRow.LampRow[0].Name);
@@ -70,8 +70,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         {
             Guid testId = new Guid();
             Guid testId2 = new Guid();
-            TestLampsRow.AddLamp(new Lamp("lamp", testId));
-            TestLampsRow.AddLamp(new Lamp("Sas", new Guid()));
+            TestLampsRow.AddLamp(new Lamp("lamp"));
+            TestLampsRow.AddLamp(new Lamp("Sas"));
             TestLampsRow.RemoveLamp(testId);
             Assert.Single(TestLampsRow.LampRow);
             Assert.Equal(testId2, TestLampsRow.LampRow[0].ID);
@@ -81,7 +81,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         public void LampsRow_RemoveLampInPosition_RemoveTheLampInPosition1()
         {
             TestLampsRow.AddLamp(new Lamp("lamp"));
-            TestLampsRow.AddLamp(new Lamp("Sas", new Guid()));
+            TestLampsRow.AddLamp(new Lamp("Sas"));
             TestLampsRow.RemoveLampInPosition(1);
             Assert.Single(TestLampsRow.LampRow);
             Assert.Equal("lamp", TestLampsRow.LampRow[0].Name);
@@ -91,7 +91,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         public void LampsRow_SwitchOn_SwitchOnAllLamps()
         {
             TestLampsRow.AddLamp(new Lamp("lamp"));
-            TestLampsRow.AddLamp(new Lamp("Sas", new Guid()));
+            TestLampsRow.AddLamp(new Lamp("Sas"));
             TestLampsRow.SwitchOn();
             Assert.Equal(DeviceStatus.On, TestLampsRow.LampRow[0].DeviceStatus);
             Assert.Equal(DeviceStatus.On, TestLampsRow.LampRow[1].DeviceStatus);
@@ -102,7 +102,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         {
             Guid testId = new Guid();
             TestLampsRow.AddLamp(new Lamp("lamp"));
-            TestLampsRow.AddLamp(new Lamp("Sas", testId));
+            TestLampsRow.AddLamp(new Lamp("Sas"));
             TestLampsRow.SwitchOn(testId);
             Assert.Equal(DeviceStatus.Off, TestLampsRow.LampRow[0].DeviceStatus);
             Assert.Equal(DeviceStatus.On, TestLampsRow.LampRow[1].DeviceStatus);
@@ -138,7 +138,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         public void LampsRow_SwitchOff_SwitchOffAllLamps()
         {
             TestLampsRow.AddLamp(new Lamp("lamp"));
-            TestLampsRow.AddLamp(new Lamp("Sas", new Guid()));
+            TestLampsRow.AddLamp(new Lamp("Sas"));
             TestLampsRow.SwitchOn();
             TestLampsRow.SwitchOff();
             Assert.Equal(DeviceStatus.Off, TestLampsRow.LampRow[0].DeviceStatus);
@@ -150,7 +150,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         {
             Guid testId = new Guid();
             TestLampsRow.AddLamp(new Lamp("lamp"));
-            TestLampsRow.AddLamp(new Lamp("Sas", testId));
+            TestLampsRow.AddLamp(new Lamp("Sas"));
             TestLampsRow.SwitchOn();
             TestLampsRow.SwitchOff(testId);
             Assert.Equal(DeviceStatus.On, TestLampsRow.LampRow[0].DeviceStatus);
@@ -214,7 +214,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         {
             Guid testId = new Guid();
             TestLampsRow.AddLamp(new Lamp("lamp"));
-            TestLampsRow.AddLamp(new Lamp("Sas", testId));
+            TestLampsRow.AddLamp(new Lamp("Sas"));
             TestLampsRow.SwitchOn();
             TestLampsRow.SetIntensityForLamp(10, testId);
             Assert.Equal(50, TestLampsRow.LampRow[0].Intensity);

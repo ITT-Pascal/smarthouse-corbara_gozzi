@@ -195,7 +195,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         {
             foreach (AbstractLamp lamp in LampRow)
             {
-                if (lamp.Intensity == lamp.MinIntensity)
+                if (lamp.Intensity == lamp.minIntensity)
                     return lamp;
             }
             return null;

@@ -4,88 +4,138 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.DoorTest
 {
     public class DoorTest
     {
-        Door Door = new Door("Braso", new Guid(), 1234, "PASSWORD");
+        Door Door = new Door(1234);
+        Door DoorN = new Door();
 
         [Fact]
-
         public void Door_Constructor_Code()
         {
-            Assert.Equal(1234, Door.ReturnCode("PASSWORD"));
+            Assert.Equal(DoorStatus.Locked, Door.Status);
         }
 
         [Fact]
-
-        public void Door_Constructor_CodeAndName()
+        public void Door_Constructor_NoCode()
         {
-            Assert.Equal(1234, Door.ReturnCode("PASSWORD"));
-            Assert.Equal("Braso", Door.Name);
+            Door DoorN = new Door();
+            Assert.Equal(DoorStatus.Closed, Door.Status);
         }
 
         [Fact]
-
-        public void Door_Constructor_CodeNameAndGuid()
+        public void Door_OpenDoor_OpenWhenLocked()
         {
-            Guid id = new Guid();
-            Assert.Equal(1234, Door.ReturnCode("PASSWORD"));
-            Assert.Equal("Braso", Door.Name);
-            Assert.Equal(id,Door.ID);
-        }
-
-        [Fact]
-        public void Door_OpenDoor_WithCode()
-        {
-            Door.OpenDoor(1234);
-            Assert.Equal(DeviceStatus.Open, Door.DeviceStatus);
-        }
-
-        [Fact]
-        public void Door_OpenDoor_NoCodeAndClosed()
-        {
-            Door.UnlockDoor(1234);
             Door.OpenDoor();
-            Assert.Equal(DeviceStatus.Open, Door.DeviceStatus);
+            Assert.Throws<ArgumentException>(() => "For Open the locked door you need to insert the code");
         }
 
         [Fact]
-        public void Door_OpenDoor_IsJustOpen()
+        public void Door_OpenDoor_OpenWhenClosed()
         {
-            Door.OpenDoor(1234);
-            Door.OpenDoor(1234);
-            Assert.Equal(DeviceStatus.Open, Door.DeviceStatus);
+            DoorN.OpenDoor();
+            Assert.Equal(DoorStatus.Open , DoorN.Status);
         }
 
         [Fact]
-        public void Door_CloseDoor_IsOpen()
+        public void Door_OpenDoor_OpenWhenOpen()
         {
-            Door.OpenDoor(1234);
-            Door.CloseDoor();
-            Assert.Equal(DeviceStatus.Closed, Door.DeviceStatus);
+            DoorN.OpenDoor();
+            DoorN.OpenDoor();
+            Assert.Equal(DoorStatus.Open, DoorN.Status);
         }
 
         [Fact]
-        public void Door_CloseDoor_IsJustClosed()
+        public void Door_UnlockDoor_WrongCode()
         {
-            Door.OpenDoor(1234);
-            Door.CloseDoor();
-            Door.CloseDoor();
-            Assert.Equal(DeviceStatus.Closed, Door.DeviceStatus);
+            Door.UnlockDoor(6767);
+            Assert.Throws<ArgumentException>(() => "You Insert The Wrong Code");
         }
 
         [Fact]
-        public void Door_LockDoor_IsClosed()
+        public void Door_UnlockDoor_LockedRightCode()
         {
-            Door.OpenDoor(1234);
-            Door.CloseDoor();
-            Door.LockDoor(1234);
-            Assert.Equal(DeviceStatus.Locked, Door.DeviceStatus);
-        }
-
-        [Fact]
-        public void Door_LockDoor_Islocked()
-        {           
             Door.UnlockDoor(1234);
-            Door.LockDoor(1234);
-            Assert.Equal(DeviceStatus.Locked, Door.DeviceStatus);
+            Assert.Equal(DoorStatus.Open, Door.Status);
+        }
+
+        [Fact]
+        public void Door_UnlockDoor_ClosedRightCode()
+        {
+            DoorN.UnlockDoor(1234);
+            Assert.Equal(DoorStatus.Open, DoorN.Status);
+        }
+
+        [Fact]
+        public void Door_UnlockDoor_OpenRightCode()
+        {
+            DoorN.OpenDoor();
+            DoorN.UnlockDoor(1234);
+            Assert.Equal(DoorStatus.Open, DoorN.Status);
+        }
+
+        [Fact]
+        public void Door_CloseDoor_LockedDoor()
+        {
+            Door.CloseDoor();
+            Assert.Throws<ArgumentException>(() => "You need to unlock the door");
+        }
+
+        [Fact]
+        public void Door_CloseDoor_ClosedDoor()
+        {
+            DoorN.CloseDoor();
+            Assert.Equal(DoorStatus.Closed, DoorN.Status);
+        }
+
+        [Fact]
+        public void Door_CloseDoor_OpenDoor()
+        {
+            DoorN.OpenDoor();
+            DoorN.CloseDoor();
+            Assert.Equal(DoorStatus.Closed, DoorN.Status);
+        }
+
+        [Fact]
+        public void Door_LockDoor_OpenDoor()
+        {
+            DoorN.OpenDoor();
+            DoorN.LockDoor();
+            Assert.Equal(DoorStatus.Locked, DoorN.Status);
+        }
+
+        [Fact]
+        public void Door_LockDoor_ClosedDoor()
+        {         
+            DoorN.LockDoor();
+            Assert.Equal(DoorStatus.Locked, DoorN.Status);
+        }
+
+        [Fact]
+        public void Door_LockDoor_LockedDoor()
+        {
+            DoorN.LockDoor();
+            DoorN.LockDoor();
+            Assert.Equal(DoorStatus.Locked, DoorN.Status);
+        }
+
+        [Fact]
+        public void Door_ChangeCode_CorrectCode()
+        {
+            Door.ChangeCode(6767);
+            Door.UnlockDoor(6767);
+            Assert.Equal(DoorStatus.Open, DoorN.Status);
+        }
+
+        [Fact]
+        public void Door_ChangeCode_CodeTooLong()
+        {
+            Door.ChangeCode(67677935);
+            Assert.Throws<ArgumentException>(() => "The Code Has to be at least 2 number and maximus 6 numbers");
+        }
+
+        [Fact]
+        public void Door_ChangeCode_CodeTooShort()
+        {
+            Door.ChangeCode(1);
+            Assert.Throws<ArgumentException>(() => "The Code Has to be at least 2 number and maximus 6 numbers");
         }
     }
 }

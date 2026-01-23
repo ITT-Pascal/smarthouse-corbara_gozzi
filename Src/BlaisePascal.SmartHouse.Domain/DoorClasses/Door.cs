@@ -1,4 +1,5 @@
 ﻿using BlaisePascal.SmartHouse.Domain.Abstractions;
+using System.ComponentModel.Design;
 
 namespace BlaisePascal.SmartHouse.Domain.DoorClasses
 {
@@ -46,6 +47,8 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
                 LastModifierAtUtc = DateTime.UtcNow;
                 HistoryOfDoorMod.Add(DateTime.UtcNow);
             }
+            else
+                throw new ArgumentException("You Insert The Wrong Code");
         }
         public void CloseDoor()
         {
@@ -66,9 +69,14 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
         }
         public void ChangeCode(int code)
         {
-            Code = code;
-            LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfDoorMod.Add(DateTime.UtcNow);
+            if (code.ToString().Length <= 6 && code.ToString().Length > 1)
+            {
+                Code = code;
+                LastModifierAtUtc = DateTime.UtcNow;
+                HistoryOfDoorMod.Add(DateTime.UtcNow);
+            }
+            else
+                throw new ArgumentException("The Code Has to be at least 2 number and maximus 6 numbers");
         }
     }
-}
+}      

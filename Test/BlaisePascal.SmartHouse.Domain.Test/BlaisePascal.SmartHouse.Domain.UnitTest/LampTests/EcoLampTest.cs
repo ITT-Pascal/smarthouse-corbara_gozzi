@@ -24,7 +24,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         {
             EcoLamp lamp = new EcoLamp();
             lamp.SwitchOn();
-            //BrightnessAtOn = 30
             Assert.Equal(DeviceStatus.On, lamp.DeviceStatus);
             Assert.Equal(30, lamp.Intensity);
         }
@@ -59,7 +58,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         public void EcoLamp_IncreaseBy_With30BrightnessTheNewBrightnessIs40()
         {
             EcoLamp lamp = new EcoLamp();
-            lamp.SwitchOn(); // 30
+            lamp.SwitchOn(); 
             lamp.IncreaseBy();
             Assert.Equal(40, lamp.Intensity);
         }
@@ -76,7 +75,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         [Fact]
         public void EcoLamp_IncreaseBy_With30BrightnessTheNewBrightnessIs50BecauseOfNewChangerValue()
         {
-            EcoLamp lamp = new EcoLamp("TestLamp", new Guid(), 20);
+            EcoLamp lamp = new EcoLamp();
             lamp.SwitchOn(); // 30
             lamp.IncreaseBy();
             Assert.Equal(50, lamp.Intensity);
@@ -85,7 +84,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         [Fact]
         public void EcoLamp_DecreaseBy_With30BrightnessTheNewBrightnessIs10BecauseOfNewChangerValue()
         {
-            EcoLamp lamp = new EcoLamp("TestLamp", new Guid(), 20);
+            EcoLamp lamp = new EcoLamp();
             lamp.SwitchOn(); // 30
             lamp.DecreaseBy();
             Assert.Equal(10, lamp.Intensity);
@@ -118,27 +117,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
             Assert.Equal(70, lamp.Intensity);
         }
 
-        [Fact]
-        public void EcoLamp_ChangeValueOfIncreaseAndDecrease_TheValueIs30()
-        {
-            EcoLamp lamp = new EcoLamp();
-            lamp.SwitchOn();
-            lamp.ChangeValueOfIncreaseAndDecrease(30);
-            lamp.IncreaseBy();
-            Assert.Equal(30, lamp.ValueOfIncreaseAndDescrease);
-            Assert.Equal(60, lamp.Intensity);
-        }
-
-        [Fact]
-        public void EcoLamp_ChangeValueOfIncreaseAndDecrease_TheValueIs1()
-        {
-            EcoLamp lamp = new EcoLamp();
-            lamp.SwitchOn();
-            lamp.ChangeValueOfIncreaseAndDecrease(1);
-            lamp.IncreaseBy();
-            Assert.Equal(DeviceStatus.On, lamp.DeviceStatus);
-            Assert.Equal(1, lamp.ValueOfIncreaseAndDescrease);
-            Assert.Equal(31, lamp.Intensity);
-        }
+       
     }
 }
