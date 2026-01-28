@@ -57,7 +57,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.ThermostatTests
         public void Thermostat_IsTemperatureEqual_ReturnTrueWith20And20()
         {
             Thermostat Thermo = new Thermostat();
-            Thermo.IsTemperatureEquals();
+            Thermo.AddTemperature();
             Assert.True(Thermo.IsTemperatureEquals());
         }
 

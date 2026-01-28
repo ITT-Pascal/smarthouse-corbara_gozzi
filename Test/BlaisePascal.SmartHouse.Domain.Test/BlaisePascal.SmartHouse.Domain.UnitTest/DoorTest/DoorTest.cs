@@ -1,9 +1,12 @@
 ﻿
 using BlaisePascal.SmartHouse.Domain.DoorClasses;
+using System.ComponentModel;
 namespace BlaisePascal.SmartHouse.Domain.UnitTest.DoorTest
 {
     public class DoorTest
     {
+        readonly int pass = 1234;
+        readonly int newPass = 4321;
         Door Door = new Door(1234);
         Door DoorN = new Door();
 
@@ -16,15 +19,13 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.DoorTest
         [Fact]
         public void Door_Constructor_NoCode()
         {
-            Door DoorN = new Door();
-            Assert.Equal(DoorStatus.Closed, Door.Status);
+            Assert.Equal(DoorStatus.Closed, DoorN.Status);
         }
 
         [Fact]
         public void Door_OpenDoor_OpenWhenLocked()
         {
-            Door.OpenDoor();
-            Assert.Throws<ArgumentException>(() => "For Open the locked door you need to insert the code");
+            Assert.Throws<ArgumentException>(() => Door.OpenDoor());
         }
 
         [Fact]
@@ -45,8 +46,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.DoorTest
         [Fact]
         public void Door_UnlockDoor_WrongCode()
         {
-            Door.UnlockDoor(6767);
-            Assert.Throws<ArgumentException>(() => "You Insert The Wrong Code");
+            Assert.Throws<ArgumentException>(() => Door.UnlockDoor(6767));
         }
 
         [Fact]
@@ -59,23 +59,22 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.DoorTest
         [Fact]
         public void Door_UnlockDoor_ClosedRightCode()
         {
-            DoorN.UnlockDoor(1234);
-            Assert.Equal(DoorStatus.Open, DoorN.Status);
+            Door.UnlockDoor(1234);
+            Assert.Equal(DoorStatus.Open, Door.Status);
         }
 
         [Fact]
         public void Door_UnlockDoor_OpenRightCode()
         {
-            DoorN.OpenDoor();
-            DoorN.UnlockDoor(1234);
-            Assert.Equal(DoorStatus.Open, DoorN.Status);
+            Door.UnlockDoor(1234);
+            Door.UnlockDoor(1234);
+            Assert.Equal(DoorStatus.Open, Door.Status);
         }
 
         [Fact]
         public void Door_CloseDoor_LockedDoor()
         {
-            Door.CloseDoor();
-            Assert.Throws<ArgumentException>(() => "You need to unlock the door");
+            Assert.Throws<ArgumentException>(() => Door.CloseDoor());
         }
 
         [Fact]
@@ -121,21 +120,21 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.DoorTest
         {
             Door.ChangeCode(6767);
             Door.UnlockDoor(6767);
-            Assert.Equal(DoorStatus.Open, DoorN.Status);
+            Assert.Equal(DoorStatus.Open, Door.Status);
         }
 
         [Fact]
         public void Door_ChangeCode_CodeTooLong()
         {
-            Door.ChangeCode(67677935);
-            Assert.Throws<ArgumentException>(() => "The Code Has to be at least 2 number and maximus 6 numbers");
+            Assert.Throws<ArgumentException>(() => Door.ChangeCode(67677935));
         }
 
         [Fact]
         public void Door_ChangeCode_CodeTooShort()
         {
-            Door.ChangeCode(1);
-            Assert.Throws<ArgumentException>(() => "The Code Has to be at least 2 number and maximus 6 numbers");
+            Assert.Throws<ArgumentException>(() => Door.ChangeCode(1));
         }
+
+        //TODO Read only con pass e nuova pass
     }
 }

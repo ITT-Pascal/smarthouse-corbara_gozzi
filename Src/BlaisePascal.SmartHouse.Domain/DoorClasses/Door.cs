@@ -40,15 +40,17 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
             
         }
         public void UnlockDoor(int code)
-        {
+        { 
             if (code == Code)
-            {
-                Status = DoorStatus.Open;
-                LastModifierAtUtc = DateTime.UtcNow;
-                HistoryOfDoorMod.Add(DateTime.UtcNow);
+                {
+            Status = DoorStatus.Open;
+            LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfDoorMod.Add(DateTime.UtcNow);
             }
             else
-                throw new ArgumentException("You Insert The Wrong Code");
+               throw new ArgumentException("You Insert The Wrong Code");
+             
+
         }
         public void CloseDoor()
         {
