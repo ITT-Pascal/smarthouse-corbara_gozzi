@@ -9,34 +9,36 @@ namespace BlaisePascal.SmartHouse.Domain.Temperature
         private const int minHeat = 0;
         //-------ATTRIBUTES AND PROPERTY-------
 
-        public int Speed { get; private set; }
-        public int Heat { get; private set; }
+        public uint Speed { get; private set; }
+        public Heat Heat { get; private set; }
+        public Heat CustomHeat = new Heat(15);
         public AcMode ModeOfAc { get; private set; }
 
-        public Dictionary<AcMode, int> HeatForAcModes = new Dictionary<AcMode, int>()
+        public Dictionary<AcMode, Heat> HeatForAcModes = new Dictionary<AcMode, Heat>()
         {
-            { AcMode.Heat, 30 },
-            { AcMode.Cool, 10 },
-            { AcMode.Dry, 0 }
+            { AcMode.Hot, new Heat(30) },
+            { AcMode.Heat, new Heat(20) },
+            { AcMode.Cool, new Heat(10) },
+            { AcMode.Freeze, new Heat(-10) },
+            { AcMode.Dry, new Heat(0) }
         };
 
         //------CONSTRUCTORS------
         public AirConditioner(): base()
         {
             Speed = minSpeed;
-            Heat = minHeat;
-            
+            Heat = new Heat(minHeat);
         }
         public AirConditioner(Guid id) : base(id)
         {
             Speed = minSpeed;
-            Heat = minHeat;
+            Heat = new Heat(minHeat);
         }
 
         public AirConditioner(string name, Guid guid): base(guid, name)
         {
             Speed = minSpeed;
-            Heat = minHeat;
+            Heat = new Heat(minHeat);
         }
 
         //------METHODS------
@@ -48,7 +50,7 @@ namespace BlaisePascal.SmartHouse.Domain.Temperature
         public sealed override void SwitchOff()
         {
             base.SwitchOff();
-            Heat = 0;
+            Heat = new Heat(0);
             Speed = 0;
         }
         public void Toggle()
@@ -83,6 +85,12 @@ namespace BlaisePascal.SmartHouse.Domain.Temperature
                 LastModifierAtUtc = DateTime.UtcNow;
                 HistoryOfMod.Add(DateTime.UtcNow);
             }
+            else if (mode == AcMode.Custom)
+            {
+                Heat = CustomHeat;
+                LastModifierAtUtc = DateTime.UtcNow;
+                HistoryOfMod.Add(DateTime.UtcNow);
+            }
             else
                 throw new ArgumentException("You have to turn it on.");
         }
@@ -90,6 +98,10 @@ namespace BlaisePascal.SmartHouse.Domain.Temperature
         {
             ModeOfAc = AcMode.Cool;
             Heat = HeatForAcModes[ModeOfAc];
+        }
+        public void ChangeHeatCustomMode(Heat newHeat)
+        {
+            CustomHeat = newHeat;
         }
     }
 }

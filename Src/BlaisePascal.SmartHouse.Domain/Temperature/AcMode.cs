@@ -2,8 +2,11 @@
 {
     public enum AcMode
     {
+        Hot, //MOLTO CALDO
         Cool,//FREDDO
         Heat,//CALDO
-        Dry //DEUMIDIFICATORE
+        Dry, //DEUMIDIFICATORE
+        Freeze, //CONGELO
+        Custom
     }
 }

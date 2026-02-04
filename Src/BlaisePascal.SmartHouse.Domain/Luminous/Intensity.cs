@@ -8,19 +8,23 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
 {
     public class Intensity
     {
-        int maxPercentage = 100;
-        int minPercentage = 0;
-        int Value { get; }
+        public int maxPercentage = 100;
+        public int minPercentage = 0;
+        public int Value { get; }
 
         public Intensity(int val)
         {
             if (val < minPercentage || val > maxPercentage)
-                throw new ArgumentException("Inserire una percentuale di intensità tra 0 e 100");
+                throw new ArgumentException("Percentuale di intensità fuori al range 0 e 100");
             Value = val;
         }
-
-        public void AddIntensity(int newIntensity)
+        public Intensity SumOfIntensity(int newValue)
         {
+            return new Intensity(Value + newValue);
+        }
+        public Intensity SubtractionOfIntensity(int newValue)
+        {
+            return new Intensity(Value - newValue);
         }
     }
 }

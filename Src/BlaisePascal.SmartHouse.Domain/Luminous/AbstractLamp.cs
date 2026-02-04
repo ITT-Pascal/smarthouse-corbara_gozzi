@@ -6,9 +6,8 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
 {
     public abstract class AbstractLamp: AbstractDevice, ISwitchable, IToggable
     {
-        public int minIntensity = 1; //Se private reca errori in lampsrow
         private int intensityAtOff = 0;
-        private Intensity valOfIncreaseAndDecrease = new Intensity(10);
+        private int valOfIncreaseAndDecrease = 10;
         //-------ATTRIBUTES AND PROPERTY-------
         public Intensity Intensity { get; protected set; }
         public Intensity IntensityAtOn = new Intensity(50);
@@ -16,11 +15,6 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         //------CONSTRUCTORS------
         protected AbstractLamp(): base()
         {
-            Intensity = new Intensity(intensityAtOff);
-        }
-        protected AbstractLamp(string name) : base()
-        {
-            Name = new Name(name);
             Intensity = new Intensity(intensityAtOff);
         }
         protected AbstractLamp(Guid id) : base(id)
@@ -56,7 +50,7 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         {
             if (DeviceStatus == DeviceStatus.On)
             {
-                Intensity = new Intensity(Math.Min(Intensity. + valOfIncreaseAndDecrease, MaxIntensity));
+                Intensity = Intensity.SumOfIntensity(valOfIncreaseAndDecrease);
                 LastModifierAtUtc = DateTime.UtcNow;
                 HistoryOfMod.Add(DateTime.UtcNow);
             }
@@ -65,16 +59,16 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         {
             if (DeviceStatus == DeviceStatus.On)
             {
-                Intensity = Math.Max(Intensity - valOfIncreaseAndDecrease, minIntensity);
+                Intensity = Intensity.SubtractionOfIntensity(valOfIncreaseAndDecrease);
                 LastModifierAtUtc = DateTime.UtcNow;
                 HistoryOfMod.Add(DateTime.UtcNow);
             }
         }
-        public virtual void SetIntensity(int value)
+        public virtual void SetIntensity(Intensity value)
         {
             if (DeviceStatus == DeviceStatus.On)
             {
-                Intensity = DeviceValidator.ValidateNewIntensity(value, MaxIntensity);
+                Intensity = value;
                 LastModifierAtUtc = DateTime.UtcNow;
                 HistoryOfMod.Add(DateTime.UtcNow);
             }

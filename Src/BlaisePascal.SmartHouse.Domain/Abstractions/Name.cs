@@ -15,7 +15,7 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
         {
             if (string.IsNullOrWhiteSpace(value))
                 throw new ArgumentException("Inserire caratteri");
-            if(value.Contains(" ") || value.Contains("."))
+            if(value.Contains(' ') || value.Contains('.'))
                 throw new ArgumentException("Impossibile nome con spazi o punti");
             Value = $"{value}";
         }

@@ -8,9 +8,9 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
     {
 
         //-------ATTRIBUTES AND PROPERTY-------
-        private int Code { get; set; }
+        private DoorCode Code { get; set; }
         public DoorStatus Status { get; private set; }
-        public DateTime DateTimeAtCreationUtc { get; private set;}
+        public DateTime DateTimeAtCreationUtc { get; init;}
         public DateTime? LastModifierAtUtc { get; protected set; }
 
         public List<DateTime> HistoryOfDoorMod = new List<DateTime>();
@@ -19,8 +19,10 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
         public Door()
         {
             Status = DoorStatus.Closed;
+            DateTimeAtCreationUtc = DateTime.UtcNow;
+            Code = new DoorCode(123456);
         }
-        public Door(int code)
+        public Door(DoorCode code)
         {
             Status = DoorStatus.Locked;
             Code = code;
@@ -40,13 +42,13 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
                 throw new ArgumentException("For Open the locked door you need to insert the code");
             
         }
-        public void UnlockDoor(int code)
+        public void UnlockDoor(DoorCode code)
         { 
             if (code == Code)
-                {
-            Status = DoorStatus.Open;
-            LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfDoorMod.Add(DateTime.UtcNow);
+            {
+                Status = DoorStatus.Open;
+                LastModifierAtUtc = DateTime.UtcNow;
+                HistoryOfDoorMod.Add(DateTime.UtcNow);
             }
             else
                throw new ArgumentException("You Insert The Wrong Code");
@@ -70,16 +72,16 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfDoorMod.Add(DateTime.UtcNow);
         }
-        public void ChangeCode(int code)
+        public void ChangeCode(DoorCode code, DoorCode newCode)
         {
-            if (code.ToString().Length <= 6 && code.ToString().Length > 1)
+            if (code == Code)
             {
-                Code = code;
+                Code = newCode;
                 LastModifierAtUtc = DateTime.UtcNow;
                 HistoryOfDoorMod.Add(DateTime.UtcNow);
             }
             else
-                throw new ArgumentException("The Code Has to be at least 2 number and maximus 6 numbers");
+                throw new ArgumentException("Put first the previous code to change it");
         }
         /// <summary>
         /// metodo che ritorna con lo string builder tutto lo storico delle modifiche della porta

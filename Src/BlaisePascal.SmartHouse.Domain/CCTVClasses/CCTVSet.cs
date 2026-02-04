@@ -1,4 +1,5 @@
 ﻿using System;
+using BlaisePascal.SmartHouse.Domain.Abstractions;
 using BlaisePascal.SmartHouse.Domain.LampClasses;
 
 namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
@@ -7,11 +8,15 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
     {
         //-------ATTRIBUTES AND PROPERTY-------
         public List<CCTV> CCTVset { get; private set; }
-        private string? AdminPassword;
+        private Password? AdminPassword;
 
         //------CONSTRUCTORS------
-        public CCTVSet() { CCTVset = new List<CCTV>(); }
-        public CCTVSet(string adminPassword)
+        public CCTVSet() 
+        { 
+            CCTVset = new List<CCTV>();
+            AdminPassword = new Password("1234567890");
+        }
+        public CCTVSet(Password adminPassword)
         {
             CCTVset = new List<CCTV>();
             AdminPassword = adminPassword;
@@ -28,7 +33,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
             CCTVset.Insert(pos, camera);
         }
 
-        public void RemoveCCTV(int pos, string adminPassword)
+        public void RemoveCCTV(int pos, Password adminPassword)
         {
             if (AdminPassword == adminPassword)
                 CCTVset.RemoveAt(pos);
@@ -45,14 +50,14 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
             }
             return pos;
         }
-        public void RemoveCCTV(Guid id, string adminPassword)
+        public void RemoveCCTV(Guid id, Password adminPassword)
         {
             if (AdminPassword == adminPassword)
                 CCTVset.Remove(CCTVset[GetPositionOfCCTV(id)]);
             else
                 throw new ArgumentException("Password errata");
         }
-        public void RemoveCCTV(string name, string adminPassword)
+        public void RemoveCCTV(Name name, Password adminPassword)
         {
             if (AdminPassword == adminPassword)
             {
@@ -86,7 +91,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         /// Accende telecamera in base al nome
         /// </summary>
         /// <param name="name"></param>
-        public void SwitchOn(string name)
+        public void SwitchOn(Name name)
         {
             foreach (CCTV cam in CCTVset)
             {
@@ -94,7 +99,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
                     cam.SwitchOn();
             }
         }
-        private List<CCTV> GetCCTVWithName(string name)
+        private List<CCTV> GetCCTVWithName(Name name)
         {
             List<CCTV> cams = new List<CCTV>();
             foreach (CCTV cam in CCTVset)
@@ -104,7 +109,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
             }
             return cams;
         }
-        public void SwitchOff(string adminPassword)
+        public void SwitchOff(Password adminPassword)
         {
             if (AdminPassword == adminPassword)
                 foreach (CCTV cam in CCTVset)
@@ -119,7 +124,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         /// Spegne telecamera in base all'ID
         /// </summary>
         /// <param name="guid"></param>
-        public void SwitchOff(Guid guid, string adminPassword)
+        public void SwitchOff(Guid guid, Password adminPassword)
         {
             if (AdminPassword == adminPassword)
                 CCTVset[GetPositionOfCCTV(guid)].SwitchOff();
@@ -131,7 +136,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         /// Spegne telecamera in base al nome
         /// </summary>
         /// <param name="name"></param>
-        public void SwitchOff(string name, string adminPassword)
+        public void SwitchOff(Name name, Password adminPassword)
         {
             if (AdminPassword == adminPassword)
             {
@@ -146,7 +151,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         }
         
         //CAMBIA L'ANGOLO DI TUTTE LE TELECAMERE
-        public void ChangeAllCCTVDegrees(int degrees)
+        public void ChangeAllCCTVDegrees(Degrees degrees)
         {
             foreach(CCTV cam in CCTVset)
             {
@@ -155,15 +160,15 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
             }
         }
 
-        //CAMBIA L'ANGOLO SOLO PER QUELLA CON IL GUID CRRISPONDENTE
-        public void ChangeCCTVDegrees(Guid id, int degrees)
+        //CAMBIA L'ANGOLO SOLO PER QUELLA CON IL GUID CORRISPONDENTE
+        public void ChangeCCTVDegrees(Guid id, Degrees degrees)
         {
             if (CCTVset[GetPositionOfCCTV(id)].DeviceStatus == DeviceStatus.On)
                 CCTVset[GetPositionOfCCTV(id)].SetCCTVDegrees(degrees);
         }
 
         //CAMBIA L'ANGOLO PER QUELLE CON IL NOME CRRISPONDENTE
-        public void ChangeCCTVDegrees(string name, int degrees)
+        public void ChangeCCTVDegrees(Name name, Degrees degrees)
         {
             foreach (CCTV cam in CCTVset)
             {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlaisePascal.SmartHouse.Domain.Abstractions
 {
-    public abstract class AbstractDevice
+    public abstract class AbstractDevice: ISwitchable
     {
         //-------ATTRIBUTES AND PROPERTY-------
         public Guid ID { get; init; }
@@ -22,7 +22,7 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
         {
             DeviceStatus = DeviceStatus.Off;
             DateTimeAtCreationUtc = DateTime.UtcNow;
-            ID = new Guid();
+            ID = Guid.NewGuid();
             Name = new Name("ABSTRACT_DEVICE");
         }
         public AbstractDevice(Guid guid)

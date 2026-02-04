@@ -9,8 +9,6 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
 {
     public class EcoLamp : AbstractLamp
     {
-        private const int maxIntensity = 70;
-        private const int intensityAtOn = 30;
         private const int DefaultAutoOffMinutes = 10;
         private const int MinAutoOffMinutes = 1;
 
@@ -19,18 +17,15 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         //------CONSTRUCTORS------
         public EcoLamp() : base()
         {
-            MaxIntensity = maxIntensity;
-            IntensityAtOn = intensityAtOn;
+
         }
         public EcoLamp(Guid Id) : base(Id)
         {
-            MaxIntensity = maxIntensity;
-            IntensityAtOn = intensityAtOn;
+
         }
-        public EcoLamp(Guid id, string name):base(id, name)
-        {
-            MaxIntensity = maxIntensity;
-            IntensityAtOn = intensityAtOn;
+        public EcoLamp(Guid id, string name) : base(id, name)
+        { 
+
         }
 
         //--------METHODS-------
@@ -48,7 +43,7 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
             autoOffAtUtc = DateTime.UtcNow.AddMinutes(autoOffMinutes);
         }
 
-        public sealed override void SetIntensity(int value)
+        public sealed override void SetIntensity(Intensity value)
         {
             base.SetIntensity(value);
             ResetAutoOffIfNeeded();

@@ -8,30 +8,33 @@ using BlaisePascal.SmartHouse.Domain.Luminous;
 
 namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
 {
-    public class CCTV : AbstractDevice, ISwitchable, IToggable
+    public class CCTV : AbstractDevice, ISwitchable
     {
-        private const int intensityOfLed = 100;
-        private const int degreesAtCreation = 90;
+        private const int degreesAtCreation = 0;
         //-------ATTRIBUTES AND PROPERTY-------
+        public Intensity intensityOfLedAtOn { get; init; }
         public Lamp CameraLed { get; private set; }
         public VideoQuality QualityOfVideo { get; private set; }
-        public int Degrees { get; private set; }
+        public Degrees Degrees { get; private set; }
 
         //------CONSTRUCTORS------
         public CCTV(): base()
         {
-            CameraLed = new Lamp("CameraLed");
-            Degrees = degreesAtCreation;
+            intensityOfLedAtOn = new Intensity(20);
+            CameraLed = new Lamp();
+            Degrees = new Degrees(degreesAtCreation);
         }
         public CCTV(Guid id): base(id)
         {
-            CameraLed = new Lamp("CameraLed");
-            Degrees = degreesAtCreation;
+            intensityOfLedAtOn = new Intensity(20);
+            CameraLed = new Lamp();
+            Degrees = new Degrees(degreesAtCreation);
         }
         public CCTV(Guid id, string name): base(id, name)
         {
-            CameraLed = new Lamp("CameraLed");
-            Degrees = degreesAtCreation;
+            intensityOfLedAtOn = new Intensity(20);
+            CameraLed = new Lamp();
+            Degrees = new Degrees(degreesAtCreation);
         }
 
         //------METHODS------
@@ -39,7 +42,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         {
             base.SwitchOn();
             CameraLed.SwitchOn();
-            CameraLed.SetIntensity(intensityOfLed);
+            CameraLed.SetIntensity(intensityOfLedAtOn);
             QualityOfVideo = VideoQuality._720P_60;
         }
         public override void SwitchOff()
@@ -53,18 +56,15 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
-        public void SetCCTVDegrees(int degrees)
+        public void SetCCTVDegrees(Degrees degrees)
         {
-            Degrees = DeviceValidator.ValidateDegrees(degrees);
+            Degrees = degrees;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
-        public void Toggle()
+        public void SetNightVision()
         {
-            if (DeviceStatus == DeviceStatus.On)
-                SwitchOff();
-            else
-                SwitchOn();
+            QualityOfVideo = VideoQuality.NightVision;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
