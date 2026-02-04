@@ -8,29 +8,28 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
     {
         public int minIntensity = 1; //Se private reca errori in lampsrow
         private int intensityAtOff = 0;
-        private int valOfIncreaseAndDecrease = 10;
+        private Intensity valOfIncreaseAndDecrease = new Intensity(10);
         //-------ATTRIBUTES AND PROPERTY-------
-        public int Intensity { get;  protected set; }
-        public int MaxIntensity;
-        public int IntensityAtOn;
+        public Intensity Intensity { get; protected set; }
+        public Intensity IntensityAtOn = new Intensity(50);
 
         //------CONSTRUCTORS------
         protected AbstractLamp(): base()
         {
-            Intensity = intensityAtOff;
+            Intensity = new Intensity(intensityAtOff);
         }
         protected AbstractLamp(string name) : base()
         {
-            Name = name;
-            Intensity = intensityAtOff;
+            Name = new Name(name);
+            Intensity = new Intensity(intensityAtOff);
         }
         protected AbstractLamp(Guid id) : base(id)
         {
-            Intensity = intensityAtOff;
+            Intensity = new Intensity(intensityAtOff);
         }
         protected AbstractLamp( Guid guid, string name) : base(guid, name)
         {
-            Intensity = intensityAtOff;
+            Intensity = new Intensity(intensityAtOff);
         }
 
         //------METHODS------
@@ -42,7 +41,7 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         public override void SwitchOff()
         {
             base.SwitchOff();
-            Intensity = intensityAtOff;
+            Intensity = new Intensity(intensityAtOff);
         }
         public virtual void Toggle()
         {
@@ -57,7 +56,7 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         {
             if (DeviceStatus == DeviceStatus.On)
             {
-                Intensity = Math.Min(Intensity + valOfIncreaseAndDecrease, MaxIntensity);
+                Intensity = new Intensity(Math.Min(Intensity. + valOfIncreaseAndDecrease, MaxIntensity));
                 LastModifierAtUtc = DateTime.UtcNow;
                 HistoryOfMod.Add(DateTime.UtcNow);
             }

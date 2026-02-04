@@ -1,5 +1,6 @@
 ﻿using BlaisePascal.SmartHouse.Domain.Abstractions;
 using System.ComponentModel.Design;
+using System.Text;
 
 namespace BlaisePascal.SmartHouse.Domain.DoorClasses
 {
@@ -79,6 +80,21 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
             }
             else
                 throw new ArgumentException("The Code Has to be at least 2 number and maximus 6 numbers");
+        }
+        /// <summary>
+        /// metodo che ritorna con lo string builder tutto lo storico delle modifiche della porta
+        /// </summary>
+        /// <returns></returns>
+        public string ReturnAllModifiesOfDoor()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"----DOOR----");
+            foreach (DateTime modifie in HistoryOfDoorMod)
+            {
+                sb.Append(modifie);
+                sb.Append("\n");
+            }
+            return sb.ToString();
         }
     }
 }      

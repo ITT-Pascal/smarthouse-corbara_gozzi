@@ -11,7 +11,7 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
         //-------ATTRIBUTES AND PROPERTY-------
         public Guid ID { get; init; }
         public DeviceStatus DeviceStatus { get; protected set; }
-        public string ?Name { get; protected set; }
+        public Name ?Name { get; protected set; }
         public DateTime DateTimeAtCreationUtc { get; init; }
         public DateTime? LastModifierAtUtc { get; protected set; }
 
@@ -23,21 +23,21 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
             DeviceStatus = DeviceStatus.Off;
             DateTimeAtCreationUtc = DateTime.UtcNow;
             ID = new Guid();
-            Name = "Device";
+            Name = new Name("ABSTRACT_DEVICE");
         }
         public AbstractDevice(Guid guid)
         {
             DeviceStatus = DeviceStatus.Off;
             DateTimeAtCreationUtc = DateTime.UtcNow;
             ID = guid;
-            Name = "Device";
+            Name = new Name("ABSTRACT_DEVICE");
         }
         public AbstractDevice(Guid guid, string name)
         {
             DeviceStatus = DeviceStatus.Off;
             DateTimeAtCreationUtc = DateTime.UtcNow;
             ID = guid;
-            Name = name;
+            Name = new Name(name);
         }
 
         //------METHODS------
@@ -53,6 +53,9 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
+        /// <summary>
+        /// metodo che permette di eliminare lo status di errore
+        /// </summary>
         public void FixErrors()
         {
             if (DeviceStatus == DeviceStatus.Error)
@@ -62,12 +65,16 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
-        public void RenameDevice(string newName)
+        public void RenameDevice(Name newName)
         {
             Name = newName;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
+        /// <summary>
+        /// metodo che ritorna con lo string builder tutto lo storico delle modifiche
+        /// </summary>
+        /// <returns></returns>
         public string ReturnAllModifiesOfDevice(AbstractDevice device)
         {
             StringBuilder sb = new StringBuilder();
