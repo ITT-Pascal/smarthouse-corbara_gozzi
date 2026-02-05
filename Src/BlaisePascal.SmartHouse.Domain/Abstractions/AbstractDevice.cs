@@ -65,7 +65,7 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
-        public void RenameDevice(Name newName)
+        public void RenameTo(Name newName)
         {
             Name = newName;
             LastModifierAtUtc = DateTime.UtcNow;
@@ -78,12 +78,8 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
         public string ReturnAllModifiesOfDevice(AbstractDevice device)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append($"----{device.GetType}----");
-            foreach (DateTime modifie in HistoryOfMod)
-            {
-                sb.Append(modifie);
-                sb.Append("\n");
-            }
+            sb.Append($"----{Name} modifies----");
+            sb.Append(string.Join("\n", HistoryOfMod));
             return sb.ToString();
         }
     }

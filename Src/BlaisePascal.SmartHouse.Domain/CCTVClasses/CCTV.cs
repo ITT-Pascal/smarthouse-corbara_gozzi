@@ -42,7 +42,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         {
             base.SwitchOn();
             CameraLed.SwitchOn();
-            CameraLed.SetIntensity(intensityOfLedAtOn);
+            CameraLed.SetIntensityTo(intensityOfLedAtOn);
             QualityOfVideo = VideoQuality._720P_60;
         }
         public override void SwitchOff()
@@ -50,23 +50,27 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
             base.SwitchOff();
             CameraLed.SwitchOff();
         }
-        public void ChangeQualityOfVideo(VideoQuality newQuality)
+        public void ChangeQualityOfVideoTo(VideoQuality newQuality)
         { 
             QualityOfVideo = newQuality;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
-        public void SetCCTVDegrees(Degrees degrees)
+        public void SetCCTVDegreesInto(Degrees newDegrees)
         {
-            Degrees = degrees;
+            Degrees = newDegrees;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
+        /// <summary>
+        /// MODALITA' VISIONE NOTTURNA
+        /// </summary>
         public void SetNightVision()
         {
             QualityOfVideo = VideoQuality.NightVision;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
+        public void ReturnAllModifiesOfDevice() => ReturnAllModifiesOfDevice(this);
     }
 }

@@ -72,7 +72,7 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfDoorMod.Add(DateTime.UtcNow);
         }
-        public void ChangeCode(DoorCode code, DoorCode newCode)
+        public void ChangeCodeTo(DoorCode newCode, DoorCode code)
         {
             if (code == Code)
             {

@@ -77,7 +77,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.ThermostatTests
         {
             Guid id = new Guid();
             Thermostat Thermo = new Thermostat(id, "Teodo");
-            Thermo.ChangeTargetTemperature(37);
+            Thermo.ChangeTargetTemperatureTo(37);
             Assert.Equal(36, Thermo.TargetTemperature);
         }
 
@@ -86,7 +86,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.ThermostatTests
         {
             Guid id = new Guid();
             Thermostat Thermo = new Thermostat(id, "Teodo");
-            Thermo.ChangeTargetTemperature(-37);
+            Thermo.ChangeTargetTemperatureTo(-37);
             Assert.Equal(1, Thermo.TargetTemperature);
         }
 
@@ -95,7 +95,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.ThermostatTests
         {
             Guid id = new Guid();
             Thermostat Thermo = new Thermostat(id, "Teodo");
-            Thermo.ChangeTargetTemperature(21);
+            Thermo.ChangeTargetTemperatureTo(21);
             Assert.Equal(21, Thermo.TargetTemperature);
         }
     }

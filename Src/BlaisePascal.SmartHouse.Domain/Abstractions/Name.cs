@@ -13,6 +13,7 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
 
         public Name(string value)
         {
+            //CONTROLLO CHE IL NOME NON SIA VUOTO E CHE NON ABBIA PUNTI O SPAZI
             if (string.IsNullOrWhiteSpace(value))
                 throw new ArgumentException("Inserire caratteri");
             if(value.Contains(' ') || value.Contains('.'))

@@ -55,13 +55,13 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         /// Cambia la luminosità a tutte le lampade
         /// </summary>
         /// <param name="intensity"></param>
-        public void SetIntensity(Intensity intensity)
+        public void SetIntensityTo(Intensity intensity)
         {
             for (int rows = 0; rows < size; rows++)
             {
                 for (int cols = 0; cols < size; cols++)
                 {
-                    LampMatrix[rows, cols].SetIntensity(intensity);
+                    LampMatrix[rows, cols].SetIntensityTo(intensity);
                 }
             }
         }

@@ -16,7 +16,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
         public void AirConditioner_Constructor_WhenCreatedHeatAndSpeedAre0()
         {
             Assert.Equal(1, cond.Speed);
-            Assert.Equal(0, cond.Heat);
+            Assert.Equal(0, cond.Temperature);
             Assert.Equal(DeviceStatus.Off , cond.DeviceStatus);
         }
 
@@ -26,7 +26,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
             cond.SwitchOn();
             cond.SwitchOff();
             Assert.Equal(0, cond.Speed);
-            Assert.Equal(0, cond.Heat);
+            Assert.Equal(0, cond.Temperature);
             Assert.Equal(DeviceStatus.Off, cond.DeviceStatus);
         }  
 
@@ -58,7 +58,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
         {
             cond.SwitchOn();
             Assert.Equal(AcMode.Cool, cond.ModeOfAc);
-            Assert.Equal(10, cond.Heat);
+            Assert.Equal(10, cond.Temperature);
             Assert.Equal(1, cond.Speed);
 
             Assert.Equal(DeviceStatus.On, cond.DeviceStatus);
@@ -68,16 +68,16 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
         public void AirConditioner_ChangeMode_WhenOffItGaveError()
         {
             cond.SwitchOff();
-            Assert.Throws<ArgumentException>(() => cond.ChangeMode(AcMode.Cool));
+            Assert.Throws<ArgumentException>(() => cond.ChangeModeTo(AcMode.Cool));
         }
 
         [Fact]
         public void AirConditioner_ChangeMode_IfIPutTheSameItRemainThatMode()
         {
             cond.SwitchOn();
-            cond.ChangeMode(AcMode.Cool);
+            cond.ChangeModeTo(AcMode.Cool);
             Assert.Equal(AcMode.Cool, cond.ModeOfAc);
-            Assert.Equal(10, cond.Heat);
+            Assert.Equal(10, cond.Temperature);
             Assert.Equal(1, cond.Speed);
         }
 
@@ -85,9 +85,9 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
         public void AirConditioner_ChangeMode_ToHeatTheHeatIs30()
         {
             cond.SwitchOn();
-            cond.ChangeMode(AcMode.Heat);
+            cond.ChangeModeTo(AcMode.Heat);
             Assert.Equal(AcMode.Heat, cond.ModeOfAc);
-            Assert.Equal(30, cond.Heat);
+            Assert.Equal(30, cond.Temperature);
             Assert.Equal(1, cond.Speed);
         }
 
@@ -95,9 +95,9 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
         public void AirConditioner_ChangeMode_ToDryTheHeatIs0()
         {
             cond.SwitchOn();
-            cond.ChangeMode(AcMode.Dry);
+            cond.ChangeModeTo(AcMode.Dry);
             Assert.Equal(AcMode.Dry, cond.ModeOfAc);
-            Assert.Equal(0, cond.Heat);
+            Assert.Equal(0, cond.Temperature);
             Assert.Equal(1, cond.Speed);
         }
 
@@ -106,14 +106,14 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
         {
             cond.SwitchOn();
             cond.SwitchOff();
-            Assert.Throws<ArgumentException>(() => cond.ChangeSpeed(10));
+            Assert.Throws<ArgumentException>(() => cond.ChangeSpeedTo(10));
         }
 
         [Fact]
         public void AirConditioner_ChangeSpeed_IfToHighItGoToTheMaxSpeed()
         {
             cond.SwitchOn();
-            cond.ChangeSpeed(100000000);
+            cond.ChangeSpeedTo(100000000);
             Assert.Equal(10, cond.Speed);
         }
 
@@ -121,7 +121,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
         public void AirConditioner_ChangeSpeed_IfNegativeItBecameMinSpeed()
         {
             cond.SwitchOn();
-            cond.ChangeSpeed(-104);
+            cond.ChangeSpeedTo(-104);
             Assert.Equal(1, cond.Speed);
         }
 
@@ -129,7 +129,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.AirConditionerTest
         public void AirConditioner_ChangeSpeed_IfBecameTheAmountTyped()
         {
             cond.SwitchOn();
-            cond.ChangeSpeed(4);
+            cond.ChangeSpeedTo(4);
             Assert.Equal(4, cond.Speed);
         }
     }

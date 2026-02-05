@@ -50,7 +50,7 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         {
             if (DeviceStatus == DeviceStatus.On)
             {
-                Intensity = Intensity.SumOfIntensity(valOfIncreaseAndDecrease);
+                Intensity = Intensity.SumOfIntensityWith(valOfIncreaseAndDecrease);
                 LastModifierAtUtc = DateTime.UtcNow;
                 HistoryOfMod.Add(DateTime.UtcNow);
             }
@@ -59,19 +59,20 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         {
             if (DeviceStatus == DeviceStatus.On)
             {
-                Intensity = Intensity.SubtractionOfIntensity(valOfIncreaseAndDecrease);
+                Intensity = Intensity.SubtractionOfIntensityWith(valOfIncreaseAndDecrease);
                 LastModifierAtUtc = DateTime.UtcNow;
                 HistoryOfMod.Add(DateTime.UtcNow);
             }
         }
-        public virtual void SetIntensity(Intensity value)
+        public virtual void SetIntensityTo(Intensity intensity)
         {
             if (DeviceStatus == DeviceStatus.On)
             {
-                Intensity = value;
+                Intensity = intensity;
                 LastModifierAtUtc = DateTime.UtcNow;
                 HistoryOfMod.Add(DateTime.UtcNow);
             }
         }
+        public void ReturnAllModifiesOfDevice() => ReturnAllModifiesOfDevice(this);
     }
 }

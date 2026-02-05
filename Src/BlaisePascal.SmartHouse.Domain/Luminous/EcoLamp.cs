@@ -43,9 +43,9 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
             autoOffAtUtc = DateTime.UtcNow.AddMinutes(autoOffMinutes);
         }
 
-        public sealed override void SetIntensity(Intensity value)
+        public sealed override void SetIntensityTo(Intensity intensity)
         {
-            base.SetIntensity(value);
+            base.SetIntensityTo(intensity);
             ResetAutoOffIfNeeded();
         }
         public sealed override void IncreaseBy()

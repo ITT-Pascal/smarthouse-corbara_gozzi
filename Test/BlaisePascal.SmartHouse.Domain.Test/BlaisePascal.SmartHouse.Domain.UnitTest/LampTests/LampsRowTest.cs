@@ -51,7 +51,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         {
             TestLampsRow.AddLamp(new EcoLamp());
             TestLampsRow.AddLamp(new Lamp("Sas"));
-            TestLampsRow.AddLampInPosition(new Lamp("Braso"), 1);
+            TestLampsRow.AddLampInPositio(new Lamp("Braso"), 1);
             Assert.Equal("Braso", TestLampsRow.LampRow[1].Name);
         }
 
@@ -72,7 +72,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
             Guid testId2 = new Guid();
             TestLampsRow.AddLamp(new Lamp("lamp"));
             TestLampsRow.AddLamp(new Lamp("Sas"));
-            TestLampsRow.RemoveLamp(testId);
+            TestLampsRow.RemoveLampBy(testId);
             Assert.Single(TestLampsRow.LampRow);
             Assert.Equal(testId2, TestLampsRow.LampRow[0].ID);
         }
@@ -82,7 +82,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
         {
             TestLampsRow.AddLamp(new Lamp("lamp"));
             TestLampsRow.AddLamp(new Lamp("Sas"));
-            TestLampsRow.RemoveLampInPosition(1);
+            TestLampsRow.RemoveLampAt(1);
             Assert.Single(TestLampsRow.LampRow);
             Assert.Equal("lamp", TestLampsRow.LampRow[0].Name);
         }
@@ -103,7 +103,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
             Guid testId = new Guid();
             TestLampsRow.AddLamp(new Lamp("lamp"));
             TestLampsRow.AddLamp(new Lamp("Sas"));
-            TestLampsRow.SwitchOn(testId);
+            TestLampsRow.SwitchOnBy(testId);
             Assert.Equal(DeviceStatus.Off, TestLampsRow.LampRow[0].DeviceStatus);
             Assert.Equal(DeviceStatus.On, TestLampsRow.LampRow[1].DeviceStatus);
         }
@@ -152,7 +152,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
             TestLampsRow.AddLamp(new Lamp("lamp"));
             TestLampsRow.AddLamp(new Lamp("Sas"));
             TestLampsRow.SwitchOn();
-            TestLampsRow.SwitchOff(testId);
+            TestLampsRow.SwitchOffBy(testId);
             Assert.Equal(DeviceStatus.On, TestLampsRow.LampRow[0].DeviceStatus);
             Assert.Equal(DeviceStatus.Off, TestLampsRow.LampRow[1].DeviceStatus);
         }

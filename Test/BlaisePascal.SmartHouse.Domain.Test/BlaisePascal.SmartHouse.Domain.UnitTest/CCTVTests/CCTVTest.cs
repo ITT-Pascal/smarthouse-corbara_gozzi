@@ -45,7 +45,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.CCTVTests
         {
             CCTV TestCCTV = new CCTV();
             TestCCTV.SwitchOn();
-            TestCCTV.ChangeQualityOfVideo(VideoQuality._720P_60);
+            TestCCTV.ChangeQualityOfVideoTo(VideoQuality._720P_60);
             Assert.Equal(VideoQuality._720P_60, TestCCTV.QualityOfVideo);
         }
 
@@ -54,7 +54,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.CCTVTests
         {
             CCTV TestCCTV = new CCTV();
             TestCCTV.SwitchOn();
-            TestCCTV.ChangeQualityOfVideo(VideoQuality._1080P_HD);
+            TestCCTV.ChangeQualityOfVideoTo(VideoQuality._1080P_HD);
             Assert.Equal(VideoQuality._1080P_HD, TestCCTV.QualityOfVideo);
         }
 
