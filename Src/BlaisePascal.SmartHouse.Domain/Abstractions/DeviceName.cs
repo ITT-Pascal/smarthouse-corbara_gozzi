@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace BlaisePascal.SmartHouse.Domain.Abstractions
 {
-    public class Name
+    public class DeviceName
     {
         public string Value { get; }
 
-        public Name(string value)
+        public DeviceName(string value)
         {
             //CONTROLLO CHE IL NOME NON SIA VUOTO E CHE NON ABBIA PUNTI O SPAZI
             if (string.IsNullOrWhiteSpace(value))

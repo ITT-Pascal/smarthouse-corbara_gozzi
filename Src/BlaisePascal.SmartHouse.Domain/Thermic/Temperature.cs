@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.Luminous;
 
-namespace BlaisePascal.SmartHouse.Domain.Temperature
+namespace BlaisePascal.SmartHouse.Domain.Thermic
 {
     public class Temperature
     {
@@ -18,10 +18,6 @@ namespace BlaisePascal.SmartHouse.Domain.Temperature
             if (val < minHeat || val > maxHeat)
                 throw new ArgumentException("Inserire heat tra -10 e 30");
             Value = val;
-        }
-        public Temperature AddTemperatureWith(int otherTemperature)
-        {
-            return new Temperature(Value + otherTemperature);
         }
     }
 }

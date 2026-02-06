@@ -10,11 +10,11 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
 {
     public sealed class TwoLampsDevice
     {
-        //-------ATTRIBUTES AND PROPERTY-------
+        //   -------ATTRIBUTES AND PROPERTY-------
         public AbstractLamp FirstLamp { get; private set; }
         public AbstractLamp SecondLamp { get; private set; }
         
-        //------CONSTRUCTORS------
+        //      ------CONSTRUCTORS------
         public TwoLampsDevice()
         {
             FirstLamp = new Lamp();
@@ -26,7 +26,10 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
             SecondLamp = secondLamp;
         }
 
-        //------METHODS------
+        //       ------METHODS------
+
+        //--SWITCH METHODS--
+
         public void SwitchOnFirstLamp() 
         {
             FirstLamp.SwitchOn();
@@ -53,6 +56,9 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         { 
             SecondLamp.SwitchOff(); 
         }
+
+        //--CHANGER INTENSITY METHODS--
+
         public void SetIntensityOfLampsTo(Intensity intensity)
         {
             if (FirstLamp.DeviceStatus == DeviceStatus.On && SecondLamp.DeviceStatus == DeviceStatus.On)

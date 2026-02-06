@@ -13,16 +13,42 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
 {
     public class LampsRow
     {
-        //-------ATTRIBUTES AND PROPERTY-------
+        //     -------ATTRIBUTES AND PROPERTY-------
         public List<AbstractLamp> LampRow { get; private set; }
 
-        //------CONSTRUCTORS------
+        //        ------CONSTRUCTORS------
         public LampsRow()
         { 
             LampRow = new List<AbstractLamp>(); 
         }
 
-        //------METHODS------
+        //          ------METHODS------
+
+        //--GETTER METHODS--
+
+        //Metodo privato per poter individuare una o più lamp in base al nome
+        private List<AbstractLamp> GetLampsWithName(DeviceName name)
+        {
+            List<AbstractLamp> lamps = new List<AbstractLamp>();
+            foreach (AbstractLamp lamp in LampRow)
+            {
+                if (lamp.Name == name)
+                    lamps.Add(lamp);
+            }
+            return lamps;
+        }
+
+        //Metodo privato per poter individuare una lamp in base al guid
+        private int GetIdxOfLampBy(Guid id)
+        {
+            List<Guid> GuidList = new List<Guid>();
+            foreach (AbstractLamp lamp in LampRow)
+                GuidList.Add(lamp.ID);
+            return Array.IndexOf(GuidList.ToArray(), id);
+        }
+
+        //--SWITCH METHODS--
+
         public void SwitchOn()
         {
             foreach(AbstractLamp lamp in LampRow) 
@@ -43,22 +69,11 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
                 LampRow[GetIdxOfLampBy(guid)].SwitchOn();
         }
 
-        //Metodo privato per poter individuare una o più lamp in base al nome
-        private List<AbstractLamp> GetLampsWithName(Name name)
-        {
-            List<AbstractLamp> lamps = new List<AbstractLamp>();
-            foreach(AbstractLamp lamp in LampRow) 
-            { 
-                if(lamp.Name == name)
-                    lamps.Add(lamp);
-            }
-            return lamps;
-        }
         /// <summary>
         /// Accende lampada in base al nome
         /// </summary>
         /// <param name="name"></param>
-        public void SwitchOnBy(Name name)
+        public void SwitchOnBy(DeviceName name)
         {
             foreach(AbstractLamp lamp in LampRow)
             {
@@ -90,7 +105,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         /// Spegne lampada in base al nome
         /// </summary>
         /// <param name="name"></param>
-        public void SwitchOffBy(Name name)
+        public void SwitchOffBy(DeviceName name)
         {
             foreach (AbstractLamp lamp in LampRow)
             {
@@ -99,6 +114,8 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
             }
         }
 
+        //--ADDER/REMOVER METHODS--
+
         public void AddLamp(AbstractLamp lamp) 
         { 
             LampRow.Add(lamp);
@@ -106,15 +123,6 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         public void AddLampIn(int position, AbstractLamp lamp) 
         {
             LampRow.Insert(position, lamp);
-        }
-
-        //Metodo privato per poter individuare una lamp in base al guid
-        private int GetIdxOfLampBy(Guid id)
-        {
-            List<Guid> GuidList = new List<Guid>();
-            foreach (AbstractLamp lamp in LampRow)
-                GuidList.Add(lamp.ID);
-            return Array.IndexOf(GuidList.ToArray(), id);
         }
 
         /// <summary>
@@ -133,7 +141,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         /// Elimina lampada in base all'ID
         /// </summary>
         /// <param name="Id"></param>
-        public void RemoveLampBy(Name name)
+        public void RemoveLampBy(DeviceName name)
         {
             for (int i = 0; i < LampRow.Count; i++)
             {
@@ -145,7 +153,9 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         {
             LampRow.RemoveAt(position);
         }
-        
+
+        //--CHANGER INTENSITY METHODS--
+
         public void SetIntensityForAllLampsTo(Intensity intensity)
         {
             foreach(AbstractLamp lamp in LampRow)
@@ -173,7 +183,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         /// Cambia inenistà lampada in base al nome
         /// </summary>
         /// <param name="Id"></param>
-        public void SetIntensityForLampWith(Name name, Intensity intensity)
+        public void SetIntensityForLampWith(DeviceName name, Intensity intensity)
         {
             foreach(AbstractLamp lamp in LampRow)
             {
@@ -181,6 +191,9 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
                     lamp.SetIntensityTo(intensity);
             }
         }
+
+        //--DETECTIONER METHODS--
+
         public AbstractLamp ?FindLampWithMaxIntensity() 
         {
             foreach(AbstractLamp lamp in LampRow)
@@ -241,6 +254,9 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
                 return LampRow[GetIdxOfLampBy(id)];
             }
         }
+
+        //--SORTER METHODS--
+
         //IL PARAMETRO INDICA SE DEVE ESSERE IN ORDINE DECRESCENTE
         public List<AbstractLamp> SortByIntensity(bool descending)
         {

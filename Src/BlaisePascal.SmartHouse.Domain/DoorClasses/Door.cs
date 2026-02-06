@@ -7,7 +7,7 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
     public class Door
     {
 
-        //-------ATTRIBUTES AND PROPERTY-------
+        //  -------ATTRIBUTES AND PROPERTY-------
         private DoorCode Code { get; set; }
         public DoorStatus Status { get; private set; }
         public DateTime DateTimeAtCreationUtc { get; init;}
@@ -15,7 +15,7 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
 
         public List<DateTime> HistoryOfDoorMod = new List<DateTime>();
 
-        //------CONSTRUCTORS------
+        //      ------CONSTRUCTORS------
         public Door()
         {
             Status = DoorStatus.Closed;
@@ -29,7 +29,7 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
             DateTimeAtCreationUtc = DateTime.UtcNow;
         }
 
-        //------METHODS------
+        //       ------METHODS------
         public void OpenDoor()
         {
             if (Status != DoorStatus.Locked)
@@ -40,20 +40,6 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
             }
             else
                 throw new ArgumentException("For Open the locked door you need to insert the code");
-            
-        }
-        public void UnlockDoor(DoorCode code)
-        { 
-            if (code == Code)
-            {
-                Status = DoorStatus.Open;
-                LastModifierAtUtc = DateTime.UtcNow;
-                HistoryOfDoorMod.Add(DateTime.UtcNow);
-            }
-            else
-               throw new ArgumentException("You Insert The Wrong Code");
-             
-
         }
         public void CloseDoor()
         {
@@ -72,6 +58,19 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfDoorMod.Add(DateTime.UtcNow);
         }
+        public void UnlockDoor(DoorCode code)
+        { 
+            if (code == Code)
+            {
+                Status = DoorStatus.Open;
+                LastModifierAtUtc = DateTime.UtcNow;
+                HistoryOfDoorMod.Add(DateTime.UtcNow);
+            }
+            else
+               throw new ArgumentException("You Insert The Wrong Code");
+             
+
+        }
         public void ChangeCodeTo(DoorCode newCode, DoorCode code)
         {
             if (code == Code)
@@ -83,6 +82,7 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
             else
                 throw new ArgumentException("Put first the previous code to change it");
         }
+
         /// <summary>
         /// metodo che ritorna con lo string builder tutto lo storico delle modifiche della porta
         /// </summary>

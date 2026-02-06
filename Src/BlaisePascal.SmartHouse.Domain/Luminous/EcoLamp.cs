@@ -11,10 +11,9 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
     {
         private const int DefaultAutoOffMinutes = 10;
         private const int MinAutoOffMinutes = 1;
-
         private DateTime? autoOffAtUtc;
 
-        //------CONSTRUCTORS------
+        //      ------CONSTRUCTORS------
         public EcoLamp() : base()
         {
 
@@ -28,7 +27,10 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
 
         }
 
-        //--------METHODS-------
+        //     --------METHODS-------
+
+        //--ON/OFF METHODS--
+        
         public void SwitchOn(bool enableAutoOff)
         {
             SwitchOn();
@@ -42,6 +44,23 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
             SwitchOn();
             autoOffAtUtc = DateTime.UtcNow.AddMinutes(autoOffMinutes);
         }
+        public sealed override void SwitchOff()
+        {
+            base.SwitchOff();
+            autoOffAtUtc = null;
+        }
+        public void CheckAutoOff()
+        {
+            if (DeviceStatus == DeviceStatus.On && autoOffAtUtc.HasValue && DateTime.UtcNow >= autoOffAtUtc.Value)
+                SwitchOff();
+        }
+        private void ResetAutoOffIfNeeded()
+        {
+            if (autoOffAtUtc.HasValue)
+                autoOffAtUtc = DateTime.UtcNow.AddMinutes(DefaultAutoOffMinutes);
+        }
+
+        //--CHANGER INTENSITY METHODS--
 
         public sealed override void SetIntensityTo(Intensity intensity)
         {
@@ -57,21 +76,6 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         {
             base.DecreaseBy();
             ResetAutoOffIfNeeded();
-        }
-        public sealed override void SwitchOff()
-        {
-            base.SwitchOff();
-            autoOffAtUtc = null;
-        }
-        public void CheckAutoOff()
-        {
-            if (DeviceStatus == DeviceStatus.On &&autoOffAtUtc.HasValue && DateTime.UtcNow >= autoOffAtUtc.Value)
-                SwitchOff();
-        }
-        private void ResetAutoOffIfNeeded()
-        {
-            if (autoOffAtUtc.HasValue)
-                autoOffAtUtc = DateTime.UtcNow.AddMinutes(DefaultAutoOffMinutes);
         }
     }
 }

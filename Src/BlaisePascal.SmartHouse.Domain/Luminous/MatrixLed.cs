@@ -8,20 +8,23 @@ using BlaisePascal.SmartHouse.Domain.Abstractions;
 
 namespace BlaisePascal.SmartHouse.Domain.Luminous
 {
-    public class MatrixLed: AbstractDevice, ISwitchable, IToggable
+    public class MatrixLed: AbstractDevice, IToggable
     {
         private int size = 10;
 
-        //-------ATTRIBUTES AND PROPERTY-------
+        //    -------ATTRIBUTES AND PROPERTY-------
         public Lamp[,] LampMatrix { get; private set; }
 
-        //------CONSTRUCTORS------
+        //       ------CONSTRUCTORS------
         public MatrixLed()
         {
             LampMatrix = new Lamp[size, size];
         }
 
-        //------METHODS------
+        //        ------METHODS------
+
+        //--ON/OFF METHODS--
+
         public sealed override void SwitchOn()
         {
             base.SwitchOn();
@@ -51,6 +54,9 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
             else
                 SwitchOn();
         }
+
+        //--CHANGER INTENSITY METHODS--
+
         /// <summary>
         /// Cambia la luminosità a tutte le lampade
         /// </summary>

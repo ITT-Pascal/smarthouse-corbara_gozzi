@@ -4,15 +4,15 @@ using System.Xml.Linq;
 
 namespace BlaisePascal.SmartHouse.Domain.Luminous
 {
-    public abstract class AbstractLamp: AbstractDevice, ISwitchable, IToggable
+    public abstract class AbstractLamp: AbstractDevice, IToggable
     {
         private int intensityAtOff = 0;
         private int valOfIncreaseAndDecrease = 10;
-        //-------ATTRIBUTES AND PROPERTY-------
+        //  -------ATTRIBUTES AND PROPERTY-------
         public Intensity Intensity { get; protected set; }
         public Intensity IntensityAtOn = new Intensity(50);
 
-        //------CONSTRUCTORS------
+        //      ------CONSTRUCTORS------
         protected AbstractLamp(): base()
         {
             Intensity = new Intensity(intensityAtOff);
@@ -26,7 +26,10 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
             Intensity = new Intensity(intensityAtOff);
         }
 
-        //------METHODS------
+        //     ------METHODS------
+
+        //--ON/OFF METHODS--
+
         public sealed override void SwitchOn()
         {
             base.SwitchOn();
@@ -46,11 +49,14 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
+
+        //--CHANGER INTENSITY METHODS--
+
         public virtual void IncreaseBy()
         {
             if (DeviceStatus == DeviceStatus.On)
             {
-                Intensity = Intensity.SumOfIntensityWith(valOfIncreaseAndDecrease);
+                Intensity = new Intensity(Intensity.Value+valOfIncreaseAndDecrease);
                 LastModifierAtUtc = DateTime.UtcNow;
                 HistoryOfMod.Add(DateTime.UtcNow);
             }
@@ -59,7 +65,7 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         {
             if (DeviceStatus == DeviceStatus.On)
             {
-                Intensity = Intensity.SubtractionOfIntensityWith(valOfIncreaseAndDecrease);
+                Intensity = new Intensity(Intensity.Value - valOfIncreaseAndDecrease);
                 LastModifierAtUtc = DateTime.UtcNow;
                 HistoryOfMod.Add(DateTime.UtcNow);
             }

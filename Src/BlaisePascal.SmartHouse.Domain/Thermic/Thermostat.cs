@@ -5,19 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
 
-namespace BlaisePascal.SmartHouse.Domain.Temperature
+namespace BlaisePascal.SmartHouse.Domain.Thermic
 {
-    public class Thermostat : AbstractDevice, IToggable, ISwitchable
+    public class Thermostat : AbstractDevice, IToggable
     {
         private const int tempAtOn = 0;
         private const int defaultTarget = 20;
         private const int tempAdder = 2;
 
-        //-------ATTRIBUTES AND PROPERTY-------
+        //     -------ATTRIBUTES AND PROPERTY-------
         public Temperature CurrentTemperature { get; private set; }
         public Temperature TargetTemperature { get; private set; }
 
-        //------CONSTRUCTORS------
+        //         ------CONSTRUCTORS------
         public Thermostat():base()
         {
             CurrentTemperature = new Temperature(tempAtOn);
@@ -38,8 +38,11 @@ namespace BlaisePascal.SmartHouse.Domain.Temperature
             CurrentTemperature = new Temperature(tempAtOn);
             TargetTemperature = new Temperature(defaultTarget);
         }
-        
-        //------METHODS------
+
+        //        ------METHODS------
+
+        //--ON/OFF METHODS--
+
         public sealed override void SwitchOn()
         {
             while (!IsTemperatureEquals())
@@ -51,26 +54,32 @@ namespace BlaisePascal.SmartHouse.Domain.Temperature
         {
             base.SwitchOff();
         }
-        public bool IsTemperatureEquals()
-        { 
-            return CurrentTemperature == TargetTemperature; 
-        }
-        private void AddTemperature()
-        {
-            CurrentTemperature = CurrentTemperature.AddTemperatureWith(tempAdder);
-        }
-        public void ChangeTargetTemperatureTo(Temperature newTemp)
-        {
-            TargetTemperature = newTemp;
-            LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
-        }
         public void Toggle()
         {
             if (DeviceStatus == DeviceStatus.On)
                 SwitchOff();
             else
                 SwitchOn();
+        }
+
+        //--CHANGER TEMPERATURE METHODS--
+
+        public void ChangeTargetTemperatureTo(Temperature newTemp)
+        {
+            TargetTemperature = newTemp;
+            LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
+        }
+        private void AddTemperature()
+        {
+            CurrentTemperature = new Temperature(CurrentTemperature.Value+tempAdder);
+        }
+
+        //--OTHER METHODS--
+
+        public bool IsTemperatureEquals()
+        {
+            return CurrentTemperature == TargetTemperature;
         }
         public void ReturnAllModifiesOfDevice() => ReturnAllModifiesOfDevice(this);
     }

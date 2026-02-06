@@ -1,13 +1,13 @@
 ﻿using BlaisePascal.SmartHouse.Domain.Abstractions;
 
-namespace BlaisePascal.SmartHouse.Domain.Temperature
+namespace BlaisePascal.SmartHouse.Domain.Thermic
 {
-    public class AirConditioner: AbstractDevice, ISwitchable, IToggable
+    public class AirConditioner: AbstractDevice, IToggable
     {
         private const int speedAtOff = 0;
         private const int speedAtOn = 0;
         private const int minTemp = 0;
-        //-------ATTRIBUTES AND PROPERTY-------
+        //     -------ATTRIBUTES AND PROPERTY-------
 
         public SpeedRPM Speed { get; private set; }
         public Temperature Temperature { get; private set; }
@@ -23,7 +23,7 @@ namespace BlaisePascal.SmartHouse.Domain.Temperature
             { AcMode.Dry, new Temperature(0) }
         };
 
-        //------CONSTRUCTORS------
+        //      ------CONSTRUCTORS------
         public AirConditioner(): base()
         {
             Speed = new SpeedRPM(speedAtOff);
@@ -41,7 +41,10 @@ namespace BlaisePascal.SmartHouse.Domain.Temperature
             Temperature = new Temperature(minTemp);
         }
 
-        //------METHODS------
+        //      ------METHODS------
+
+        //--ON/OFF METHODS--
+
         public sealed override void SwitchOn()
         {
             base.SwitchOn();
@@ -62,51 +65,56 @@ namespace BlaisePascal.SmartHouse.Domain.Temperature
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
+
+        //--CHANGER METHODS--
+
         //cambia la velocità delle ventole
         public void ChangeSpeedTo(int speed)
-        {           
-            if (DeviceStatus == DeviceStatus.On)
+        {
+
+            // INSERIRE CONTROLLO DEVICE STATUS ON
+            switch (this.ModeOfAc)
             {
-                if (ModeOfAc == AcMode.Dry)
+                case AcMode.Dry:
                     Speed = new SpeedRPM(-speed);
-                else
+                    break;
+                default:
                     Speed = new SpeedRPM(speed);
-                LastModifierAtUtc = DateTime.UtcNow;
-                HistoryOfMod.Add(DateTime.UtcNow);
+                    break;
             }
-            else
-                throw new ArgumentException("You have to turn it on.");                  
+            LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);             
         }
         public void ChangeModeTo(AcMode newMode)
         {
-            if (DeviceStatus == DeviceStatus.On)
+            // INSERIRE CONTROLLO DEVICE STATUS ON
+            switch (newMode)
             {
-                if (newMode == AcMode.Custom)
-                {
+                case AcMode.Custom:
                     Temperature = CustomTemperature;
                     LastModifierAtUtc = DateTime.UtcNow;
                     HistoryOfMod.Add(DateTime.UtcNow);
-                }
-                else
-                {
+                    break;
+                default:
                     ModeOfAc = newMode;
                     Temperature = HeatForAcModes[ModeOfAc];
                     LastModifierAtUtc = DateTime.UtcNow;
                     HistoryOfMod.Add(DateTime.UtcNow);
-                }
+                    break;
             }
-            else
-                throw new ArgumentException("You have to turn it on.");
         }
+        public void ChangeCustomTemperatureTo(Temperature newTemp)
+        {
+            CustomTemperature = newTemp;
+        }
+
+        //--OTHER METHODS--
+
         private void PutStarterStatus()
         {
             ModeOfAc = AcMode.Cool;
             Temperature = HeatForAcModes[ModeOfAc];
             Speed = new SpeedRPM(speedAtOn);
-        }
-        public void ChangeCustomTemperatureTo(Temperature newTemp)
-        {
-            CustomTemperature = newTemp;
         }
         public void ReturnAllModifiesOfDevice() => ReturnAllModifiesOfDevice(this);
     }

@@ -1,4 +1,4 @@
-﻿namespace BlaisePascal.SmartHouse.Domain.Temperature
+﻿namespace BlaisePascal.SmartHouse.Domain.Thermic
 {
     public enum AcMode
     {

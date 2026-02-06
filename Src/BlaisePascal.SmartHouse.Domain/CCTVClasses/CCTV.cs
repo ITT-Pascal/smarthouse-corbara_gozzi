@@ -8,16 +8,16 @@ using BlaisePascal.SmartHouse.Domain.Luminous;
 
 namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
 {
-    public class CCTV : AbstractDevice, ISwitchable
+    public class CCTV : AbstractDevice
     {
         private const int degreesAtCreation = 0;
-        //-------ATTRIBUTES AND PROPERTY-------
+        //    -------ATTRIBUTES AND PROPERTY-------
         public Intensity intensityOfLedAtOn { get; init; }
         public Lamp CameraLed { get; private set; }
         public VideoQuality QualityOfVideo { get; private set; }
         public Degrees Degrees { get; private set; }
 
-        //------CONSTRUCTORS------
+        //       ------CONSTRUCTORS------
         public CCTV(): base()
         {
             intensityOfLedAtOn = new Intensity(20);
@@ -37,7 +37,10 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
             Degrees = new Degrees(degreesAtCreation);
         }
 
-        //------METHODS------
+        //          ------METHODS------
+
+        //--SWITCH METHODS--
+
         public override void SwitchOn()
         {
             base.SwitchOn();
@@ -50,6 +53,9 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
             base.SwitchOff();
             CameraLed.SwitchOff();
         }
+
+        // --CHANGER METHODS--
+
         public void ChangeQualityOfVideoTo(VideoQuality newQuality)
         { 
             QualityOfVideo = newQuality;
@@ -71,6 +77,9 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
+
+        //--RETURN METHODS--
+
         public void ReturnAllModifiesOfDevice() => ReturnAllModifiesOfDevice(this);
     }
 }

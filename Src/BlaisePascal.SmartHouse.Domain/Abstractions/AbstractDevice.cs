@@ -8,39 +8,41 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
 {
     public abstract class AbstractDevice: ISwitchable
     {
-        //-------ATTRIBUTES AND PROPERTY-------
+        //   -------ATTRIBUTES AND PROPERTY-------
         public Guid ID { get; init; }
         public DeviceStatus DeviceStatus { get; protected set; }
-        public Name ?Name { get; protected set; }
+        public DeviceName ?Name { get; protected set; }
         public DateTime DateTimeAtCreationUtc { get; init; }
         public DateTime? LastModifierAtUtc { get; protected set; }
 
         public List<DateTime> HistoryOfMod = new List<DateTime>();
 
-        //------CONSTRUCTORS------
+        //      ------CONSTRUCTORS------
         public AbstractDevice()
         {
             DeviceStatus = DeviceStatus.Off;
             DateTimeAtCreationUtc = DateTime.UtcNow;
             ID = Guid.NewGuid();
-            Name = new Name("ABSTRACT_DEVICE");
+            Name = new DeviceName("ABSTRACT_DEVICE");
         }
         public AbstractDevice(Guid guid)
         {
             DeviceStatus = DeviceStatus.Off;
             DateTimeAtCreationUtc = DateTime.UtcNow;
             ID = guid;
-            Name = new Name("ABSTRACT_DEVICE");
+            Name = new DeviceName("ABSTRACT_DEVICE");
         }
         public AbstractDevice(Guid guid, string name)
         {
             DeviceStatus = DeviceStatus.Off;
             DateTimeAtCreationUtc = DateTime.UtcNow;
             ID = guid;
-            Name = new Name(name);
+            Name = new DeviceName(name);
         }
 
-        //------METHODS------
+        //        ------METHODS------
+
+        //--SWITCH METHODS--
         public virtual void SwitchOn()
         {
             DeviceStatus = DeviceStatus.On;
@@ -53,24 +55,27 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
+
+        //--CHANGER METHODS--
+
         /// <summary>
         /// metodo che permette di eliminare lo status di errore
         /// </summary>
         public void FixErrors()
         {
-            if (DeviceStatus == DeviceStatus.Error)
-            {
-                DeviceStatus = DeviceStatus.On;
-            }
+            DeviceStatus = DeviceStatus.On;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
-        public void RenameTo(Name newName)
+        public void RenameTo(DeviceName newName)
         {
             Name = newName;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
+
+        //--RETURN METHODS--
+
         /// <summary>
         /// metodo che ritorna con lo string builder tutto lo storico delle modifiche
         /// </summary>
