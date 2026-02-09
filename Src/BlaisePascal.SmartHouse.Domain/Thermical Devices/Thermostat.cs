@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
+using BlaisePascal.SmartHouse.Domain.Shared;
 
 namespace BlaisePascal.SmartHouse.Domain.Thermic
 {
-    public class Thermostat : AbstractDevice, IToggable
+    public class Thermostat : AbstractDevice, IToggable, ISwitchable
     {
         private const int tempAtOn = 0;
         private const int defaultTarget = 20;
@@ -20,23 +21,23 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
         //         ------CONSTRUCTORS------
         public Thermostat():base()
         {
-            CurrentTemperature = new Temperature(tempAtOn);
-            TargetTemperature = new Temperature(defaultTarget);
+            CurrentTemperature = Temperature.NewTemperature(tempAtOn);
+            TargetTemperature = Temperature.NewTemperature(defaultTarget);
         }
         public Thermostat(Guid Id): base(Id)
         {
-            CurrentTemperature = new Temperature(tempAtOn);
-            TargetTemperature = new Temperature(defaultTarget);
+            CurrentTemperature = Temperature.NewTemperature(tempAtOn);
+            TargetTemperature = Temperature.NewTemperature(defaultTarget);
         }
         public Thermostat(Guid Id, string name): base(Id, name)
         {
-            CurrentTemperature = new Temperature(tempAtOn);
-            TargetTemperature = new Temperature(defaultTarget);
+            CurrentTemperature = Temperature.NewTemperature(tempAtOn);
+            TargetTemperature = Temperature.NewTemperature(defaultTarget);
         }
         public Thermostat(Guid Id, string name, int targetTemperature):base(Id, name)
         {
-            CurrentTemperature = new Temperature(tempAtOn);
-            TargetTemperature = new Temperature(defaultTarget);
+            CurrentTemperature = Temperature.NewTemperature(tempAtOn);
+            TargetTemperature = Temperature.NewTemperature(targetTemperature);
         }
 
         //        ------METHODS------
@@ -45,8 +46,8 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
 
         public sealed override void SwitchOn()
         {
-            while (!IsTemperatureEquals())
-                AddTemperature();
+            base.SwitchOn();
+            EqualsTemperatureTo();
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
@@ -54,25 +55,27 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
         {
             base.SwitchOff();
         }
-        public void Toggle()
-        {
-            if (DeviceStatus == DeviceStatus.On)
-                SwitchOff();
-            else
-                SwitchOn();
-        }
 
         //--CHANGER TEMPERATURE METHODS--
 
-        public void ChangeTargetTemperatureTo(Temperature newTemp)
+        private void EqualsTemperatureTo()
         {
-            TargetTemperature = newTemp;
+            if (CurrentTemperature.Value > TargetTemperature.Value)
+                SwitchOff();
+            else
+                while (!IsTemperatureEquals())
+                    AddTemperature();
+        }
+        public void ChangeTargetTemperatureTo(int newTemp)
+        {
+            TargetTemperature = Temperature.NewTemperature(newTemp);
+            EqualsTemperatureTo();
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
         private void AddTemperature()
         {
-            CurrentTemperature = new Temperature(CurrentTemperature.Value+tempAdder);
+            CurrentTemperature = Temperature.NewTemperature(CurrentTemperature.Value+tempAdder);
         }
 
         //--OTHER METHODS--
@@ -81,6 +84,5 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
         {
             return CurrentTemperature == TargetTemperature;
         }
-        public void ReturnAllModifiesOfDevice() => ReturnAllModifiesOfDevice(this);
     }
 }

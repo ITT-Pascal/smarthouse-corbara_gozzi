@@ -18,5 +18,10 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
                 throw new ArgumentException("Percentuale di intensità fuori al range 0 e 100");
             Value = val;
         }
+
+        public static Intensity NewIntensity(int val)
+        {
+            return new Intensity(val);
+        }
     }
 }

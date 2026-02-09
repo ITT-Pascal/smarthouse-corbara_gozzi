@@ -51,7 +51,7 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         }
         public void CheckAutoOff()
         {
-            IsDeviceOn();
+            CheckIsOn();
             if (autoOffAtUtc.HasValue && DateTime.UtcNow >= autoOffAtUtc.Value)
                 SwitchOff();
         }

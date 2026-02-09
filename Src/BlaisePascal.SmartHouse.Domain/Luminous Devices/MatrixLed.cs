@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
+using BlaisePascal.SmartHouse.Domain.Shared;
 
 namespace BlaisePascal.SmartHouse.Domain.Luminous
 {
@@ -46,13 +47,6 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
                     LampMatrix[rows, cols].SwitchOff();
                 }
             }
-        }
-        public void Toggle()
-        {
-            if (DeviceStatus == DeviceStatus.On)
-                SwitchOff();
-            else
-                SwitchOn();
         }
 
         //--CHANGER INTENSITY METHODS--

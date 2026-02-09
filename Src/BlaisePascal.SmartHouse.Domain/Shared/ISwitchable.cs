@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlaisePascal.SmartHouse.Domain.DoorClasses
+namespace BlaisePascal.SmartHouse.Domain.Shared
 {
-    public enum DoorStatus
+    public interface ISwitchable
     {
-        Open,
-        Closed,
-        Locked
+        void SwitchOn();
+        void SwitchOff();
     }
 }

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace BlaisePascal.SmartHouse.Domain.Abstractions
 {
@@ -19,6 +20,10 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
             if(value.Contains(' ') || value.Contains('.'))
                 throw new ArgumentException("Impossibile nome con spazi o punti");
             Value = $"{value}";
+        }
+        public static DeviceName NewDeviceName(string value)
+        {
+            return new DeviceName(value);
         }
 
     }

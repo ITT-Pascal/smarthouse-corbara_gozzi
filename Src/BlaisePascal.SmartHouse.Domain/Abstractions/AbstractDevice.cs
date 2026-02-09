@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BlaisePascal.SmartHouse.Domain.Shared;
 
 namespace BlaisePascal.SmartHouse.Domain.Abstractions
 {
-    public abstract class AbstractDevice: ISwitchable
+    public abstract class AbstractDevice
     {
         //   -------ATTRIBUTES AND PROPERTY-------
         public Guid ID { get; init; }
         public DeviceStatus DeviceStatus { get; protected set; }
-        public DeviceName ?Name { get; protected set; }
+        public DeviceName Name { get; protected set; }
         public DateTime DateTimeAtCreationUtc { get; init; }
         public DateTime? LastModifierAtUtc { get; protected set; }
 
-        public List<DateTime> HistoryOfMod = new List<DateTime>();
+        public List<DateTime> HistoryOfMod = []; // <= new()  <= new List<DateTime>()
 
         //      ------CONSTRUCTORS------
         public AbstractDevice()
@@ -23,21 +24,21 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
             DeviceStatus = DeviceStatus.Off;
             DateTimeAtCreationUtc = DateTime.UtcNow;
             ID = Guid.NewGuid();
-            Name = new DeviceName("ABSTRACT_DEVICE");
+            Name = DeviceName.NewDeviceName("ABSTRACT_DEVICE");
         }
         public AbstractDevice(Guid guid)
         {
             DeviceStatus = DeviceStatus.Off;
             DateTimeAtCreationUtc = DateTime.UtcNow;
             ID = guid;
-            Name = new DeviceName("ABSTRACT_DEVICE");
+            Name = DeviceName.NewDeviceName("ABSTRACT_DEVICE");
         }
         public AbstractDevice(Guid guid, string name)
         {
             DeviceStatus = DeviceStatus.Off;
             DateTimeAtCreationUtc = DateTime.UtcNow;
             ID = guid;
-            Name = new DeviceName(name);
+            Name = DeviceName.NewDeviceName(name);
         }
 
         //        ------METHODS------
@@ -52,6 +53,15 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
         public virtual void SwitchOff()
         {
             DeviceStatus = DeviceStatus.Off;
+            LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
+        }
+        public virtual void Toggle()
+        {
+            if (DeviceStatus == DeviceStatus.On)
+                SwitchOff();
+            else
+                SwitchOn();
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
@@ -71,11 +81,11 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
         /// metodo che ritorna con lo string builder tutto lo storico delle modifiche
         /// </summary>
         /// <returns></returns>
-        public string ReturnAllModifiesOfDevice(AbstractDevice device)
+        public string ReturnAllModifiesOfDevice()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.Append($"----{Name} modifies----");
-            sb.Append(string.Join("\n", HistoryOfMod));
+            sb.Append(string.Join('\n', HistoryOfMod));
             return sb.ToString();
         }
     }

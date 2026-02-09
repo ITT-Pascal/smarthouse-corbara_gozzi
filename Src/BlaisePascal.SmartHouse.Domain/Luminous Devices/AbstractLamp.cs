@@ -1,29 +1,31 @@
 ﻿using BlaisePascal.SmartHouse.Domain.Abstractions;
+using BlaisePascal.SmartHouse.Domain.Shared;
 using System.Reflection.Metadata.Ecma335;
 using System.Xml.Linq;
 
 namespace BlaisePascal.SmartHouse.Domain.Luminous
 {
-    public abstract class AbstractLamp: AbstractDevice, IToggable
+    public abstract class AbstractLamp: AbstractDevice, IToggable, ISwitchable
     {
-        private int intensityAtOff = 0;
-        private int valOfIncreaseAndDecrease = 10;
-        //  -------ATTRIBUTES AND PROPERTY-------
-        public Intensity Intensity { get; protected set; }
-        public Intensity IntensityAtOn = new Intensity(50);
+        private const int intensityAtOff = 0;
+        private const int intensityAtOn = 50;
 
+        //  -------ATTRIBUTES AND PROPERTY-------
+        private int valOfIncreaseAndDecrease { get; } = 10;
+        public Intensity Intensity { get; protected set; }
+        
         //      ------CONSTRUCTORS------
         protected AbstractLamp(): base()
         {
-            Intensity = new Intensity(intensityAtOff);
+            Intensity = Intensity.NewIntensity(intensityAtOff);
         }
         protected AbstractLamp(Guid id) : base(id)
         {
-            Intensity = new Intensity(intensityAtOff);
+            Intensity = Intensity.NewIntensity(intensityAtOff);
         }
         protected AbstractLamp( Guid guid, string name) : base(guid, name)
         {
-            Intensity = new Intensity(intensityAtOff);
+            Intensity = Intensity.NewIntensity(intensityAtOff);
         }
 
         //     ------METHODS------
@@ -32,58 +34,47 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         /// Metodo che lancia errore se il device è spento
         /// </summary>
         
-        public void IsDeviceOn()
+        public void CheckIsOn()
         {
             if (DeviceStatus == DeviceStatus.Off)
                 throw new ArgumentException("Device is off");
         }
-
 
         //--ON/OFF METHODS--
 
         public sealed override void SwitchOn()
         {
             base.SwitchOn();
-            Intensity = IntensityAtOn;
+            Intensity = Intensity.NewIntensity(intensityAtOn);
         }
         public override void SwitchOff()
         {
             base.SwitchOff();
-            Intensity = new Intensity(intensityAtOff);
-        }
-        public virtual void Toggle()
-        {
-            if (DeviceStatus == DeviceStatus.On)
-                SwitchOff();
-            else
-                SwitchOn();
-            LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
+            Intensity = Intensity.NewIntensity(intensityAtOff);
         }
 
         //--CHANGER INTENSITY METHODS--
 
         public virtual void IncreaseBy()
         {
-            IsDeviceOn();
-            Intensity = new Intensity(Intensity.Value+valOfIncreaseAndDecrease);
+            CheckIsOn();
+            Intensity = Intensity.NewIntensity(Intensity.Value + valOfIncreaseAndDecrease);
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
         public virtual void DecreaseBy()
         {
-            IsDeviceOn();
-            Intensity = new Intensity(Intensity.Value - valOfIncreaseAndDecrease);
+            CheckIsOn();
+            Intensity = Intensity.NewIntensity(Intensity.Value - valOfIncreaseAndDecrease);
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
         public virtual void SetIntensityTo(Intensity intensity)
         {
-            IsDeviceOn();
+            CheckIsOn();
             Intensity = intensity;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
-        public void ReturnAllModifiesOfDevice() => ReturnAllModifiesOfDevice(this);
     }
 }

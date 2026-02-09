@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.LampClasses;
 using BlaisePascal.SmartHouse.Domain.Luminous;
+using BlaisePascal.SmartHouse.Domain.Shared;
 
 namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
 {

@@ -1,44 +1,46 @@
 ﻿using BlaisePascal.SmartHouse.Domain.Abstractions;
+using BlaisePascal.SmartHouse.Domain.Shared;
 
 namespace BlaisePascal.SmartHouse.Domain.Thermic
 {
-    public class AirConditioner: AbstractDevice, IToggable
+    public class AirConditioner: AbstractDevice, IToggable, ISwitchable
     {
         private const int speedAtOff = 0;
         private const int speedAtOn = 0;
         private const int minTemp = 0;
+        private const int starterCustomTemp = 15;
         //     -------ATTRIBUTES AND PROPERTY-------
 
         public SpeedRPM Speed { get; private set; }
         public Temperature Temperature { get; private set; }
-        public Temperature CustomTemperature = new Temperature(15);
+        public Temperature CustomTemperature { get; private set; } = Temperature.NewTemperature(starterCustomTemp);
         public AcMode ModeOfAc { get; private set; }
 
-        public Dictionary<AcMode, Temperature> HeatForAcModes = new Dictionary<AcMode, Temperature>()
+        public Dictionary<AcMode, Temperature> HeatForAcModes = new()
         {
-            { AcMode.Hot, new Temperature(30) },
-            { AcMode.Heat, new Temperature(20) },
-            { AcMode.Cool, new Temperature(10) },
-            { AcMode.Freeze, new Temperature(-10) },
-            { AcMode.Dry, new Temperature(0) }
+            { AcMode.Hot, Temperature.NewTemperature(30) },
+            { AcMode.Heat, Temperature.NewTemperature(20) },
+            { AcMode.Cool, Temperature.NewTemperature(10) },
+            { AcMode.Freeze, Temperature.NewTemperature(-10) },
+            { AcMode.Dry,Temperature.NewTemperature(0) }
         };
 
         //      ------CONSTRUCTORS------
         public AirConditioner(): base()
         {
-            Speed = new SpeedRPM(speedAtOff);
-            Temperature = new Temperature(minTemp);
+            Speed = SpeedRPM.NewSpeed(speedAtOff);
+            Temperature = Temperature.NewTemperature(minTemp);
         }
         public AirConditioner(Guid id) : base(id)
         {
-            Speed = new SpeedRPM(speedAtOff);
-            Temperature = new Temperature(minTemp);
+            Speed = SpeedRPM.NewSpeed(speedAtOff);
+            Temperature = Temperature.NewTemperature(minTemp);
         }
 
         public AirConditioner(string name, Guid guid): base(guid, name)
         {
-            Speed = new SpeedRPM(speedAtOff);
-            Temperature = new Temperature(minTemp);
+            Speed = SpeedRPM.NewSpeed(speedAtOff);
+            Temperature = Temperature.NewTemperature(minTemp);
         }
 
         //      ------METHODS------
@@ -53,17 +55,7 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
         public sealed override void SwitchOff()
         {
             base.SwitchOff();
-            Temperature = new Temperature(0);
-            Speed = new SpeedRPM(speedAtOff);
-        }
-        public void Toggle()
-        {
-            if (DeviceStatus == DeviceStatus.On)
-                SwitchOff();
-            else
-                SwitchOn();
-            LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
+            Temperature = Temperature.NewTemperature(minTemp);
         }
 
         //--CHANGER METHODS--
@@ -76,10 +68,10 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
             switch (this.ModeOfAc)
             {
                 case AcMode.Dry:
-                    Speed = new SpeedRPM(-speed);
+                    Speed = SpeedRPM.NewSpeed(-speed);
                     break;
                 default:
-                    Speed = new SpeedRPM(speed);
+                    Speed = SpeedRPM.NewSpeed(speed);
                     break;
             }
             LastModifierAtUtc = DateTime.UtcNow;
@@ -103,9 +95,9 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
                     break;
             }
         }
-        public void ChangeCustomTemperatureTo(Temperature newTemp)
+        public void ChangeCustomTemperatureTo(int newTemp)
         {
-            CustomTemperature = newTemp;
+            CustomTemperature = Temperature.NewTemperature(newTemp);
         }
 
         //--OTHER METHODS--
@@ -114,9 +106,8 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
         {
             ModeOfAc = AcMode.Cool;
             Temperature = HeatForAcModes[ModeOfAc];
-            Speed = new SpeedRPM(speedAtOn);
+            Speed = SpeedRPM.NewSpeed(speedAtOn);
         }
-        public void ReturnAllModifiesOfDevice() => ReturnAllModifiesOfDevice(this);
     }
 }
 

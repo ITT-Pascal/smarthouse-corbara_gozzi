@@ -25,6 +25,10 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
                 throw new ArgumentException("Inserire password con almeno 8 caratteri");
             Value = $"{value}";
         }
+        public static Password NewPassword(string val)
+        {
+            return new Password(val);
+        }
 
     }
 }

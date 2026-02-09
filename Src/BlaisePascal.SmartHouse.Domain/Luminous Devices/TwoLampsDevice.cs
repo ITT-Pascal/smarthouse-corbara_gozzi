@@ -49,9 +49,9 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
 
         public void SetIntensityOfLampsTo(Intensity intensity)
         {
-            FirstLamp.IsDeviceOn();
-            FirstLamp.IsDeviceOn();
+            FirstLamp.CheckIsOn();
             FirstLamp.SetIntensityTo(intensity);
+            FirstLamp.CheckIsOn();
             SecondLamp.SetIntensityTo(intensity);
         }
     }

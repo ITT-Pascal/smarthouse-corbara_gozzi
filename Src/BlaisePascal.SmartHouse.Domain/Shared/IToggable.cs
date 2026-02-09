@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlaisePascal.SmartHouse.Domain.Abstractions
+namespace BlaisePascal.SmartHouse.Domain.Shared
 {
     public interface IToggable
     {
