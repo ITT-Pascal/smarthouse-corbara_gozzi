@@ -11,29 +11,28 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
     public class CCTV : AbstractDevice
     {
         private const int degreesAtCreation = 0;
+        private const int intensityAtOn = 60;
         //    -------ATTRIBUTES AND PROPERTY-------
-        public Intensity intensityOfLedAtOn { get; init; }
         public Lamp CameraLed { get; private set; }
-        public VideoQuality QualityOfVideo { get; private set; }
         public Degrees Degrees { get; private set; }
 
         //       ------CONSTRUCTORS------
         public CCTV(): base()
         {
-            intensityOfLedAtOn = new Intensity(20);
             CameraLed = new Lamp();
+            CameraLed.IntensityAtOn = new Intensity(intensityAtOn);
             Degrees = new Degrees(degreesAtCreation);
         }
         public CCTV(Guid id): base(id)
         {
-            intensityOfLedAtOn = new Intensity(20);
             CameraLed = new Lamp();
+            CameraLed.IntensityAtOn = new Intensity(intensityAtOn);
             Degrees = new Degrees(degreesAtCreation);
         }
         public CCTV(Guid id, string name): base(id, name)
         {
-            intensityOfLedAtOn = new Intensity(20);
             CameraLed = new Lamp();
+            CameraLed.IntensityAtOn = new Intensity(intensityAtOn);
             Degrees = new Degrees(degreesAtCreation);
         }
 
@@ -45,8 +44,6 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         {
             base.SwitchOn();
             CameraLed.SwitchOn();
-            CameraLed.SetIntensityTo(intensityOfLedAtOn);
-            QualityOfVideo = VideoQuality._720P_60;
         }
         public override void SwitchOff()
         {
@@ -56,24 +53,9 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
 
         // --CHANGER METHODS--
 
-        public void ChangeQualityOfVideoTo(VideoQuality newQuality)
-        { 
-            QualityOfVideo = newQuality;
-            LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
-        }
         public void SetCCTVDegreesInto(Degrees newDegrees)
         {
             Degrees = newDegrees;
-            LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
-        }
-        /// <summary>
-        /// MODALITA' VISIONE NOTTURNA
-        /// </summary>
-        public void SetNightVision()
-        {
-            QualityOfVideo = VideoQuality.NightVision;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }

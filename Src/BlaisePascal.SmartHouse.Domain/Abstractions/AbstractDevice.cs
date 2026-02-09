@@ -58,15 +58,6 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
 
         //--CHANGER METHODS--
 
-        /// <summary>
-        /// metodo che permette di eliminare lo status di errore
-        /// </summary>
-        public void FixErrors()
-        {
-            DeviceStatus = DeviceStatus.On;
-            LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
-        }
         public void RenameTo(DeviceName newName)
         {
             Name = newName;

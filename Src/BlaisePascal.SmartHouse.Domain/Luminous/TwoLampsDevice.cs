@@ -8,23 +8,11 @@ using System.Xml.Linq;
 
 namespace BlaisePascal.SmartHouse.Domain.LampClasses
 {
-    public sealed class TwoLampsDevice
+    public sealed class TwoLampsDevice(AbstractLamp firstLamp, AbstractLamp secondLamp)
     {
         //   -------ATTRIBUTES AND PROPERTY-------
-        public AbstractLamp FirstLamp { get; private set; }
-        public AbstractLamp SecondLamp { get; private set; }
-        
-        //      ------CONSTRUCTORS------
-        public TwoLampsDevice()
-        {
-            FirstLamp = new Lamp();
-            SecondLamp = new Lamp();
-        }
-        public TwoLampsDevice(AbstractLamp firstLamp, AbstractLamp secondLamp)
-        {
-            FirstLamp = firstLamp;
-            SecondLamp = secondLamp;
-        }
+        public AbstractLamp FirstLamp { get; private set; } = firstLamp;
+        public AbstractLamp SecondLamp { get; private set; } = secondLamp;
 
         //       ------METHODS------
 
@@ -61,11 +49,10 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
 
         public void SetIntensityOfLampsTo(Intensity intensity)
         {
-            if (FirstLamp.DeviceStatus == DeviceStatus.On && SecondLamp.DeviceStatus == DeviceStatus.On)
-            {
-                FirstLamp.SetIntensityTo(intensity);
-                SecondLamp.SetIntensityTo(intensity);
-            }
+            FirstLamp.IsDeviceOn();
+            FirstLamp.IsDeviceOn();
+            FirstLamp.SetIntensityTo(intensity);
+            SecondLamp.SetIntensityTo(intensity);
         }
     }
 }

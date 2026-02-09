@@ -28,6 +28,17 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
 
         //     ------METHODS------
 
+        /// <summary>
+        /// Metodo che lancia errore se il device è spento
+        /// </summary>
+        
+        public void IsDeviceOn()
+        {
+            if (DeviceStatus == DeviceStatus.Off)
+                throw new ArgumentException("Device is off");
+        }
+
+
         //--ON/OFF METHODS--
 
         public sealed override void SwitchOn()
@@ -54,30 +65,24 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
 
         public virtual void IncreaseBy()
         {
-            if (DeviceStatus == DeviceStatus.On)
-            {
-                Intensity = new Intensity(Intensity.Value+valOfIncreaseAndDecrease);
-                LastModifierAtUtc = DateTime.UtcNow;
-                HistoryOfMod.Add(DateTime.UtcNow);
-            }
+            IsDeviceOn();
+            Intensity = new Intensity(Intensity.Value+valOfIncreaseAndDecrease);
+            LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
         }
         public virtual void DecreaseBy()
         {
-            if (DeviceStatus == DeviceStatus.On)
-            {
-                Intensity = new Intensity(Intensity.Value - valOfIncreaseAndDecrease);
-                LastModifierAtUtc = DateTime.UtcNow;
-                HistoryOfMod.Add(DateTime.UtcNow);
-            }
+            IsDeviceOn();
+            Intensity = new Intensity(Intensity.Value - valOfIncreaseAndDecrease);
+            LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
         }
         public virtual void SetIntensityTo(Intensity intensity)
         {
-            if (DeviceStatus == DeviceStatus.On)
-            {
-                Intensity = intensity;
-                LastModifierAtUtc = DateTime.UtcNow;
-                HistoryOfMod.Add(DateTime.UtcNow);
-            }
+            IsDeviceOn();
+            Intensity = intensity;
+            LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void ReturnAllModifiesOfDevice() => ReturnAllModifiesOfDevice(this);
     }
