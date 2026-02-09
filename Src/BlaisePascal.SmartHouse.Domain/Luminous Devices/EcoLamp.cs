@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using BlaisePascal.SmartHouse.Domain.Luminous_Devices;
 
 namespace BlaisePascal.SmartHouse.Domain.Luminous
 {
-    public class EcoLamp : AbstractLamp
+    public sealed class EcoLamp : AbstractLamp
     {
         private const int DefaultAutoOffMinutes = 10;
         private const int MinAutoOffMinutes = 1;

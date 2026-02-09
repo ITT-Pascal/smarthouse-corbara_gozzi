@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
@@ -239,32 +240,10 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         //IL PARAMETRO INDICA SE DEVE ESSERE IN ORDINE DECRESCENTE
         public List<AbstractLamp> SortByIntensity(bool descending)
         {
-            List<AbstractLamp> ListOfLamp = [];
-            LampsRow HelpList = new();
-            HelpList.LampRow.Add(LampRow[0]);
             if (descending)
-            {
-                for (int i = 1; i < LampRow.Count; i++)
-                {
-                    int j = 0;
-                    while (LampRow[i].Intensity.Value < HelpList.LampRow[j].Intensity.Value && j < HelpList.LampRow.Count)
-                        j++;
-                    HelpList.AddLampIn(j, LampRow[i]);
-                }
-            }
-            else 
-            {
-                for (int i = 1; i < LampRow.Count; i++)
-                {
-                    int j = 0;
-                    while (LampRow[i].Intensity.Value > HelpList.LampRow[j].Intensity.Value && j < HelpList.LampRow.Count)
-                        j++;
-                    HelpList.AddLampIn(j, LampRow[i]);
-                }
-            }    
-            for (int i = 0; i < HelpList.LampRow.Count; i++)
-                ListOfLamp.Add(HelpList.LampRow[i]);
-            return ListOfLamp;
+                return LampRow.OrderByDescending(lamp => lamp.Intensity.Value).ToList();
+            else
+                return LampRow.OrderBy(lamp => lamp.Intensity.Value).ToList();  
         }
     }
 }

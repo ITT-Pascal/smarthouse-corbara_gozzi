@@ -1,4 +1,5 @@
 ﻿using System.Xml.Linq;
+using BlaisePascal.SmartHouse.Domain.Luminous_Devices;
 
 namespace BlaisePascal.SmartHouse.Domain.Luminous
 {

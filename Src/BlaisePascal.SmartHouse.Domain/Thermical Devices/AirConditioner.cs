@@ -58,13 +58,18 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
             Temperature = Temperature.NewTemperature(minTemp);
         }
 
+        public void CheckIsOn()
+        {
+            if (DeviceStatus == DeviceStatus.Off)
+                throw new ArgumentException("Device is off");
+        }
+
         //--CHANGER METHODS--
 
         //cambia la velocità delle ventole
         public void ChangeSpeedTo(int speed)
         {
-
-            // INSERIRE CONTROLLO DEVICE STATUS ON
+            CheckIsOn();
             switch (this.ModeOfAc)
             {
                 case AcMode.Dry:
@@ -79,7 +84,7 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
         }
         public void ChangeModeTo(AcMode newMode)
         {
-            // INSERIRE CONTROLLO DEVICE STATUS ON
+            CheckIsOn();
             switch (newMode)
             {
                 case AcMode.Custom:

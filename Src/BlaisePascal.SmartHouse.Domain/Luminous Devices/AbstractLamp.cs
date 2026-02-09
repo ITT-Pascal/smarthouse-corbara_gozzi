@@ -1,17 +1,19 @@
-﻿using BlaisePascal.SmartHouse.Domain.Abstractions;
-using BlaisePascal.SmartHouse.Domain.Shared;
-using System.Reflection.Metadata.Ecma335;
+﻿using System.Reflection.Metadata.Ecma335;
 using System.Xml.Linq;
+using BlaisePascal.SmartHouse.Domain.Abstractions;
+using BlaisePascal.SmartHouse.Domain.Luminous_Devices;
+using BlaisePascal.SmartHouse.Domain.Shared;
 
 namespace BlaisePascal.SmartHouse.Domain.Luminous
 {
-    public abstract class AbstractLamp: AbstractDevice, IToggable, ISwitchable
+    public abstract class AbstractLamp: AbstractDevice, ILamp
     {
         private const int intensityAtOff = 0;
         private const int intensityAtOn = 50;
+        private const int valOfIncreaseAndDecrease = 10;
 
         //  -------ATTRIBUTES AND PROPERTY-------
-        private int valOfIncreaseAndDecrease { get; } = 10;
+
         public Intensity Intensity { get; protected set; }
         
         //      ------CONSTRUCTORS------
