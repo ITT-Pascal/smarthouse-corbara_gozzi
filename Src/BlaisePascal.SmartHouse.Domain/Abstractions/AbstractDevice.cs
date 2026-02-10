@@ -56,15 +56,6 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
-        public virtual void Toggle()
-        {
-            if (DeviceStatus == DeviceStatus.On)
-                SwitchOff();
-            else
-                SwitchOn();
-            LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
-        }
 
         //--CHANGER METHODS--
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
 using BlaisePascal.SmartHouse.Domain.LampClasses;
 using BlaisePascal.SmartHouse.Domain.Shared;
@@ -29,7 +30,6 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        
         private void IsPasswordCorrect(Password Try)
         {
             if (Try != AdminPassword)
@@ -54,14 +54,12 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         { 
             CCTVset.Add(camera); 
         }
-
         public void AddCCTVIn(int position, CCTV camera)
         {
             if (CCTVset[position] != null)
                 throw new Exception("Position not empty");
             CCTVset.Insert(position, camera);
         }
-
         public void RemoveCCTVAt(int position, Password password)
         {
             IsPasswordCorrect(password);
@@ -112,8 +110,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
             IsPasswordCorrect(password);
             foreach (CCTV cam in CCTVset)
                 cam.SwitchOff();
-        }
-            
+        }   
 
         /// <summary>
         /// Spegne telecamera in base all'ID

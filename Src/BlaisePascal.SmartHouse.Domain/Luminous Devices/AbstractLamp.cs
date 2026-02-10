@@ -39,12 +39,12 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         public void CheckIsOn()
         {
             if (DeviceStatus == DeviceStatus.Off)
-                throw new ArgumentException("Device is off");
+                throw new Exception("Switch on device first");
         }
 
         //--ON/OFF METHODS--
 
-        public sealed override void SwitchOn()
+        public override void SwitchOn()
         {
             base.SwitchOn();
             Intensity = Intensity.NewIntensity(intensityAtOn);
@@ -53,6 +53,15 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         {
             base.SwitchOff();
             Intensity = Intensity.NewIntensity(intensityAtOff);
+        }
+        public virtual void Toggle()
+        {
+            if (DeviceStatus == DeviceStatus.On)
+                SwitchOff();
+            else
+                SwitchOn();
+            LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
         }
 
         //--CHANGER INTENSITY METHODS--

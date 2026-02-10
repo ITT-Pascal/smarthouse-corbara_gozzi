@@ -15,9 +15,9 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
         public Temperature Temperature { get; private set; }
         public Temperature CustomTemperature { get; private set; } = Temperature.NewTemperature(starterCustomTemp);
         public AcMode ModeOfAc { get; private set; }
-
         public Dictionary<AcMode, Temperature> HeatForAcModes = new()
         {
+            
             { AcMode.Hot, Temperature.NewTemperature(30) },
             { AcMode.Heat, Temperature.NewTemperature(20) },
             { AcMode.Cool, Temperature.NewTemperature(10) },
@@ -58,10 +58,20 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
             Temperature = Temperature.NewTemperature(minTemp);
         }
 
-        public void CheckIsOn()
+        private void CheckIsOn()
         {
             if (DeviceStatus == DeviceStatus.Off)
                 throw new ArgumentException("Device is off");
+        }
+
+        public void Toggle()
+        {
+            if (DeviceStatus == DeviceStatus.On)
+                SwitchOff();
+            else
+                SwitchOn();
+            LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
         }
 
         //--CHANGER METHODS--
@@ -99,10 +109,14 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
                     HistoryOfMod.Add(DateTime.UtcNow);
                     break;
             }
+            LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void ChangeCustomTemperatureTo(int newTemp)
         {
             CustomTemperature = Temperature.NewTemperature(newTemp);
+            LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
         }
 
         //--OTHER METHODS--
@@ -112,6 +126,8 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
             ModeOfAc = AcMode.Cool;
             Temperature = HeatForAcModes[ModeOfAc];
             Speed = SpeedRPM.NewSpeed(speedAtOn);
+            LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
         }
     }
 }

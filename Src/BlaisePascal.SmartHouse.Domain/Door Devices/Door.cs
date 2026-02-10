@@ -40,7 +40,6 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
         {
             if (DeviceStatus == DeviceStatus.Locked)
                 throw new ArgumentException("Impossibile, la porta è chiusa");
-
         }
 
         //METODO CHE LANCIA ERRORE PER PASSWORD ERRATA
@@ -54,25 +53,21 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
         /// <summary>
         /// METODI CHE LANCIANO ERRORI PERCHE' EREDITATI MA IMPOSSIBILI DA CHIAMARE SENNO' CAUSEREBBERO ERRORI
         /// </summary>
-        public sealed override void SwitchOn()
-        {
-            throw new ArgumentException("Door is not switchable");
-        }
+        public sealed override void SwitchOn() { throw new ArgumentException("Door is not switchable"); }
         /// <summary>
         /// METODI CHE LANCIANO ERRORI PERCHE' EREDITATI MA IMPOSSIBILI DA CHIAMARE SENNO' CAUSEREBBERO ERRORI
         /// </summary>
-        public sealed override void SwitchOff()
-        {
-            throw new ArgumentException("Door is not switchable");
-        }
+        public sealed override void SwitchOff() { throw new ArgumentException("Door is not switchable"); }
 
-        public sealed override void Toggle()
+        public void Toggle()
         {
             IsDoorLocked();
             if (DeviceStatus == DeviceStatus.Closed)
                 OpenDoor();
             else
                 CloseDoor();
+            LastModifierAtUtc = DateTime.UtcNow;
+            HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void OpenDoor()
         {
@@ -108,22 +103,6 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
             Code = newCode;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfDoorMod.Add(DateTime.UtcNow);
-        }
-
-        /// <summary>
-        /// metodo che ritorna con lo string builder tutto lo storico delle modifiche della porta
-        /// </summary>
-        /// <returns></returns>
-        public string ReturnAllModifiesOfDoor()
-        {
-            StringBuilder sb = new();
-            sb.Append($"----DOOR----");
-            foreach (DateTime modifie in HistoryOfDoorMod)
-            {
-                sb.Append(modifie);
-                sb.Append('\n');
-            }
-            return sb.ToString();
         }
     }
 }      

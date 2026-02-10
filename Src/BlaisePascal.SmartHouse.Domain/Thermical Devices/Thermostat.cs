@@ -8,7 +8,7 @@ using BlaisePascal.SmartHouse.Domain.Shared;
 
 namespace BlaisePascal.SmartHouse.Domain.Thermic
 {
-    public class Thermostat : AbstractDevice, IToggable, ISwitchable
+    public sealed class Thermostat : AbstractDevice, ISwitchable
     {
         private const int tempAtOn = 0;
         private const int defaultTarget = 20;
@@ -44,14 +44,14 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
 
         //--ON/OFF METHODS--
 
-        public sealed override void SwitchOn()
+        public override void SwitchOn()
         {
             base.SwitchOn();
             EqualsTemperatureTo();
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
-        public sealed override void SwitchOff()
+        public override void SwitchOff()
         {
             base.SwitchOff();
         }

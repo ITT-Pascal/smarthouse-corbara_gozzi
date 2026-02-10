@@ -24,7 +24,7 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
 
         }
         public EcoLamp(Guid id, string name) : base(id, name)
-        { 
+        {
 
         }
 
@@ -45,7 +45,7 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
             SwitchOn();
             autoOffAtUtc = DateTime.UtcNow.AddMinutes(autoOffMinutes);
         }
-        public sealed override void SwitchOff()
+        public override void SwitchOff()
         {
             base.SwitchOff();
             autoOffAtUtc = null;
@@ -64,17 +64,17 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
 
         //--CHANGER INTENSITY METHODS--
 
-        public sealed override void SetIntensityTo(Intensity intensity)
+        public override void SetIntensityTo(Intensity intensity)
         {
             base.SetIntensityTo(intensity);
             ResetAutoOffIfNeeded();
         }
-        public sealed override void IncreaseBy()
+        public override void IncreaseBy()
         {
             base.IncreaseBy();
             ResetAutoOffIfNeeded();
         }
-        public sealed override void DecreaseBy()
+        public override void DecreaseBy()
         {
             base.DecreaseBy();
             ResetAutoOffIfNeeded();

@@ -15,8 +15,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
     {
         private const int degreesAtCreation = 0;
         private const int basicZoom = 100;
-        private const int basicZoomJump = 10;
-        private const int basicDegreesJump = 10;
+        private const int basicJump = 10;
         //    -------ATTRIBUTES AND PROPERTY-------
         public Lamp CameraLed { get; private set; }
         public Degrees Degrees { get; private set; }
@@ -55,19 +54,19 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         {
             base.SwitchOff();
             CameraLed.SwitchOff();
-            ReturnAllModifiesOfDevice();
         }
 
         // --CHANGER METHODS--
+
         public void IncreaseDegreesBy()
         {
-            Degrees = Degrees.NewDegrees(Degrees.Value + basicDegreesJump);
+            Degrees = Degrees.NewDegrees(Degrees.Value + basicJump);
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void DecreaseDegreesBy()
         {
-            Degrees = Degrees.NewDegrees(Degrees.Value - basicDegreesJump);
+            Degrees = Degrees.NewDegrees(Degrees.Value - basicJump);
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
@@ -77,20 +76,18 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
-
         public void IncreaseZoomBy()
         {
-            Zoom = Zoom.NewZoom(Zoom.Value + basicZoomJump);
+            Zoom = Zoom.NewZoom(Zoom.Value + basicJump);
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void DecreaseZoomBy()
         {
-            Zoom = Zoom.NewZoom(Zoom.Value - basicZoomJump);
+            Zoom = Zoom.NewZoom(Zoom.Value - basicJump);
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
-
         public void SetCCTVZoomTo(Zoom zoom)
         {
             Zoom = zoom;

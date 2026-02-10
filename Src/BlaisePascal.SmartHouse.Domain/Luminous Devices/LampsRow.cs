@@ -163,7 +163,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
             List<AbstractLamp> lamps = [];
             foreach(AbstractLamp lamp in LampRow)
             {
-                if (lamp.Intensity.Value == lamp.Intensity.maxPercentage)
+                if (lamp.Intensity.Value == lamp.Intensity.MaxPercentage)
                     lamps.Add(lamp);
             }
             if (lamps.Count == 0)
@@ -175,7 +175,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
             List<AbstractLamp> lamps = [];
             foreach (AbstractLamp lamp in LampRow)
             {
-                if (lamp.Intensity.Value == lamp.Intensity.minPercentage)
+                if (lamp.Intensity.Value == lamp.Intensity.MinPercentage)
                     lamps.Add(lamp);
             }
             if (lamps.Count == 0)
