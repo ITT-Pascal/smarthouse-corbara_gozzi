@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
 using BlaisePascal.SmartHouse.Domain.Luminous_Devices;
-using BlaisePascal.SmartHouse.Domain.Shared;
 
 namespace BlaisePascal.SmartHouse.Domain.Luminous
 {
@@ -70,6 +69,17 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
                 }
             }
         }
+        public void Toggle()
+        {
+            for (int rows = 0; rows < size; rows++)
+            {
+                for (int cols = 0; cols < size; cols++)
+                {
+                    LampMatrix[rows, cols].Toggle();
+                }
+            }
+        }
+
         //ACCENDE UNA SI E UNA NO, TIPO SCACCHIERA
         public void SwitchOnLikeChessboard()
         {
@@ -84,17 +94,7 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
                 }
             }
         }
-        public sealed override void Toggle()
-        {
-            for (int rows = 0; rows < size; rows++)
-            {
-                for (int cols = 0; cols < size; cols++)
-                {
-                    LampMatrix[rows, cols].Toggle();
-                }
-            }
-        }
-
+        
         //--CHANGER INTENSITY METHODS--
 
         /// <summary>

@@ -59,7 +59,7 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous_Devices
         }
         public override void SwitchOff()
         {
-            TimeOfUseInMin = SwitchOnTime.Minute - DateTime.UtcNow.Minute;
+            TimeOfUseInMin = DateTime.UtcNow.Minute - SwitchOnTime.Minute;
             DecreaseBatteryCharge();
             base.SwitchOff();
         }
@@ -107,7 +107,7 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous_Devices
         }
         public void UnplugLamp()
         {
-            TimeOfChargeInMin = StartedChargeTime.Minute - DateTime.UtcNow.Minute;
+            TimeOfChargeInMin = DateTime.UtcNow.Minute - StartedChargeTime.Minute;
             IncreaseBatteryCharge();
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);

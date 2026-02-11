@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
 using BlaisePascal.SmartHouse.Domain.CCTV_Devices;
 using BlaisePascal.SmartHouse.Domain.Luminous;
-using BlaisePascal.SmartHouse.Domain.Shared;
 
 namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
 {
