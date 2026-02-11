@@ -9,7 +9,7 @@ using BlaisePascal.SmartHouse.Domain.Luminous_Devices;
 
 namespace BlaisePascal.SmartHouse.Domain.Luminous
 {
-    public class MatrixLed: AbstractDevice, IToggable
+    public class MatrixLamp: AbstractDevice, IToggable
     {
         private const int size = 10;
 
@@ -17,32 +17,38 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         public Lamp[,] LampMatrix { get; private set; }
 
         //       ------CONSTRUCTORS------
-        public MatrixLed()
+        public MatrixLamp()
         {
             LampMatrix = new Lamp[size, size];
         }
 
         //        ------METHODS------
 
+        //--CHECK METHODS--
+
+        private static void AreIdxsInRange(uint row, uint col)
+        {
+            if (row >= size || col >= size)
+                throw new ArgumentException("Indexes: Spotted index out of matrix range");
+        }
+
         //--ADD AND REMOVE METHODS--
 
-        public void AddLampInPosition(uint rows, uint cols, Lamp lamp)
+        public void AddLampInPosition(uint row, uint col, Lamp lamp)
         {
-            if (rows >= LampMatrix.GetLength(0) || cols >= LampMatrix.GetLength(1))
-                throw new ArgumentOutOfRangeException("Index out of matrix");
-            if (LampMatrix[rows, cols] == null)
-                LampMatrix[rows, cols] = lamp;
+            AreIdxsInRange(row, col);
+            if (LampMatrix[row, col] == null)
+                LampMatrix[row, col] = lamp;
             else
-                throw new ArgumentException("There is already a lamp");
+                throw new ArgumentException("Matrix point: There is already a lamp");
         }
-        public void RemoveLampInPosition(uint rows, uint cols)
+        public void RemoveLampInPosition(uint row, uint col)
         {
-            if (rows >= LampMatrix.GetLength(0) || cols >= LampMatrix.GetLength(1))
-                throw new ArgumentOutOfRangeException("Index out of matrix");
-            if (LampMatrix[rows, cols] == null)
-                throw new ArgumentException("There is nothing");
+            AreIdxsInRange(row, col);
+            if (LampMatrix[row, col] == null)
+                throw new ArgumentException("Matrix point: There is nothing");
             else
-                LampMatrix[rows, cols] = null;
+                LampMatrix[row, col] = null;
         }
 
         //--ON/OFF METHODS--
@@ -111,11 +117,10 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
                 }
             }
         }
-        public void SetIntensityInPosition(uint rowsIdx, uint colsIdx, Intensity intensity)
+        public void SetIntensityInPosition(uint row, uint col, Intensity intensity)
         {
-            if (rowsIdx >= LampMatrix.GetLength(0) || colsIdx >= LampMatrix.GetLength(1))
-                throw new ArgumentOutOfRangeException("Index out of matrix");
-            LampMatrix[rowsIdx, colsIdx].SetIntensityTo(intensity);
+            AreIdxsInRange(row, col);
+            LampMatrix[row, col].SetIntensityTo(intensity);
         }
     }
 }

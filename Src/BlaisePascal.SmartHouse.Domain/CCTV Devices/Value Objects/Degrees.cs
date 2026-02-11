@@ -10,16 +10,15 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
     public class Degrees
     {
         private const int maxDegrees = 360;
-        private const int minDegrees = 0;
-        public int Value { get; }
+        public uint Value { get; }
 
-        public Degrees(int val)
+        public Degrees(uint val)
         {
-            if (val > maxDegrees || val < minDegrees)
-                throw new ArgumentException("Inserire gradi validi(0-360)");
+            if (val > maxDegrees)
+                throw new ArgumentException("Degrees: Invalid Degrees value[out of 0..360]");
             Value = val;
         }
-        public static Degrees NewDegrees(int val)
+        public static Degrees NewDegrees(uint val)
         {
             return new Degrees(val);
         }

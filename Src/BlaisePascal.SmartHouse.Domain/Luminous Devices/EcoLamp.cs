@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using BlaisePascal.SmartHouse.Domain.Luminous_Devices;
+﻿using BlaisePascal.SmartHouse.Domain.Abstractions;
+using BlaisePascal.SmartHouse.Domain.Shared;
 
 namespace BlaisePascal.SmartHouse.Domain.Luminous
 {
@@ -19,11 +14,11 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         {
 
         }
-        public EcoLamp(Guid Id) : base(Id)
+        public EcoLamp(Guid id) : base(id)
         {
 
         }
-        public EcoLamp(Guid id, string name) : base(id, name)
+        public EcoLamp(Guid id, DeviceName name) : base(id, name)
         {
 
         }
@@ -31,14 +26,14 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         //     --------METHODS-------
 
         //--ON/OFF METHODS--
-        
-        public void SwitchOn(bool enableAutoOff)
+
+        public sealed override void SwitchOn(bool enableAutoOff)
         {
             SwitchOn();
             autoOffAtUtc = enableAutoOff
-            ?DateTime.UtcNow.AddMinutes(DefaultAutoOffMinutes): null;
+            ? DateTime.UtcNow.AddMinutes(DefaultAutoOffMinutes) : null;
         }
-        public void SwitchOn(int autoOffMinutes)
+        public sealed override void SwitchOn(int autoOffMinutes)
         {
             if (autoOffMinutes < MinAutoOffMinutes)
                 throw new ArgumentOutOfRangeException(nameof(autoOffMinutes));
@@ -52,7 +47,7 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         }
         public void CheckAutoOff()
         {
-            CheckIsOn();
+            CheckStatusWith(DeviceStatus.On);
             if (autoOffAtUtc.HasValue && DateTime.UtcNow >= autoOffAtUtc.Value)
                 SwitchOff();
         }

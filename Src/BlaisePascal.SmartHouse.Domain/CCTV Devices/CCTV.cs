@@ -23,19 +23,19 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         //       ------CONSTRUCTORS------
         public CCTV(): base()
         {
-            CameraLed = new Lamp(Guid.NewGuid(), "CAMERA_LED");
+            CameraLed = new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName("CAMERA_LED"));
             Degrees = Degrees.NewDegrees(degreesAtCreation);
             Zoom = Zoom.NewZoom(basicZoom);
         }
         public CCTV(Guid id): base(id)
         {
-            CameraLed = new Lamp(Guid.NewGuid(), "CAMERA_LED");
+            CameraLed = new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName("CAMERA_LED"));
             Degrees = Degrees.NewDegrees(degreesAtCreation);
             Zoom = Zoom.NewZoom(basicZoom);
         }
-        public CCTV(Guid id, string name): base(id, name)
+        public CCTV(Guid id, DeviceName name): base(id, name)
         {
-            CameraLed = new Lamp(Guid.NewGuid(), "CAMERA_LED");
+            CameraLed = new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName("CAMERA_LED"));
             Degrees = Degrees.NewDegrees(degreesAtCreation);
             Zoom = Zoom.NewZoom(basicZoom);
         }

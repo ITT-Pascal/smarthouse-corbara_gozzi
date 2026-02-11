@@ -7,6 +7,7 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
 {
     public class Door: AbstractDevice, IToggable
     {
+        private const int basicCode = 123456;
 
         //  -------ATTRIBUTES AND PROPERTY-------
         private DoorCode Code { get; set; }
@@ -14,54 +15,50 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
         public List<DateTime> HistoryOfDoorMod = [];
 
         //      ------CONSTRUCTORS------
-        public Door()
-        {
-            DeviceStatus = DeviceStatus.Closed;
-            DateTimeAtCreationUtc = DateTime.UtcNow;
-            Code = DoorCode.NewDoorCode(123456);
+        public Door() : this(DoorCode.NewDoorCode(basicCode)) 
+        { 
+
         }
-        public Door(DoorCode code)
+        public Door(DoorCode code) : base()
         {
             DeviceStatus = DeviceStatus.Closed;
             Code = code;
-            DateTimeAtCreationUtc = DateTime.UtcNow;
+        }
+        public Door(Guid id) : base(id)
+        {
+            DeviceStatus = DeviceStatus.Closed;
+            Code = DoorCode.NewDoorCode(basicCode);
+        }
+        public Door(Guid id, DeviceName name) : base(id, name)
+        {
+            DeviceStatus = DeviceStatus.Closed;
+            Code = DoorCode.NewDoorCode(basicCode);
         }
 
         //       ------METHODS------
 
         //--CHECK METHODS--
 
-        /// <summary>
-        /// Metodo che verifica se la porta è locked
-        /// </summary>
-        /// <exception cref="ArgumentException"></exception>
-        
-        private void IsDoorLocked()
-        {
-            if (DeviceStatus == DeviceStatus.Locked)
-                throw new ArgumentException("Impossibile, la porta è chiusa");
-        }
-
         //METODO CHE LANCIA ERRORE PER PASSWORD ERRATA
 
         private void IsCodeCorrect(DoorCode Try)
         {
             if (Try != Code)
-                throw new ArgumentException("Codice errato");
+                throw new ArgumentException("Code: Incorrect try");
         }
 
         /// <summary>
         /// METODI CHE LANCIANO ERRORI PERCHE' EREDITATI MA IMPOSSIBILI DA CHIAMARE SENNO' CAUSEREBBERO ERRORI
         /// </summary>
-        public sealed override void SwitchOn() { throw new ArgumentException("Door is not switchable"); }
+        public sealed override void SwitchOn() { throw new ArgumentException("Method call: Door is not switchable"); }
         /// <summary>
         /// METODI CHE LANCIANO ERRORI PERCHE' EREDITATI MA IMPOSSIBILI DA CHIAMARE SENNO' CAUSEREBBERO ERRORI
         /// </summary>
-        public sealed override void SwitchOff() { throw new ArgumentException("Door is not switchable"); }
+        public sealed override void SwitchOff() { throw new ArgumentException("Method call: Door is not switchable"); }
 
         public void Toggle()
         {
-            IsDoorLocked();
+            CheckStatusWith(DeviceStatus.Locked);
             if (DeviceStatus == DeviceStatus.Closed)
                 OpenDoor();
             else
@@ -71,14 +68,14 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
         }
         public void OpenDoor()
         {
-            IsDoorLocked();
+            CheckStatusWith(DeviceStatus.Locked);
             DeviceStatus = DeviceStatus.Open;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfDoorMod.Add(DateTime.UtcNow);
         }
         public void CloseDoor()
         {
-            IsDoorLocked();
+            CheckStatusWith(DeviceStatus.Locked);
             DeviceStatus = DeviceStatus.Closed;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfDoorMod.Add(DateTime.UtcNow);

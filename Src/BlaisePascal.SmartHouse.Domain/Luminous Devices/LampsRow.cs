@@ -91,6 +91,10 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         }
         public void AddLampIn(int position, AbstractLamp lamp) 
         {
+            if (position < 0 || position >= LampRow.Count)
+                throw new ArgumentException("Position: Position out of range");
+            if (LampRow[position] != null)
+                throw new Exception("Position: Position out of range");
             LampRow.Insert(position, lamp);
         }
 
@@ -98,9 +102,9 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         /// Elimina lampada in base all'ID
         /// </summary>
         /// <param name="Id"></param>
-        public void RemoveLampBy(Guid Id) 
+        public void RemoveLampBy(Guid id) 
         {
-            LampRow.RemoveAt(GetIdxOfLampBy(Id));
+            LampRow.RemoveAt(GetIdxOfLampBy(id));
         }
 
         /// <summary>
@@ -115,8 +119,8 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         }
         public void RemoveLampAt(int position)
         {
-            if (LampRow[position] != null)
-                throw new ArgumentException("Position not empty");
+            if (position < 0 || position >= LampRow.Count)
+                throw new ArgumentException("Position: Position out of range");
             LampRow.RemoveAt(position);
         }
 
@@ -163,7 +167,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
             List<AbstractLamp> lamps = [];
             foreach(AbstractLamp lamp in LampRow)
             {
-                if (lamp.Intensity.Value == lamp.Intensity.MaxPercentage)
+                if (lamp.Intensity.Value == Intensity.maxPercentage)
                     lamps.Add(lamp);
             }
             if (lamps.Count == 0)
@@ -175,7 +179,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
             List<AbstractLamp> lamps = [];
             foreach (AbstractLamp lamp in LampRow)
             {
-                if (lamp.Intensity.Value == lamp.Intensity.MinPercentage)
+                if (lamp.Intensity.Value == Intensity.minPercentage)
                     lamps.Add(lamp);
             }
             if (lamps.Count == 0)
@@ -220,8 +224,6 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         }
         public AbstractLamp FindLampBy(Guid id)
         {
-            if (LampRow[GetIdxOfLampBy(id)] == null)
-                throw new ArgumentException("Lamp not found");
             return LampRow[GetIdxOfLampBy(id)];
         }
         //Metodo privato per poter individuare l'index di una lamp in base al guid
@@ -231,7 +233,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
             foreach (AbstractLamp lamp in LampRow)
                 GuidList.Add(lamp.ID);
             if (Array.IndexOf([.. GuidList], id) == -1)
-                throw new ArgumentException("Id not identified");
+                throw new ArgumentException("ID: Id not identified");
             return Array.IndexOf([.. GuidList], id);
         }
 

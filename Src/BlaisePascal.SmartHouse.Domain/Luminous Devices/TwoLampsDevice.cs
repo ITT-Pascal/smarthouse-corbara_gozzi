@@ -1,4 +1,5 @@
 ﻿using BlaisePascal.SmartHouse.Domain.Luminous;
+using BlaisePascal.SmartHouse.Domain.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,9 +50,9 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
 
         public void SetIntensityOfLampsTo(Intensity intensity)
         {
-            FirstLamp.CheckIsOn();
+            FirstLamp.CheckStatusWith(DeviceStatus.On);
+            FirstLamp.CheckStatusWith(DeviceStatus.On);
             FirstLamp.SetIntensityTo(intensity);
-            FirstLamp.CheckIsOn();
             SecondLamp.SetIntensityTo(intensity);
         }
     }

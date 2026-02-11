@@ -10,16 +10,18 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
     public class CCTVSet
     {
         // -------ATTRIBUTES AND PROPERTY-------
-        public List<CCTV> CCTVset { get; private set; } = [];
+        public List<CCTV> CCTVset { get; private set; }
         private Password AdminPassword { get; }
 
         //    ------CONSTRUCTORS------
         public CCTVSet() 
-        { 
+        {
+            CCTVset = [];
             AdminPassword = Password.NewPassword("1234567890");
         }
         public CCTVSet(Password adminPassword)
         {
+            CCTVset = [];
             AdminPassword = adminPassword;
         }
 
@@ -33,7 +35,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         private void IsPasswordCorrect(Password Try)
         {
             if (Try != AdminPassword)
-                throw new ArgumentException("Password errata");
+                throw new ArgumentException("Password: Incorrect try");
         }
 
         //--GETTER METHODS--
@@ -44,7 +46,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
             foreach (CCTV cam in CCTVset)
                 GuidList.Add(cam.ID);
             if (Array.IndexOf([.. GuidList], id) == -1)   // [.. GuidList] <= (GuidList.ToArray())
-                throw new ArgumentException("Id not identified");
+                throw new ArgumentException("ID: Id not identified");
             return Array.IndexOf([.. GuidList], id);
         }
 
@@ -56,12 +58,16 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         }
         public void AddCCTVIn(int position, CCTV camera)
         {
+            if (position < 0 || position >= CCTVset.Count)
+                throw new ArgumentException("Position out of range");
             if (CCTVset[position] != null)
                 throw new Exception("Position not empty");
             CCTVset.Insert(position, camera);
         }
         public void RemoveCCTVAt(int position, Password password)
         {
+            if (position < 0 || position >= CCTVset.Count)
+                throw new ArgumentException("Position out of range");
             IsPasswordCorrect(password);
             CCTVset.RemoveAt(position);
         }

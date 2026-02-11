@@ -10,8 +10,8 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
 {
     public class Temperature
     {
-        private int minHeat = -10;
-        private int maxHeat = 30;
+        private const int minHeat = -10; 
+        private const int maxHeat = 30;
         public int Value { get; }
 
         public Temperature(int val)

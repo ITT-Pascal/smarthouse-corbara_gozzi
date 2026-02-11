@@ -8,9 +8,8 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
 {
     public abstract class AbstractLamp: AbstractDevice, ILamp
     {
-        private const int intensityAtOff = 0;
         private const int intensityAtOn = 50;
-        private const int valOfIncreaseAndDecrease = 10;
+        private const int intensityJump = 10;
 
         //  -------ATTRIBUTES AND PROPERTY-------
 
@@ -19,28 +18,18 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         //      ------CONSTRUCTORS------
         protected AbstractLamp(): base()
         {
-            Intensity = Intensity.NewIntensity(intensityAtOff);
+            Intensity = Intensity.NewIntensity(Intensity.minPercentage);
         }
         protected AbstractLamp(Guid id) : base(id)
         {
-            Intensity = Intensity.NewIntensity(intensityAtOff);
+            Intensity = Intensity.NewIntensity(Intensity.minPercentage);
         }
-        protected AbstractLamp( Guid guid, string name) : base(guid, name)
+        protected AbstractLamp( Guid id, DeviceName name) : base(id, name)
         {
-            Intensity = Intensity.NewIntensity(intensityAtOff);
+            Intensity = Intensity.NewIntensity(Intensity.minPercentage);
         }
 
         //     ------METHODS------
-
-        /// <summary>
-        /// Metodo che lancia errore se il device è spento
-        /// </summary>
-        
-        public void CheckIsOn()
-        {
-            if (DeviceStatus == DeviceStatus.Off)
-                throw new Exception("Switch on device first");
-        }
 
         //--ON/OFF METHODS--
 
@@ -49,10 +38,18 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
             base.SwitchOn();
             Intensity = Intensity.NewIntensity(intensityAtOn);
         }
+        public virtual void SwitchOn(bool enableAutoOff)
+        {
+            base.SwitchOn();
+        }
+        public virtual void SwitchOn(int autoOffMinutes)
+        {
+            base.SwitchOn();
+        }
         public override void SwitchOff()
         {
             base.SwitchOff();
-            Intensity = Intensity.NewIntensity(intensityAtOff);
+            Intensity = Intensity.NewIntensity(Intensity.minPercentage);
         }
         public virtual void Toggle()
         {
@@ -68,21 +65,21 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
 
         public virtual void IncreaseBy()
         {
-            CheckIsOn();
-            Intensity = Intensity.NewIntensity(Intensity.Value + valOfIncreaseAndDecrease);
+            CheckStatusWith(DeviceStatus.On);
+            Intensity = Intensity.NewIntensity(Intensity.Value + intensityJump);
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
         public virtual void DecreaseBy()
         {
-            CheckIsOn();
-            Intensity = Intensity.NewIntensity(Intensity.Value - valOfIncreaseAndDecrease);
+            CheckStatusWith(DeviceStatus.On);
+            Intensity = Intensity.NewIntensity(Intensity.Value - intensityJump);
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
         public virtual void SetIntensityTo(Intensity intensity)
         {
-            CheckIsOn();
+            CheckStatusWith(DeviceStatus.On);
             Intensity = intensity;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);

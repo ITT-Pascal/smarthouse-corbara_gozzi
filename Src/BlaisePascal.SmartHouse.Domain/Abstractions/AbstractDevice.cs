@@ -26,22 +26,30 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
             ID = Guid.NewGuid();
             Name = DeviceName.NewDeviceName("ABSTRACT_DEVICE");
         }
-        public AbstractDevice(Guid guid)
+        public AbstractDevice(Guid id)
         {
             DeviceStatus = DeviceStatus.Off;
             DateTimeAtCreationUtc = DateTime.UtcNow;
-            ID = guid;
+            ID = id;
             Name = DeviceName.NewDeviceName("ABSTRACT_DEVICE");
         }
-        public AbstractDevice(Guid guid, string name)
+        public AbstractDevice(Guid id, DeviceName name)
         {
             DeviceStatus = DeviceStatus.Off;
             DateTimeAtCreationUtc = DateTime.UtcNow;
-            ID = guid;
-            Name = DeviceName.NewDeviceName(name);
+            ID = id;
+            Name = name;
         }
 
         //        ------METHODS------
+
+        //--CHECK METHODS--
+
+        public void CheckStatusWith(DeviceStatus status)
+        {
+            if (DeviceStatus == status)
+                throw new ArgumentException("Status: Status is not compatible with this method actions");
+        }
 
         //--SWITCH METHODS--
         public virtual void SwitchOn()

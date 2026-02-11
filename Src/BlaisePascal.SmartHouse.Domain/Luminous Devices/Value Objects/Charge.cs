@@ -7,21 +7,19 @@ using BlaisePascal.SmartHouse.Domain.Luminous;
 
 namespace BlaisePascal.SmartHouse.Domain.Luminous_Devices
 {
-    public class Charge
+    public class Charge: Intensity
     {
         //UNA SCARICA COMPLETA DURA 10 h (600 min)  1 unità di scarica = 6 min
 
         //UNA RICARICA COMPLETA DURA 3 h (ca 200 min) 1 unità di carica = 2 min
-        public int MaxCharge { get; private set; } = 100;
-        public int MinCharge { get; private set; } = 0;
-        public int Value { get; }
+        
 
-        public Charge(int val)
+        public Charge(int val): base(val)
         {
-            if (val < MinCharge)
-                Value = MinCharge;
-            else if (val > MaxCharge)
-                Value = MaxCharge;
+            if (val < MinPercentage)
+                Value = MinPercentage;
+            else if (val > MaxPercentage)
+                Value = MaxPercentage;
             else
                 Value = val;
             
@@ -30,5 +28,10 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous_Devices
         {
             return new Charge(val);
         }
+        public sealed override Intensity NewIntensity(int val)
+        {
+            throw new Exception("Method call: You cannot call this method");
+        }
+        
     }
 }

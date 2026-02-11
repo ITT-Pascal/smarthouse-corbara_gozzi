@@ -1,4 +1,5 @@
 ﻿using System.Xml.Linq;
+using BlaisePascal.SmartHouse.Domain.Abstractions;
 using BlaisePascal.SmartHouse.Domain.Luminous_Devices;
 
 namespace BlaisePascal.SmartHouse.Domain.Luminous
@@ -11,11 +12,11 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         {
 
         }
-        public Lamp(Guid Id) : base(Id)
+        public Lamp(Guid id) : base(id)
         {
             
         }
-        public Lamp(Guid Id, string name) : base(Id, name) 
+        public Lamp(Guid id, DeviceName name) : base(id, name) 
         {
             
         }

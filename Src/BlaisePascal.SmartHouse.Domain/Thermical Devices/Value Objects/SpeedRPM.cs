@@ -16,12 +16,9 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
         {
             if(speed != 0)
             {
-                if (!(speed is >= minSpeed and <= maxSpeed))
-                    throw new ArgumentException("Velocità fuori dal range di funzionamento");
-                else if (!(-speed is >= minSpeed and <= maxSpeed))
+                if (!(Math.Abs(speed) is >= minSpeed and <= maxSpeed))
                     throw new ArgumentException("Velocità fuori dal range di funzionamento");
             }
-
             Value = speed;
         }
         public static SpeedRPM NewSpeed(int val)

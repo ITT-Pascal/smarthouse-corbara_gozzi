@@ -23,20 +23,20 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
             CurrentTemperature = Temperature.NewTemperature(tempAtOn);
             TargetTemperature = Temperature.NewTemperature(defaultTarget);
         }
-        public Thermostat(Guid Id): base(Id)
+        public Thermostat(Guid id): base(id)
         {
             CurrentTemperature = Temperature.NewTemperature(tempAtOn);
             TargetTemperature = Temperature.NewTemperature(defaultTarget);
         }
-        public Thermostat(Guid Id, string name): base(Id, name)
+        public Thermostat(Guid id, DeviceName name): base(id, name)
         {
             CurrentTemperature = Temperature.NewTemperature(tempAtOn);
             TargetTemperature = Temperature.NewTemperature(defaultTarget);
         }
-        public Thermostat(Guid Id, string name, int targetTemperature):base(Id, name)
+        public Thermostat(Guid id, DeviceName name, Temperature targetTemperature):base(id, name)
         {
             CurrentTemperature = Temperature.NewTemperature(tempAtOn);
-            TargetTemperature = Temperature.NewTemperature(targetTemperature);
+            TargetTemperature = targetTemperature;
         }
 
         //        ------METHODS------
@@ -65,9 +65,9 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
                 while (!IsTemperatureEquals())
                     AddTemperature();
         }
-        public void ChangeTargetTemperatureTo(int newTemp)
+        public void ChangeTargetTemperatureTo(Temperature newTemp)
         {
-            TargetTemperature = Temperature.NewTemperature(newTemp);
+            TargetTemperature = newTemp;
             EqualsTemperatureTo();
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);

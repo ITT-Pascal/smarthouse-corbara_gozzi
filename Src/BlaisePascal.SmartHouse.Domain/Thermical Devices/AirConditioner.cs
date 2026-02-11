@@ -1,4 +1,5 @@
-﻿using BlaisePascal.SmartHouse.Domain.Abstractions;
+﻿using System.Xml.Linq;
+using BlaisePascal.SmartHouse.Domain.Abstractions;
 using BlaisePascal.SmartHouse.Domain.Shared;
 
 namespace BlaisePascal.SmartHouse.Domain.Thermic
@@ -37,7 +38,7 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
             Temperature = Temperature.NewTemperature(minTemp);
         }
 
-        public AirConditioner(string name, Guid guid): base(guid, name)
+        public AirConditioner(Guid id, DeviceName name) : base(id, name)
         {
             Speed = SpeedRPM.NewSpeed(speedAtOff);
             Temperature = Temperature.NewTemperature(minTemp);
@@ -57,13 +58,6 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
             base.SwitchOff();
             Temperature = Temperature.NewTemperature(minTemp);
         }
-
-        private void CheckIsOn()
-        {
-            if (DeviceStatus == DeviceStatus.Off)
-                throw new ArgumentException("Device is off");
-        }
-
         public void Toggle()
         {
             if (DeviceStatus == DeviceStatus.On)
@@ -79,8 +73,8 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
         //cambia la velocità delle ventole
         public void ChangeSpeedTo(int speed)
         {
-            CheckIsOn();
-            switch (this.ModeOfAc)
+            CheckStatusWith(DeviceStatus.On);
+            switch (ModeOfAc)
             {
                 case AcMode.Dry:
                     Speed = SpeedRPM.NewSpeed(-speed);
@@ -94,7 +88,7 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
         }
         public void ChangeModeTo(AcMode newMode)
         {
-            CheckIsOn();
+            CheckStatusWith(DeviceStatus.On);
             switch (newMode)
             {
                 case AcMode.Custom:
@@ -112,9 +106,9 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
-        public void ChangeCustomTemperatureTo(int newTemp)
+        public void ChangeCustomTemperatureTo(Temperature newTemp)
         {
-            CustomTemperature = Temperature.NewTemperature(newTemp);
+            CustomTemperature = newTemp;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }

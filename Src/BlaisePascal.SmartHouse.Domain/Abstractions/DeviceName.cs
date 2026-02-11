@@ -16,10 +16,10 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
         {
             //CONTROLLO CHE IL NOME NON SIA VUOTO E CHE NON ABBIA PUNTI O SPAZI
             if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("Inserire caratteri");
+                throw new ArgumentException("DeviceName: There is no char");
             if(value.Contains(' ') || value.Contains('.'))
-                throw new ArgumentException("Impossibile nome con spazi o punti");
-            Value = $"{value}";
+                throw new ArgumentException("DeviceName: Name can't contain spaces[ ] or points[.]");
+            Value = value;
         }
         public static DeviceName NewDeviceName(string value)
         {

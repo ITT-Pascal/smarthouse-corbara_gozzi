@@ -14,10 +14,11 @@ namespace BlaisePascal.SmartHouse.Domain.CCTV_Devices
 
         public Zoom(int val)
         {
-            if (val < minZoom || val > maxZoom)
+            if (!(val is >= minZoom and <= maxZoom))
             {
-                throw new ArgumentOutOfRangeException("Zoom fuori dal range possibile 10-200");
+                throw new ArgumentException("Zoom: Invalid Zoom value[out of 10..200]");
             }
+            Value = val;
         }
         public static Zoom NewZoom(int zoom)
         {

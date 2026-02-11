@@ -28,11 +28,11 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous_Devices
         {
             BatteryCharge = Charge.NewChargeLevel(batteryChargeAtCreation);
         }
-        public BatteryLamp(Guid Id) : base(Id)
+        public BatteryLamp(Guid id) : base(id)
         {
             BatteryCharge = Charge.NewChargeLevel(batteryChargeAtCreation);
         }
-        public BatteryLamp(Guid Id, string name) : base(Id, name)
+        public BatteryLamp(Guid id, DeviceName name) : base(id, name)
         {
             BatteryCharge = Charge.NewChargeLevel(batteryChargeAtCreation);
         }
@@ -45,8 +45,8 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous_Devices
         /// <exception cref="Exception"></exception>
         private void IsNotOutOfCharge()
         {
-            if (BatteryCharge.Value == BatteryCharge.MinCharge)
-                throw new Exception("Battery is dead, charge it");
+            if (BatteryCharge.Value == BatteryCharge.MinPercentage)
+                throw new Exception("Battery: Lamp is out of charge");
             SwitchOff();
         }
 
