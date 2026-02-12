@@ -15,7 +15,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.CCTVTests
         {
             CCTV TestCCTV = new CCTV();
             Assert.Equal(DeviceStatus.Off, TestCCTV.DeviceStatus);
-            Assert.Equal(DeviceStatus.Off, TestCCTV.CameraLed.DeviceStatus);
+            Assert.Equal(DeviceStatus.Off, TestCCTV.CameraLamp.DeviceStatus);
         }
 
         [Fact]
@@ -24,8 +24,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.CCTVTests
             CCTV TestCCTV = new CCTV();
             TestCCTV.SwitchOn();
             Assert.Equal(DeviceStatus.On, TestCCTV.DeviceStatus);
-            Assert.Equal(DeviceStatus.On, TestCCTV.CameraLed.DeviceStatus);
-            Assert.Equal(100, TestCCTV.CameraLed.Intensity);
+            Assert.Equal(DeviceStatus.On, TestCCTV.CameraLamp.DeviceStatus);
+            Assert.Equal(100, TestCCTV.CameraLamp.Intensity);
             Assert.Equal(VideoQuality._720P_60, TestCCTV.QualityOfVideo);
         }
 
@@ -36,8 +36,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.CCTVTests
             TestCCTV.SwitchOn();
             TestCCTV.SwitchOff();
             Assert.Equal(DeviceStatus.Off, TestCCTV.DeviceStatus);
-            Assert.Equal(DeviceStatus.Off, TestCCTV.CameraLed.DeviceStatus);
-            Assert.Equal(0, TestCCTV.CameraLed.Intensity);
+            Assert.Equal(DeviceStatus.Off, TestCCTV.CameraLamp.DeviceStatus);
+            Assert.Equal(0, TestCCTV.CameraLamp.Intensity);
             Assert.Equal(VideoQuality._720P_60, TestCCTV.QualityOfVideo);
         }
 

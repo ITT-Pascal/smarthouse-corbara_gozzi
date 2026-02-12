@@ -27,13 +27,13 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
 
         //--ON/OFF METHODS--
 
-        public sealed override void SwitchOn(bool enableAutoOff)
+        public override void SwitchOn(bool enableAutoOff)
         {
             SwitchOn();
             autoOffAtUtc = enableAutoOff
             ? DateTime.UtcNow.AddMinutes(DefaultAutoOffMinutes) : null;
         }
-        public sealed override void SwitchOn(int autoOffMinutes)
+        public override void SwitchOn(int autoOffMinutes)
         {
             if (autoOffMinutes < MinAutoOffMinutes)
                 throw new ArgumentOutOfRangeException(nameof(autoOffMinutes));
@@ -47,7 +47,7 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         }
         public void CheckAutoOff()
         {
-            CheckStatusWith(DeviceStatus.On);
+            CheckMethodCompatibilityWith(DeviceStatus.On);
             if (autoOffAtUtc.HasValue && DateTime.UtcNow >= autoOffAtUtc.Value)
                 SwitchOff();
         }

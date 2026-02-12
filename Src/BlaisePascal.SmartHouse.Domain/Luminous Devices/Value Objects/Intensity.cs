@@ -8,21 +8,21 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
 {
     public class Intensity
     {
-        public int MinPercentage { get;  } = 0;
-        public int MaxPercentage { get; } = 100;
-        
-        public int Value { get; protected set; }
+        public const int minPercentage  = 0;
+        public const int maxPercentage = 0;
+
+        public int Value { get; }
 
         public Intensity(int val)
         {
-            if (val < MinPercentage)
-                Value = MinPercentage;
-            else if (val > MaxPercentage)
-                Value = MaxPercentage;
+            if (val < minPercentage)
+                Value = minPercentage;
+            else if (val > maxPercentage)
+                Value = maxPercentage;
             else
                 Value = val;
         }
-        public virtual Intensity NewIntensity(int val)
+        public static Intensity NewIntensity(int val)
         {
             return new Intensity(val);
         }

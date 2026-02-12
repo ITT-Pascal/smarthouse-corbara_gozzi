@@ -9,32 +9,32 @@ using BlaisePascal.SmartHouse.Domain.Shared;
 
 namespace BlaisePascal.SmartHouse.Domain.Luminous_Devices
 {
-    public sealed class BatteryLamp: Lamp
+    public sealed class BatteryLamp: AbstractLamp
     {
         private const int batteryChargeAtCreation = 50;
-        private const int DischargeCoefficientVal = 6;
-        private const int RechargeCoefficientVal = 2;
+        private const int dischargeCoefficientVal = 6;
+        private const int rechargeCoefficientVal = 2;
         //    -------ATTRIBUTES AND PROPERTY-------
 
-        public Charge BatteryCharge { get; private set; }
+        public Battery LampBattery { get; private set; }
 
         private int TimeOfUseInMin;
         private int TimeOfChargeInMin;
         private DateTime SwitchOnTime;
-        private DateTime StartedChargeTime;
+        private DateTime ChargeStarterTime;
 
         //        ------CONSTRUCTORS------
         public BatteryLamp() : base()
         {
-            BatteryCharge = Charge.NewChargeLevel(batteryChargeAtCreation);
+            LampBattery = Battery.NewChargeLevel(batteryChargeAtCreation);
         }
         public BatteryLamp(Guid id) : base(id)
         {
-            BatteryCharge = Charge.NewChargeLevel(batteryChargeAtCreation);
+            LampBattery = Battery.NewChargeLevel(batteryChargeAtCreation);
         }
         public BatteryLamp(Guid id, DeviceName name) : base(id, name)
         {
-            BatteryCharge = Charge.NewChargeLevel(batteryChargeAtCreation);
+            LampBattery = Battery.NewChargeLevel(batteryChargeAtCreation);
         }
 
         //        -----METHODS-----
@@ -45,8 +45,8 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous_Devices
         /// <exception cref="Exception"></exception>
         private void IsNotOutOfCharge()
         {
-            if (BatteryCharge.Value == BatteryCharge.MinPercentage)
-                throw new Exception("Battery: Lamp is out of charge");
+            if (LampBattery.ChargeValue == Battery.minPercentage)
+                throw new Exception($"Battery[{LampBattery.ChargeValue}]: LampBattery is out of charge");
             SwitchOff();
         }
 
@@ -60,7 +60,7 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous_Devices
         public override void SwitchOff()
         {
             TimeOfUseInMin = DateTime.UtcNow.Minute - SwitchOnTime.Minute;
-            DecreaseBatteryCharge();
+            DecreaseLampBattery();
             base.SwitchOff();
         }
         public override void Toggle()
@@ -89,26 +89,26 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous_Devices
 
         //--CHANGER CHARGE--
 
-        private void IncreaseBatteryCharge()
+        private void IncreaseLampBattery()
         {
-            BatteryCharge = Charge.NewChargeLevel(BatteryCharge.Value + TimeOfChargeInMin / RechargeCoefficientVal);
+            LampBattery = Battery.NewChargeLevel(LampBattery.ChargeValue + TimeOfChargeInMin / rechargeCoefficientVal);
         }
-        private void DecreaseBatteryCharge()
+        private void DecreaseLampBattery()
         {
-            BatteryCharge = Charge.NewChargeLevel(BatteryCharge.Value - TimeOfUseInMin / DischargeCoefficientVal);
+            LampBattery = Battery.NewChargeLevel(LampBattery.ChargeValue - TimeOfUseInMin / dischargeCoefficientVal);
         }
         public void PlugLamp()
         {
             if (DeviceStatus != DeviceStatus.Off)
-                throw new Exception("You need to switch off to charge lamp");
-            StartedChargeTime = DateTime.UtcNow;
+                throw new Exception($"Status[{DeviceStatus}]: You need to switch off to charge lamp");
+            ChargeStarterTime = DateTime.UtcNow;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void UnplugLamp()
         {
-            TimeOfChargeInMin = DateTime.UtcNow.Minute - StartedChargeTime.Minute;
-            IncreaseBatteryCharge();
+            TimeOfChargeInMin = DateTime.UtcNow.Minute - ChargeStarterTime.Minute;
+            IncreaseLampBattery();
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }

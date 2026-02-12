@@ -10,20 +10,20 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
 {
     public class DeviceName
     {
-        public string Value { get; }
+        public string Name { get; }
 
-        public DeviceName(string value)
+        public DeviceName(string name)
         {
             //CONTROLLO CHE IL NOME NON SIA VUOTO E CHE NON ABBIA PUNTI O SPAZI
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("DeviceName: There is no char");
-            if(value.Contains(' ') || value.Contains('.'))
-                throw new ArgumentException("DeviceName: Name can't contain spaces[ ] or points[.]");
-            Value = value;
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException($"DeviceName[{name}]: There is no char");
+            if(name.Contains(' ') || name.Contains('.'))
+                throw new ArgumentException($"DeviceName[{name}]: Name can't contain spaces[ ] or points[.]");
+            Name = name;
         }
-        public static DeviceName NewDeviceName(string value)
+        public static DeviceName NewDeviceName(string name)
         {
-            return new DeviceName(value);
+            return new DeviceName(name);
         }
 
     }

@@ -15,8 +15,8 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
         public SpeedRPM Speed { get; private set; }
         public Temperature Temperature { get; private set; }
         public Temperature CustomTemperature { get; private set; } = Temperature.NewTemperature(starterCustomTemp);
-        public AcMode ModeOfAc { get; private set; }
-        public Dictionary<AcMode, Temperature> HeatForAcModes = new()
+        public AcMode AcMode { get; private set; }
+        public Dictionary<AcMode, Temperature> AcDictionary { get; init; } = new()
         {
             
             { AcMode.Hot, Temperature.NewTemperature(30) },
@@ -73,8 +73,8 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
         //cambia la velocità delle ventole
         public void ChangeSpeedTo(int speed)
         {
-            CheckStatusWith(DeviceStatus.On);
-            switch (ModeOfAc)
+            CheckMethodCompatibilityWith(DeviceStatus.On);
+            switch (AcMode)
             {
                 case AcMode.Dry:
                     Speed = SpeedRPM.NewSpeed(-speed);
@@ -88,7 +88,7 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
         }
         public void ChangeModeTo(AcMode newMode)
         {
-            CheckStatusWith(DeviceStatus.On);
+            CheckMethodCompatibilityWith(DeviceStatus.On);
             switch (newMode)
             {
                 case AcMode.Custom:
@@ -97,8 +97,8 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
                     HistoryOfMod.Add(DateTime.UtcNow);
                     break;
                 default:
-                    ModeOfAc = newMode;
-                    Temperature = HeatForAcModes[ModeOfAc];
+                    AcMode = newMode;
+                    Temperature = AcDictionary[AcMode];
                     LastModifierAtUtc = DateTime.UtcNow;
                     HistoryOfMod.Add(DateTime.UtcNow);
                     break;
@@ -117,8 +117,8 @@ namespace BlaisePascal.SmartHouse.Domain.Thermic
 
         private void PutStarterStatus()
         {
-            ModeOfAc = AcMode.Cool;
-            Temperature = HeatForAcModes[ModeOfAc];
+            AcMode = AcMode.Cool;
+            Temperature = AcDictionary[AcMode];
             Speed = SpeedRPM.NewSpeed(speedAtOn);
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);

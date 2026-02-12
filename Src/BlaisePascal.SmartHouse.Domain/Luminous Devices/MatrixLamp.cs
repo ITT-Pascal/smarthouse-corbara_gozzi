@@ -29,7 +29,7 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
         private static void AreIdxsInRange(uint row, uint col)
         {
             if (row >= size || col >= size)
-                throw new ArgumentException("Indexes: Spotted index out of matrix range");
+                throw new ArgumentException($"Indexes[{row},{col}]: Spotted index out of matrix range");
         }
 
         //--ADD AND REMOVE METHODS--
@@ -40,15 +40,12 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
             if (LampMatrix[row, col] == null)
                 LampMatrix[row, col] = lamp;
             else
-                throw new ArgumentException("Matrix point: There is already a lamp");
+                throw new ArgumentException($"Indexes[{row},{col}]: Cannot add lamp in positions already taken");
         }
         public void RemoveLampInPosition(uint row, uint col)
         {
             AreIdxsInRange(row, col);
-            if (LampMatrix[row, col] == null)
-                throw new ArgumentException("Matrix point: There is nothing");
-            else
-                LampMatrix[row, col] = null;
+            LampMatrix[row, col] = null;
         }
 
         //--ON/OFF METHODS--

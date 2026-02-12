@@ -3,12 +3,13 @@ using System.Xml.Linq;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
 using BlaisePascal.SmartHouse.Domain.Luminous_Devices;
 using BlaisePascal.SmartHouse.Domain.Shared;
+using BlaisePascal.SmartHouse.Domain.Thermic;
 
 namespace BlaisePascal.SmartHouse.Domain.Luminous
 {
     public abstract class AbstractLamp: AbstractDevice, ILamp
     {
-        private const int intensityAtOn = 50;
+        protected const int intensityAtOn = 50;
         private const int intensityJump = 10;
 
         //  -------ATTRIBUTES AND PROPERTY-------
@@ -65,21 +66,21 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
 
         public virtual void IncreaseBy()
         {
-            CheckStatusWith(DeviceStatus.On);
+            CheckMethodCompatibilityWith(DeviceStatus.On);
             Intensity = Intensity.NewIntensity(Intensity.Value + intensityJump);
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
         public virtual void DecreaseBy()
         {
-            CheckStatusWith(DeviceStatus.On);
+            CheckMethodCompatibilityWith(DeviceStatus.On);
             Intensity = Intensity.NewIntensity(Intensity.Value - intensityJump);
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
         public virtual void SetIntensityTo(Intensity intensity)
         {
-            CheckStatusWith(DeviceStatus.On);
+            CheckMethodCompatibilityWith(DeviceStatus.On);
             Intensity = intensity;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);

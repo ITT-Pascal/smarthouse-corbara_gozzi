@@ -34,6 +34,10 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
             DeviceStatus = DeviceStatus.Closed;
             Code = DoorCode.NewDoorCode(basicCode);
         }
+        public Door(Guid id, DeviceName name, DoorCode code) : base(id, name)
+        {
+            Code = code;
+        }
 
         //       ------METHODS------
 
@@ -44,21 +48,21 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
         private void IsCodeCorrect(DoorCode Try)
         {
             if (Try != Code)
-                throw new ArgumentException("Code: Incorrect try");
+                throw new ArgumentException($"Code[{Try}]: Incorrect try");
         }
 
         /// <summary>
         /// METODI CHE LANCIANO ERRORI PERCHE' EREDITATI MA IMPOSSIBILI DA CHIAMARE SENNO' CAUSEREBBERO ERRORI
         /// </summary>
-        public sealed override void SwitchOn() { throw new ArgumentException("Method call: Door is not switchable"); }
+        public sealed override void SwitchOn() { throw new ArgumentException($"Method call[Door.SwitchOn()]: Door is not switchable"); }
         /// <summary>
         /// METODI CHE LANCIANO ERRORI PERCHE' EREDITATI MA IMPOSSIBILI DA CHIAMARE SENNO' CAUSEREBBERO ERRORI
         /// </summary>
-        public sealed override void SwitchOff() { throw new ArgumentException("Method call: Door is not switchable"); }
+        public sealed override void SwitchOff() { throw new ArgumentException($"Method call[Door.SwitchOff()]: Door is not switchable"); }
 
         public void Toggle()
         {
-            CheckStatusWith(DeviceStatus.Locked);
+            CheckMethodCompatibilityWith(DeviceStatus.Locked);
             if (DeviceStatus == DeviceStatus.Closed)
                 OpenDoor();
             else
@@ -68,14 +72,14 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
         }
         public void OpenDoor()
         {
-            CheckStatusWith(DeviceStatus.Locked);
+            CheckMethodCompatibilityWith(DeviceStatus.Locked);
             DeviceStatus = DeviceStatus.Open;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfDoorMod.Add(DateTime.UtcNow);
         }
         public void CloseDoor()
         {
-            CheckStatusWith(DeviceStatus.Locked);
+            CheckMethodCompatibilityWith(DeviceStatus.Locked);
             DeviceStatus = DeviceStatus.Closed;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfDoorMod.Add(DateTime.UtcNow);

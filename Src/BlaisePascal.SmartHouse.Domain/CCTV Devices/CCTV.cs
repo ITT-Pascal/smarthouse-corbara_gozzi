@@ -7,36 +7,36 @@ using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
 using BlaisePascal.SmartHouse.Domain.CCTV_Devices;
 using BlaisePascal.SmartHouse.Domain.Luminous;
+using BlaisePascal.SmartHouse.Domain.Shared;
 
 namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
 {
     public class CCTV : AbstractDevice, ISwitchable
     {
-        private const int degreesAtCreation = 0;
         private const int basicZoom = 100;
         private const int basicJump = 10;
         //    -------ATTRIBUTES AND PROPERTY-------
-        public Lamp CameraLed { get; private set; }
+        public Lamp CameraLamp { get; private set; }
         public Degrees Degrees { get; private set; }
         public Zoom Zoom { get; private set; }
 
         //       ------CONSTRUCTORS------
         public CCTV(): base()
         {
-            CameraLed = new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName("CAMERA_LED"));
-            Degrees = Degrees.NewDegrees(degreesAtCreation);
+            CameraLamp = new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName("CAMERA_LED"));
+            Degrees = Degrees.NewDegrees(Degrees.minDegrees);
             Zoom = Zoom.NewZoom(basicZoom);
         }
         public CCTV(Guid id): base(id)
         {
-            CameraLed = new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName("CAMERA_LED"));
-            Degrees = Degrees.NewDegrees(degreesAtCreation);
+            CameraLamp = new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName("CAMERA_LED"));
+            Degrees = Degrees.NewDegrees(Degrees.minDegrees);
             Zoom = Zoom.NewZoom(basicZoom);
         }
         public CCTV(Guid id, DeviceName name): base(id, name)
         {
-            CameraLed = new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName("CAMERA_LED"));
-            Degrees = Degrees.NewDegrees(degreesAtCreation);
+            CameraLamp = new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName("CAMERA_LED"));
+            Degrees = Degrees.NewDegrees(Degrees.minDegrees);
             Zoom = Zoom.NewZoom(basicZoom);
         }
 
@@ -47,30 +47,33 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         public override void SwitchOn()
         {
             base.SwitchOn();
-            CameraLed.SwitchOn();
+            CameraLamp.SwitchOn();
         }
         public override void SwitchOff()
         {
             base.SwitchOff();
-            CameraLed.SwitchOff();
+            CameraLamp.SwitchOff();
         }
 
         // --CHANGER METHODS--
 
         public void IncreaseDegreesBy()
         {
-            Degrees = Degrees.NewDegrees(Degrees.Value + basicJump);
+            CheckMethodCompatibilityWith(DeviceStatus.Off);
+            Degrees = Degrees.NewDegrees(Degrees.Angle + basicJump);
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void DecreaseDegreesBy()
         {
-            Degrees = Degrees.NewDegrees(Degrees.Value - basicJump);
+            CheckMethodCompatibilityWith(DeviceStatus.Off);
+            Degrees = Degrees.NewDegrees(Degrees.Angle - basicJump);
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
-        public void SetCCTVDegreesInto(Degrees newDegrees)
+        public void SetCCTVDegreesTo(Degrees newDegrees)
         {
+            CheckMethodCompatibilityWith(DeviceStatus.Off);
             Degrees = newDegrees;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
@@ -89,6 +92,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
         }
         public void SetCCTVZoomTo(Zoom zoom)
         {
+            CheckMethodCompatibilityWith(DeviceStatus.Off);
             Zoom = zoom;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);

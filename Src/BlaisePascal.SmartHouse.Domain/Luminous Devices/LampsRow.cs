@@ -92,9 +92,9 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         public void AddLampIn(int position, AbstractLamp lamp) 
         {
             if (position < 0 || position >= LampRow.Count)
-                throw new ArgumentException("Position: Position out of range");
+                throw new ArgumentException($"Position[{position}]: Position out of range");
             if (LampRow[position] != null)
-                throw new Exception("Position: Position out of range");
+                throw new Exception($"Position[{position}]: Position out of range");
             LampRow.Insert(position, lamp);
         }
 
@@ -120,7 +120,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         public void RemoveLampAt(int position)
         {
             if (position < 0 || position >= LampRow.Count)
-                throw new ArgumentException("Position: Position out of range");
+                throw new ArgumentException($"Position[{position}]: Position out of range");
             LampRow.RemoveAt(position);
         }
 
@@ -129,33 +129,27 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
         public void SetIntensityForAllLampsTo(Intensity intensity)
         {
             foreach(AbstractLamp lamp in LampRow)
-            {
-                if(lamp.DeviceStatus == DeviceStatus.On)
-                {
-                    lamp.SetIntensityTo(intensity);
-                }
-            }
+                lamp.SetIntensityTo(intensity);
         }
 
         /// <summary>
         /// Cambia inenistà lampada in base all'ID
         /// </summary>
         /// <param name="Id"></param>
-        public void SetIntensityForLampWith(Guid id, Intensity intensity) 
+        public void SetIntensityForLampBy(Guid id, Intensity intensity) 
         {
-            if (FindLampBy(id).DeviceStatus == DeviceStatus.On)
-                FindLampBy(id).SetIntensityTo(intensity);
+            FindLampBy(id).SetIntensityTo(intensity);
         }
 
         /// <summary>
         /// Cambia inenistà lampada in base al nome
         /// </summary>
         /// <param name="Id"></param>
-        public void SetIntensityForLampWith(DeviceName name, Intensity intensity)
+        public void SetIntensityForLampBy(DeviceName name, Intensity intensity)
         {
             foreach(AbstractLamp lamp in LampRow)
             {
-                if(lamp.Name == name && lamp.DeviceStatus == DeviceStatus.On)
+                if(lamp.Name == name)
                     lamp.SetIntensityTo(intensity);
             }
         }
@@ -233,19 +227,19 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
             foreach (AbstractLamp lamp in LampRow)
                 GuidList.Add(lamp.ID);
             if (Array.IndexOf([.. GuidList], id) == -1)
-                throw new ArgumentException("ID: Id not identified");
+                throw new ArgumentException($"ID[{id}]: Id not identified");
             return Array.IndexOf([.. GuidList], id);
         }
 
         //--SORTER METHODS--
 
         //IL PARAMETRO INDICA SE DEVE ESSERE IN ORDINE DECRESCENTE
-        public List<AbstractLamp> SortByIntensity(bool descending)
+        public List<AbstractLamp> SortByIntensity(bool ascending)
         {
-            if (descending)
-                return LampRow.OrderByDescending(lamp => lamp.Intensity.Value).ToList();
+            if (ascending)
+                return [.. LampRow.OrderBy(lamp => lamp.Intensity.Value)];
             else
-                return LampRow.OrderBy(lamp => lamp.Intensity.Value).ToList();  
+                return [.. LampRow.OrderByDescending(lamp => lamp.Intensity.Value)]; // [.. <expression>] == <expression>.ToList()
         }
     }
 }

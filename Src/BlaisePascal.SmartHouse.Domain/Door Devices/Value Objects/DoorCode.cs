@@ -10,18 +10,18 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
     public class DoorCode
     {
         private const int codeLenght = 6;
-        public uint Value {get; }
+        public uint Code {get; }
 
         //CODICE A 6 CIFRE
-        public DoorCode(uint val)
+        public DoorCode(uint code)
         {
-            if (val.ToString().Length != codeLenght)
-                throw new ArgumentException("Code: Code value must be positiove and a lenght of 6");
-            Value = val;
+            if (code.ToString().Length != codeLenght)
+                throw new ArgumentException($"Code[{code}]: Code value must be positiove and a lenght of 6");
+            Code = code;
         }
-        public static DoorCode NewDoorCode(uint val)
+        public static DoorCode NewDoorCode(uint code)
         {
-            return new DoorCode(val);
+            return new DoorCode(code);
         }
     }
 }

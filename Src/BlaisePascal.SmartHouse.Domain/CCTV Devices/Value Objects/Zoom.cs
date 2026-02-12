@@ -8,21 +8,21 @@ namespace BlaisePascal.SmartHouse.Domain.CCTV_Devices
 {
     public class Zoom
     {
-        private const int minZoom = 10;
-        private const int maxZoom = 200;
-        public int Value { get; }
+        private const uint minZoom = 10;
+        private const uint maxZoom = 200;
+        public uint Value { get; }
 
-        public Zoom(int val)
+        public Zoom(uint val)
         {
             if (!(val is >= minZoom and <= maxZoom))
             {
-                throw new ArgumentException("Zoom: Invalid Zoom value[out of 10..200]");
+                throw new ArgumentException($"Zoom[{val}]: Invalid Zoom value[out of 10..200]");
             }
             Value = val;
         }
-        public static Zoom NewZoom(int zoom)
+        public static Zoom NewZoom(uint val)
         {
-            return new Zoom(zoom);
+            return new Zoom(val);
         }
     }
 }

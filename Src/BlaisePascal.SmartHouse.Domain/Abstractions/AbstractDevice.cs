@@ -45,10 +45,10 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
 
         //--CHECK METHODS--
 
-        public void CheckStatusWith(DeviceStatus status)
+        public void CheckMethodCompatibilityWith(DeviceStatus status)
         {
             if (DeviceStatus == status)
-                throw new ArgumentException("Status: Status is not compatible with this method actions");
+                throw new ArgumentException($"Status[{status}]: This status is not compatible with this method actions");
         }
 
         //--SWITCH METHODS--
