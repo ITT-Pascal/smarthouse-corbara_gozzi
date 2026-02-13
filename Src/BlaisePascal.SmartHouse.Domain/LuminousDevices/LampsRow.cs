@@ -233,7 +233,7 @@ namespace BlaisePascal.SmartHouse.Domain.LampClasses
 
         //--SORTER METHODS--
 
-        //IL PARAMETRO INDICA SE DEVE ESSERE IN ORDINE DECRESCENTE
+        //IL PARAMETRO INDICA SE DEVE ESSERE IN ORDINE CRESCENTE O DECRESCENTE
         public List<AbstractLamp> SortByIntensity(bool ascending)
         {
             if (ascending)
