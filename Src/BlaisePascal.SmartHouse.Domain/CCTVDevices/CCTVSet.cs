@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Runtime.CompilerServices;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
 using BlaisePascal.SmartHouse.Domain.CCTVDevices.ValueObjects;
-using BlaisePascal.SmartHouse.Domain.LampClasses;
 using BlaisePascal.SmartHouse.Domain.Shared;
 
 namespace BlaisePascal.SmartHouse.Domain.CCTVDevices
@@ -13,9 +12,10 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVDevices
         // -------ATTRIBUTES AND PROPERTY-------
         public List<CCTV> SetOfCCTV { get; private set; }
         private Password AdminPassword { get; }
+        public bool AccessPermission { get; private set; } = false;
 
-        //    ------CONSTRUCTORS------
-        public CCTVSet() 
+		//    ------CONSTRUCTORS------
+		public CCTVSet() 
         {
             SetOfCCTV = [];
             AdminPassword = Password.NewPassword("1234567890");
@@ -33,17 +33,26 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVDevices
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        private void IsPasswordCorrect(Password Try)
+        
+        public void AccessToSistem(Password Try)
         {
-            if (Try != AdminPassword)
-                throw new ArgumentException($"Password[{Try}]: Incorrect try");
-        }
-
-        //--GETTER METHODS--
-
-        private int GetPositionOfCCTVBy(Guid id)
+            if(Try == AdminPassword)
+                AccessPermission = true;
+            else
+                throw new UnauthorizedAccessException($"Password[{Try}]: Wrong password");
+		}
+        private void CheckAccessPermission()
         {
-            List<Guid> GuidList = [];
+            if (!AccessPermission)
+                throw new UnauthorizedAccessException($"Access denied: You don't have permission to access the system");
+		}
+
+		//--GETTER METHODS--
+
+		private int GetPositionOfCCTVBy(Guid id)
+        {
+            CheckAccessPermission();
+			List<Guid> GuidList = [];
             foreach (CCTV cam in SetOfCCTV)
                 GuidList.Add(cam.ID);
             if (Array.IndexOf([.. GuidList], id) == -1)   // [.. GuidList] <= (GuidList.ToArray())
@@ -54,11 +63,13 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVDevices
         //--ADD/REMOVE METHODS--
 
         public void AddCCTV(CCTV camera) 
-        { 
-            SetOfCCTV.Add(camera); 
+        {
+			CheckAccessPermission();
+			SetOfCCTV.Add(camera); 
         }
         public void AddCCTVIn(int position, CCTV camera)
         {
+            CheckAccessPermission();
             if (position < 0 || position >= SetOfCCTV.Count)
                 throw new ArgumentException($"Position[{position}]: Position out of range");
             if (SetOfCCTV[position] != null)
@@ -69,26 +80,27 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVDevices
         {
             if (position < 0 || position >= SetOfCCTV.Count)
                 throw new ArgumentException($"Position[{position}]: Position out of range");
-            IsPasswordCorrect(password);
-            SetOfCCTV.RemoveAt(position);
+			CheckAccessPermission();
+			SetOfCCTV.RemoveAt(position);
         }
         public void RemoveCCTVBy(Guid id, Password password)
         {
-            IsPasswordCorrect(password);
-            SetOfCCTV.Remove(SetOfCCTV[GetPositionOfCCTVBy(id)]);
+			CheckAccessPermission();
+			SetOfCCTV.Remove(SetOfCCTV[GetPositionOfCCTVBy(id)]);
         }
         public void RemoveCCTVBy(DeviceName name, Password password)
         {
-            IsPasswordCorrect(password);
-            foreach (CCTV cam in SetOfCCTV)
+			CheckAccessPermission();
+			foreach (CCTV cam in SetOfCCTV)
                 if (cam.Name == name)
                     RemoveCCTVBy(cam.ID, password);
         }
 
         //--SWITCH METHODS--
-        public void SwitchOn()
+        public void SwitchOn(Password Try)
         {
-            foreach (CCTV cam in SetOfCCTV)
+            AccessToSistem(Try);
+			foreach (CCTV cam in SetOfCCTV)
                 cam.SwitchOn();
         }
 
@@ -98,6 +110,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVDevices
         /// <param name="guid"></param>
         public void SwitchOnBy(Guid id) 
         {
+            CheckAccessPermission();
             SetOfCCTV[GetPositionOfCCTVBy(id)].SwitchOn();
         }
 
@@ -107,16 +120,18 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVDevices
         /// <param name="name"></param>
         public void SwitchOnBy(DeviceName name)
         {
-            foreach (CCTV cam in SetOfCCTV)
+            CheckAccessPermission();
+			foreach (CCTV cam in SetOfCCTV)
                 if (cam.Name == name)
                     SwitchOnBy(cam.ID);
         }
 
         public void SwitchOff(Password password)
         {
-            IsPasswordCorrect(password);
-            foreach (CCTV cam in SetOfCCTV)
+			CheckAccessPermission();
+			foreach (CCTV cam in SetOfCCTV)
                 cam.SwitchOff();
+            AccessPermission = false;
         }   
 
         /// <summary>
@@ -125,7 +140,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVDevices
         /// <param name="guid"></param>
         public void SwitchOffBy(Guid id, Password password)
         {
-            IsPasswordCorrect(password);
+			CheckAccessPermission();
             SetOfCCTV[GetPositionOfCCTVBy(id)].SwitchOff();
         }
 
@@ -135,8 +150,8 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVDevices
         /// <param name="name"></param>
         public void SwitchOffBy(DeviceName name, Password password)
         {
-            IsPasswordCorrect(password);
-            foreach (CCTV cam in SetOfCCTV)
+			CheckAccessPermission();
+			foreach (CCTV cam in SetOfCCTV)
                 if (cam.Name == name)
                     SwitchOffBy(cam.ID, password);
         }
@@ -146,37 +161,43 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVDevices
         //CAMBIA L'ANGOLO DI TUTTE LE TELECAMERE
         public void ChangeAllCCTVDegreesTo(Degrees newDegrees)
         {
-            foreach (CCTV cam in SetOfCCTV)
+			CheckAccessPermission();
+			foreach (CCTV cam in SetOfCCTV)
                 cam.SetCCTVDegreesTo(newDegrees);
         }
 
         //CAMBIA L'ANGOLO SOLO PER QUELLA CON IL GUID CORRISPONDENTE
         public void ChangeCCTVDegreesBy(Guid id, Degrees degrees)
         {
-            SetOfCCTV[GetPositionOfCCTVBy(id)].SetCCTVDegreesTo(degrees);
+			CheckAccessPermission();
+			SetOfCCTV[GetPositionOfCCTVBy(id)].SetCCTVDegreesTo(degrees);
         }
 
         //CAMBIA L'ANGOLO PER QUELLE CON IL NOME CRRISPONDENTE
         public void ChangeCCTVDegreesBy(DeviceName name, Degrees degrees)
         {
-            foreach (CCTV cam in SetOfCCTV)
+			CheckAccessPermission();
+			foreach (CCTV cam in SetOfCCTV)
                 if (cam.Name == name)
                     ChangeCCTVDegreesBy(cam.ID, degrees);
         }
 
         public void ChangeAllCCTVZoomTo(Zoom zoom)
         {
-            foreach (CCTV cam in SetOfCCTV)
+			CheckAccessPermission();
+			foreach (CCTV cam in SetOfCCTV)
                 cam.SetCCTVZoomTo(zoom);
         }
 
         public void ChangeCCTVZoomBy(Guid id, Zoom zoom)
         {
-            SetOfCCTV[GetPositionOfCCTVBy(id)].SetCCTVZoomTo(zoom);
+			CheckAccessPermission();
+			SetOfCCTV[GetPositionOfCCTVBy(id)].SetCCTVZoomTo(zoom);
         }
         public void ChangeCCTVZoomBy(DeviceName name, Zoom zoom)
         {
-            foreach (CCTV cam in SetOfCCTV)
+			CheckAccessPermission();
+			foreach (CCTV cam in SetOfCCTV)
                 if (cam.Name == name)
                     ChangeCCTVZoomBy(cam.ID, zoom);
         }

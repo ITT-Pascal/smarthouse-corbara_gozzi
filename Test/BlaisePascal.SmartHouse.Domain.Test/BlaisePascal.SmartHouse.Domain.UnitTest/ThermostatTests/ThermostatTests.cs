@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.Shared;
-using BlaisePascal.SmartHouse.Domain.Temperature;
+using BlaisePascal.SmartHouse.Domain.ThermicalDevices;
 
 namespace BlaisePascal.SmartHouse.Domain.UnitTest.ThermostatTests
 {

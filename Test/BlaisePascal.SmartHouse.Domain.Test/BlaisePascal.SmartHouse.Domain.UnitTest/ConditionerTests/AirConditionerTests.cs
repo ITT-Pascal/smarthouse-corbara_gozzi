@@ -1,4 +1,5 @@
 ﻿using BlaisePascal.SmartHouse.Domain.Shared;
+using BlaisePascal.SmartHouse.Domain.ThermicalDevices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
