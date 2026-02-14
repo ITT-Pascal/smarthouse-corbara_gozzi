@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.Luminous;
 
-namespace BlaisePascal.SmartHouse.Domain.Luminous_Devices
+namespace BlaisePascal.SmartHouse.Domain.LuminousDevices.ValueObjects
 {
     public class Battery
     {

@@ -5,9 +5,9 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
-using BlaisePascal.SmartHouse.Domain.Luminous_Devices;
+using BlaisePascal.SmartHouse.Domain.LuminousDevices.ValueObjects;
 
-namespace BlaisePascal.SmartHouse.Domain.Luminous
+namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
 {
     public class MatrixLamp: AbstractDevice, IToggable
     {

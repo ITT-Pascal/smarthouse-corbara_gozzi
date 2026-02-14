@@ -5,11 +5,11 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
-using BlaisePascal.SmartHouse.Domain.CCTV_Devices;
-using BlaisePascal.SmartHouse.Domain.Luminous;
 using BlaisePascal.SmartHouse.Domain.Shared;
+using BlaisePascal.SmartHouse.Domain.CCTVDevices.ValueObjects;
+using BlaisePascal.SmartHouse.Domain.LuminousDevices;
 
-namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
+namespace BlaisePascal.SmartHouse.Domain.CCTVDevices
 {
     public class CCTV : AbstractDevice, ISwitchable
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.DoorClasses;
 
-namespace BlaisePascal.SmartHouse.Domain.Door_Devices.Repositiories
+namespace BlaisePascal.SmartHouse.Domain.DoorDevices.Repositiories
 {
     public interface IDoorRepository
     {

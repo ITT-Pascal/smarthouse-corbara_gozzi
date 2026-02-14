@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.DoorClasses;
-using BlaisePascal.SmartHouse.Domain.Luminous;
-
-namespace BlaisePascal.SmartHouse.Domain.Thermic
+namespace BlaisePascal.SmartHouse.Domain.ThermicalDevices.ValueObjects
 {
     public class Temperature
     {

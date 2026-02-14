@@ -1,9 +1,10 @@
 ﻿
 using BlaisePascal.SmartHouse.Domain.DoorClasses;
 using System.ComponentModel;
-namespace BlaisePascal.SmartHouse.Domain.UnitTest.DoorTest
+
+namespace BlaisePascal.SmartHouse.Domain.UnitTest.DoorTests
 {
-    public class DoorTest
+    public class DoorTests
     {
         readonly int pass = 1234;
         readonly int newPass = 4321;

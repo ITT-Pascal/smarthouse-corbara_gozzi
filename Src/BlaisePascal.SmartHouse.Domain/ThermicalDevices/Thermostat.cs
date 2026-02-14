@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
+using BlaisePascal.SmartHouse.Domain.ThermicalDevices.ValueObjects;
 
-namespace BlaisePascal.SmartHouse.Domain.Thermic
+namespace BlaisePascal.SmartHouse.Domain.ThermicalDevices
 {
     public sealed class Thermostat : AbstractDevice, ISwitchable
     {

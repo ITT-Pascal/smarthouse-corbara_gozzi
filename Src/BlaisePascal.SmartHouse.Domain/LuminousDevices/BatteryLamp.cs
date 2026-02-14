@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
-using BlaisePascal.SmartHouse.Domain.Luminous;
+using BlaisePascal.SmartHouse.Domain.LuminousDevices.ValueObjects;
 using BlaisePascal.SmartHouse.Domain.Shared;
 
-namespace BlaisePascal.SmartHouse.Domain.Luminous_Devices
+namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
 {
     public sealed class BatteryLamp: AbstractLamp
     {

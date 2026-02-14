@@ -1,4 +1,4 @@
-﻿using BlaisePascal.SmartHouse.Domain.Luminous;
+﻿using BlaisePascal.SmartHouse.Domain.LuminousDevices.ValueObjects;
 using BlaisePascal.SmartHouse.Domain.Shared;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace BlaisePascal.SmartHouse.Domain.LampClasses
+namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
 {
     public sealed class TwoLampsDevice(AbstractLamp firstLamp, AbstractLamp secondLamp)
     {

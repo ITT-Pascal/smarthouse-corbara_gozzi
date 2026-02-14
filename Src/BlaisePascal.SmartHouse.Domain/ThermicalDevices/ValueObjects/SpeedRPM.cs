@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlaisePascal.SmartHouse.Domain.Thermic
+namespace BlaisePascal.SmartHouse.Domain.ThermicalDevices.ValueObjects
 {
     public class SpeedRPM
     {

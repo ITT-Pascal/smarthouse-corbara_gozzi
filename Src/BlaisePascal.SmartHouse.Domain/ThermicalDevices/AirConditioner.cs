@@ -1,8 +1,9 @@
 ﻿using System.Xml.Linq;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
 using BlaisePascal.SmartHouse.Domain.Shared;
+using BlaisePascal.SmartHouse.Domain.ThermicalDevices.ValueObjects;
 
-namespace BlaisePascal.SmartHouse.Domain.Thermic
+namespace BlaisePascal.SmartHouse.Domain.ThermicalDevices
 {
     public class AirConditioner: AbstractDevice, IToggable, ISwitchable
     {

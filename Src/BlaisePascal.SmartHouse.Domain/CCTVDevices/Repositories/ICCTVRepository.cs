@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BlaisePascal.SmartHouse.Domain.CCTVClasses;
 using BlaisePascal.SmartHouse.Domain.DoorClasses;
 
-namespace BlaisePascal.SmartHouse.Domain.CCTV_Devices.Repositories
+namespace BlaisePascal.SmartHouse.Domain.CCTVDevices.Repositories
 {
     public interface ICCTVRepository
     {

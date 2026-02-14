@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BlaisePascal.SmartHouse.Domain.LampClasses;
-using BlaisePascal.SmartHouse.Domain.CCTVClasses;
 using BlaisePascal.SmartHouse.Domain.Shared;
+using BlaisePascal.SmartHouse.Domain.CCTVDevices;
 
 namespace BlaisePascal.SmartHouse.Domain.UnitTest.CCTVTests
 {

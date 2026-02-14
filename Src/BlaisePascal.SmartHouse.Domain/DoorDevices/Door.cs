@@ -1,4 +1,5 @@
 ﻿using BlaisePascal.SmartHouse.Domain.Abstractions;
+using BlaisePascal.SmartHouse.Domain.DoorDevices.ValueObjects;
 using BlaisePascal.SmartHouse.Domain.Shared;
 using System.ComponentModel.Design;
 using System.Text;

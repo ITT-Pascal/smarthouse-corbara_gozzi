@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
+namespace BlaisePascal.SmartHouse.Domain.CCTVDevices.ValueObjects
 {
     public class Password
     {

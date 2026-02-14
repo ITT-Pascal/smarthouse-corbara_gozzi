@@ -1,7 +1,8 @@
 ﻿using BlaisePascal.SmartHouse.Domain.Abstractions;
+using BlaisePascal.SmartHouse.Domain.LuminousDevices.ValueObjects;
 using BlaisePascal.SmartHouse.Domain.Shared;
 
-namespace BlaisePascal.SmartHouse.Domain.Luminous
+namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
 {
     public sealed class EcoLamp : AbstractLamp
     {

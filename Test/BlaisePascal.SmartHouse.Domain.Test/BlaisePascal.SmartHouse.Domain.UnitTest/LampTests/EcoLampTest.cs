@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using System.Runtime.CompilerServices;
-using BlaisePascal.SmartHouse.Domain.Luminous;
 using BlaisePascal.SmartHouse.Domain.Shared;
+using BlaisePascal.SmartHouse.Domain.LuminousDevices;
 
 namespace BlaisePascal.SmartHouse.Domain.UnitTest.LAMPTESTS
 {

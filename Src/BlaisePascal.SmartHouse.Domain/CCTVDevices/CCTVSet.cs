@@ -2,11 +2,11 @@
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
-using BlaisePascal.SmartHouse.Domain.CCTV_Devices;
+using BlaisePascal.SmartHouse.Domain.CCTVDevices.ValueObjects;
 using BlaisePascal.SmartHouse.Domain.LampClasses;
 using BlaisePascal.SmartHouse.Domain.Shared;
 
-namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
+namespace BlaisePascal.SmartHouse.Domain.CCTVDevices
 {
     public class CCTVSet
     {

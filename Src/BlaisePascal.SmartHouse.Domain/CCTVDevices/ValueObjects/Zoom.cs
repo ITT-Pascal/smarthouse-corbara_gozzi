@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlaisePascal.SmartHouse.Domain.CCTV_Devices
+namespace BlaisePascal.SmartHouse.Domain.CCTVDevices.ValueObjects
 {
     public class Zoom
     {

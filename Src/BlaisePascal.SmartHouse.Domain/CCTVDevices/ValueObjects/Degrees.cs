@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.Luminous;
 
-namespace BlaisePascal.SmartHouse.Domain.CCTVClasses
+namespace BlaisePascal.SmartHouse.Domain.CCTVDevices.ValueObjects
 {
     public class Degrees
     {

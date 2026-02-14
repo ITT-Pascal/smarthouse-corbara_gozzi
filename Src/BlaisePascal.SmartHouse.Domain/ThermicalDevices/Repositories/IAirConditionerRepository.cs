@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BlaisePascal.SmartHouse.Domain.Luminous;
-using BlaisePascal.SmartHouse.Domain.Thermic;
 
-namespace BlaisePascal.SmartHouse.Domain.Thermical_Devices.Repositories
+namespace BlaisePascal.SmartHouse.Domain.ThermicalDevices.Repositories
 {
     public interface IAirConditionerRepository
     {

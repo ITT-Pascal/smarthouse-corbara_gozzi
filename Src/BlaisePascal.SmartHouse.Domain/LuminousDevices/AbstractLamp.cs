@@ -1,11 +1,11 @@
 ﻿using System.Reflection.Metadata.Ecma335;
 using System.Xml.Linq;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
-using BlaisePascal.SmartHouse.Domain.Luminous_Devices;
+using BlaisePascal.SmartHouse.Domain.LuminousDevices.ValueObjects;
 using BlaisePascal.SmartHouse.Domain.Shared;
-using BlaisePascal.SmartHouse.Domain.Thermic;
+using BlaisePascal.SmartHouse.Domain.ThermicalDevices;
 
-namespace BlaisePascal.SmartHouse.Domain.Luminous
+namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
 {
     public abstract class AbstractLamp: AbstractDevice, ILamp
     {

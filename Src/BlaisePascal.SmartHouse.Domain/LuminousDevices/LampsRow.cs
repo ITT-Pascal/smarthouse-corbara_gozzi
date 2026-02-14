@@ -6,12 +6,11 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
-using BlaisePascal.SmartHouse.Domain.CCTVClasses;
-using BlaisePascal.SmartHouse.Domain.Luminous;
+using BlaisePascal.SmartHouse.Domain.LuminousDevices.ValueObjects;
 using BlaisePascal.SmartHouse.Domain.Shared;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace BlaisePascal.SmartHouse.Domain.LampClasses
+namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
 {
     public class LampsRow
     {

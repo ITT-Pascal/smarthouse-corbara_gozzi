@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BlaisePascal.SmartHouse.Domain.Luminous;
 
-namespace BlaisePascal.SmartHouse.Domain.Luminous_Devices.Repositories
+namespace BlaisePascal.SmartHouse.Domain.LuminousDevices.Repositories
 {
     public interface ILampRepository
     {
