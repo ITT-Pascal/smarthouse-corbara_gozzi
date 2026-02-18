@@ -4,7 +4,7 @@ using System.Text;
 using BlaisePascal.SmartHouse.Domain.LuminousDevices;
 using BlaisePascal.SmartHouse.Domain.LuminousDevices.Repositories;
 
-namespace BlaisePascal.SmartHouse.Domain.Application.Devices.LuminousDevices.Query
+namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Query
 {
     public class GetAllLampsByIdQuery
     {

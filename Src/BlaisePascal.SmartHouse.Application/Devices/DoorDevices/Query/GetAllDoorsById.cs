@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BlaisePascal.SmartHouse.Domain.DoorClasses;
 using BlaisePascal.SmartHouse.Domain.DoorDevices.Repositiories;
 
-namespace BlaisePascal.SmartHouse.Domain.Application.Devices.DoorDevices.Command
+namespace BlaisePascal.SmartHouse.Application.Devices.DoorDevices.Query
 {
-    public class DeleteDoorCommand
+    public class GetAllDoorsById
     {
         private readonly IDoorRepository _doorRepository;
 
-        public DeleteDoorCommand(IDoorRepository doorRepository)
+        public GetAllDoorsById(IDoorRepository doorRepository)
         {
             _doorRepository = doorRepository;
         }
 
-        public void Execute(Guid id)
+        public List<Door> Execute()
         {
-            _doorRepository.DeleteDoor(id);
+            List<Door> doors = _doorRepository.GetAllDoors();
+            return doors;
         }
     }
 }

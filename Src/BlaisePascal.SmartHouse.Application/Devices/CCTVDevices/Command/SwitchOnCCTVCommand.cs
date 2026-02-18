@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 using BlaisePascal.SmartHouse.Domain.CCTVDevices.Repositories;
+using BlaisePascal.SmartHouse.Domain.LuminousDevices.Repositories;
 
-namespace BlaisePascal.SmartHouse.Domain.Application.Devices.CCTVDevices.Command
+namespace BlaisePascal.SmartHouse.Application.Devices.CCTVDevices.Command
 {
-    public class SwitchOffCCTVCommand
+    public class SwitchOnCCTVCommand
     {
 		private readonly ICCTVRepository Repository;
 
-		public SwitchOffCCTVCommand(ICCTVRepository repository)
+		public SwitchOnCCTVCommand(ICCTVRepository repository)
 		{
 			Repository = repository;
 		}
@@ -19,7 +20,7 @@ namespace BlaisePascal.SmartHouse.Domain.Application.Devices.CCTVDevices.Command
 			var cam = Repository.GetCCTVById(id);
 			if (cam != null)
 			{
-				cam.SwitchOff();
+				cam.SwitchOn();
 				Repository.UpdateCCTV(cam);
 			}
 		}

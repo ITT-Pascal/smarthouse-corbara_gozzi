@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using BlaisePascal.SmartHouse.Domain.LuminousDevices.Repositories;
 
-namespace BlaisePascal.SmartHouse.Domain.Application.Devices.LuminousDevices.Command
+namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Command
 {
     public class DeleteLampCommand
     {

@@ -5,23 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.DoorDevices.Repositiories;
 
-namespace BlaisePascal.SmartHouse.Domain.Application.Devices.DoorDevices.Command
+namespace BlaisePascal.SmartHouse.Application.Devices.DoorDevices.Command
 {
-    public class OpenDoorCommand
+    public class DeleteDoorCommand
     {
         private readonly IDoorRepository _doorRepository;
-        public OpenDoorCommand(IDoorRepository doorRepository)
+
+        public DeleteDoorCommand(IDoorRepository doorRepository)
         {
             _doorRepository = doorRepository;
         }
+
         public void Execute(Guid id)
         {
-            var door = _doorRepository.GetDoorById(id);
-            if (door != null)
-            {
-                door.OpenDoor();
-                _doorRepository.UpdateDoor(door);
-            }
+            _doorRepository.DeleteDoor(id);
         }
     }
 }

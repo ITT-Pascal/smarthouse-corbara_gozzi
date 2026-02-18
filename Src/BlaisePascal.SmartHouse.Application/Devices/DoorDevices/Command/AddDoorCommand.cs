@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.DoorClasses;
 using BlaisePascal.SmartHouse.Domain.DoorDevices.Repositiories;
 
-namespace BlaisePascal.SmartHouse.Domain.Application.Devices.DoorDevices.Command
+namespace BlaisePascal.SmartHouse.Application.Devices.DoorDevices.Command
 {
     public class AddDoorCommand
     {

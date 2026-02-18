@@ -6,19 +6,19 @@ using BlaisePascal.SmartHouse.Domain.CCTVDevices.Repositories;
 using BlaisePascal.SmartHouse.Domain.LuminousDevices;
 using BlaisePascal.SmartHouse.Domain.LuminousDevices.Repositories;
 
-namespace BlaisePascal.SmartHouse.Domain.Application.Devices.CCTVDevices.Query
+namespace BlaisePascal.SmartHouse.Application.Devices.CCTVDevices.Query
 {
-    public class GetAllCCTVsByIdQuery
+    public class GetCCTVByIdQuery
     {
 		private readonly ICCTVRepository Repository;
-		public GetAllCCTVsByIdQuery(ICCTVRepository repository)
+		public GetCCTVByIdQuery(ICCTVRepository repository)
 		{
 			Repository = repository;
 		}
-		public List<CCTV> Execute()
+		public CCTV Execute(Guid id)
 		{
-			List<CCTV> cams = Repository.GetAllCCTV();
-			return cams;
+			var cam = Repository.GetCCTVById(id);
+			return cam;
 		}
 	}
 }

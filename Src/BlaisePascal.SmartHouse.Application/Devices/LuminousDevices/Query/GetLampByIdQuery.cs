@@ -4,20 +4,21 @@ using System.Text;
 using BlaisePascal.SmartHouse.Domain.LuminousDevices;
 using BlaisePascal.SmartHouse.Domain.LuminousDevices.Repositories;
 
-namespace BlaisePascal.SmartHouse.Domain.Application.Devices.LuminousDevices.Command
+namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Query
 {
-    public class AddLampCommand
+    public class GetLampByIdQuery
     {
 		private readonly ILampRepository Repository;
 
-		public AddLampCommand(ILampRepository repository)
+		public GetLampByIdQuery(ILampRepository repository)
 		{
 			Repository = repository;
 		}
 
-		public void Execute(AbstractLamp lamp)
+		public AbstractLamp Execute(Guid id)
 		{
-			Repository.AddLamp(lamp);
+			AbstractLamp lamp = Repository.GetLampById(id);
+			return lamp;
 		}
 	}
 }

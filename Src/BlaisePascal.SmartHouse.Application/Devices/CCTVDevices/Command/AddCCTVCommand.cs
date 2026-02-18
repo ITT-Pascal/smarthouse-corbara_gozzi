@@ -4,7 +4,7 @@ using System.Text;
 using BlaisePascal.SmartHouse.Domain.CCTVDevices;
 using BlaisePascal.SmartHouse.Domain.CCTVDevices.Repositories;
 
-namespace BlaisePascal.SmartHouse.Domain.Application.Devices.CCTVDevices.Command
+namespace BlaisePascal.SmartHouse.Application.Devices.CCTVDevices.Command
 {
     public class AddCCTVCommand
     {
