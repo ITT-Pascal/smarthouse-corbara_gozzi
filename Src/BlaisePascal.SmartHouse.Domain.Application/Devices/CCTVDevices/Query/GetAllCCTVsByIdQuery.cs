@@ -6,7 +6,7 @@ using BlaisePascal.SmartHouse.Domain.CCTVDevices.Repositories;
 using BlaisePascal.SmartHouse.Domain.LuminousDevices;
 using BlaisePascal.SmartHouse.Domain.LuminousDevices.Repositories;
 
-namespace BlaisePascal.SmartHouse.Domain.Application.Devices.CCCTVDevices.Query
+namespace BlaisePascal.SmartHouse.Domain.Application.Devices.CCTVDevices.Query
 {
     public class GetAllCCTVsByIdQuery
     {

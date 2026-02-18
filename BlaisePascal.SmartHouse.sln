@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 18
-VisualStudioVersion = 18.0.11222.15 d18.0
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36616.10 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{6C83A596-D32D-B35F-00DD-F0C99B673980}"
 EndProject
@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlaisePascal.SmartHouse.Dom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlaisePascal.SmartHouse.Domain.UnitTest", "Test\BlaisePascal.SmartHouse.Domain.Test\BlaisePascal.SmartHouse.Domain.UnitTest\BlaisePascal.SmartHouse.Domain.UnitTest.csproj", "{51855E6D-05D6-4E0B-B39B-37691A2BBD5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlaisePascal.SmartHouse.Domain.Application", "Src\BlaisePascal.SmartHouse.Domain.Application\BlaisePascal.SmartHouse.Domain.Application.csproj", "{506314A9-816F-4A38-8BD8-37338FBF2636}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlaisePascal.SmartHouse.Application", "Src\BlaisePascal.SmartHouse.Domain.Application\BlaisePascal.SmartHouse.Application.csproj", "{506314A9-816F-4A38-8BD8-37338FBF2636}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
