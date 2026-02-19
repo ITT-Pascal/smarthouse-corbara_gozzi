@@ -1,8 +1,8 @@
 ﻿using System.Reflection.Metadata.Ecma335;
 using System.Xml.Linq;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
+using BlaisePascal.SmartHouse.Domain.LuminousDevices;
 using BlaisePascal.SmartHouse.Domain.LuminousDevices.ValueObjects;
-using BlaisePascal.SmartHouse.Domain.Shared;
 using BlaisePascal.SmartHouse.Domain.ThermicalDevices;
 
 namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
@@ -39,14 +39,6 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
             base.SwitchOn();
             Intensity = Intensity.NewIntensity(intensityAtOn);
         }
-        public virtual void SwitchOn(bool enableAutoOff)
-        {
-            base.SwitchOn();
-        }
-        public virtual void SwitchOn(int autoOffMinutes)
-        {
-            base.SwitchOn();
-        }
         public override void SwitchOff()
         {
             base.SwitchOff();
@@ -66,21 +58,21 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
 
         public virtual void IncreaseBy()
         {
-            CheckMethodCompatibilityWith(DeviceStatus.On);
-            Intensity = Intensity.NewIntensity(Intensity.Value + intensityJump);
+            CheckIsNot(DeviceStatus.Off);
+            Intensity += intensityJump;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
         public virtual void DecreaseBy()
         {
-            CheckMethodCompatibilityWith(DeviceStatus.On);
-            Intensity = Intensity.NewIntensity(Intensity.Value - intensityJump);
+            CheckIsNot(DeviceStatus.Off);
+            Intensity -= intensityJump;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
         public virtual void SetIntensityTo(Intensity intensity)
         {
-            CheckMethodCompatibilityWith(DeviceStatus.On);
+            CheckIsNot(DeviceStatus.Off);
             Intensity = intensity;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);

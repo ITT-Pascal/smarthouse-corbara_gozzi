@@ -1,6 +1,5 @@
 ﻿using BlaisePascal.SmartHouse.Domain.Abstractions;
 using BlaisePascal.SmartHouse.Domain.LuminousDevices.ValueObjects;
-using BlaisePascal.SmartHouse.Domain.Shared;
 
 namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
 {
@@ -28,13 +27,13 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
 
         //--ON/OFF METHODS--
 
-        public override void SwitchOn(bool enableAutoOff)
+        public void SwitchOn(bool enableAutoOff)
         {
             SwitchOn();
             autoOffAtUtc = enableAutoOff
             ? DateTime.UtcNow.AddMinutes(DefaultAutoOffMinutes) : null;
         }
-        public override void SwitchOn(int autoOffMinutes)
+        public void SwitchOn(int autoOffMinutes)
         {
             if (autoOffMinutes < MinAutoOffMinutes)
                 throw new ArgumentOutOfRangeException(nameof(autoOffMinutes));
@@ -48,7 +47,7 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
         }
         public void CheckAutoOff()
         {
-            CheckMethodCompatibilityWith(DeviceStatus.On);
+            CheckIsNot(DeviceStatus.Off);
             if (autoOffAtUtc.HasValue && DateTime.UtcNow >= autoOffAtUtc.Value)
                 SwitchOff();
         }

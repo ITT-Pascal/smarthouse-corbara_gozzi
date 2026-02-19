@@ -1,6 +1,5 @@
 ﻿using System.Xml.Linq;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
-using BlaisePascal.SmartHouse.Domain.Shared;
 using BlaisePascal.SmartHouse.Domain.ThermicalDevices.ValueObjects;
 
 namespace BlaisePascal.SmartHouse.Domain.ThermicalDevices
@@ -57,7 +56,7 @@ namespace BlaisePascal.SmartHouse.Domain.ThermicalDevices
         public sealed override void SwitchOff()
         {
             base.SwitchOff();
-            Temperature = Temperature.NewTemperature(minTemp);
+            Speed = SpeedRPM.NewSpeed(speedAtOff);
         }
         public void Toggle()
         {
@@ -74,7 +73,7 @@ namespace BlaisePascal.SmartHouse.Domain.ThermicalDevices
         //cambia la velocità delle ventole
         public void ChangeSpeedTo(int speed)
         {
-            CheckMethodCompatibilityWith(DeviceStatus.On);
+            CheckIsNot(DeviceStatus.Off);
             switch (AcMode)
             {
                 case AcMode.Dry:
@@ -89,7 +88,7 @@ namespace BlaisePascal.SmartHouse.Domain.ThermicalDevices
         }
         public void ChangeModeTo(AcMode newMode)
         {
-            CheckMethodCompatibilityWith(DeviceStatus.On);
+            CheckIsNot(DeviceStatus.Off);
             switch (newMode)
             {
                 case AcMode.Custom:

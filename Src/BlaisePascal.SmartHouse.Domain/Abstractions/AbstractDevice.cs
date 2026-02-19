@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BlaisePascal.SmartHouse.Domain.Shared;
 
 namespace BlaisePascal.SmartHouse.Domain.Abstractions
 {
@@ -45,7 +44,7 @@ namespace BlaisePascal.SmartHouse.Domain.Abstractions
 
         //--CHECK METHODS--
 
-        public void CheckMethodCompatibilityWith(DeviceStatus status)
+        public void CheckIsNot(DeviceStatus status)
         {
             if (DeviceStatus == status)
                 throw new ArgumentException($"Status[{status}]: This status is not compatible with this method actions");

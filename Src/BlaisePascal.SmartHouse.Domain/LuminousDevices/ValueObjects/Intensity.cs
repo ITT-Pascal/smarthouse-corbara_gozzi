@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlaisePascal.SmartHouse.Domain.Luminous
+namespace BlaisePascal.SmartHouse.Domain.LuminousDevices.ValueObjects
 {
     public class Intensity
     {
-        public const int minPercentage  = 0;
-        public const int maxPercentage = 0;
+        public const uint minPercentage  = 0;
+        public const uint maxPercentage = 100;
 
-        public int Value { get; }
+        public uint Value { get; }
 
-        public Intensity(int val)
+        public Intensity(uint val)
         {
             if (val < minPercentage)
                 Value = minPercentage;
@@ -22,9 +23,21 @@ namespace BlaisePascal.SmartHouse.Domain.Luminous
             else
                 Value = val;
         }
-        public static Intensity NewIntensity(int val)
+        public static Intensity NewIntensity(uint val)
         {
             return new Intensity(val);
+        }
+        public static Intensity operator +(Intensity intensity, uint jump)
+        {
+            if (intensity.Value + jump > maxPercentage)
+                return NewIntensity(maxPercentage);
+            return NewIntensity(intensity.Value + jump);
+        }
+        public static Intensity operator -(Intensity intensity, uint jump)
+        {
+            if (intensity.Value - jump < minPercentage)
+                return NewIntensity(minPercentage);
+            return NewIntensity(intensity.Value - jump);
         }
     }
 }

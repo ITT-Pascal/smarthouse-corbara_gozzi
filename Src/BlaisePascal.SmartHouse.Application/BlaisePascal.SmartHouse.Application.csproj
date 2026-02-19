@@ -7,11 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BlaisePascal.SmartHouse.Domain\BlaisePascal.SmartHouse.Domain.csproj" />
+    <Compile Remove="Devices\ThermicalDevices\Conditioner\**" />
+    <EmbeddedResource Remove="Devices\ThermicalDevices\Conditioner\**" />
+    <None Remove="Devices\ThermicalDevices\Conditioner\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Devices\ThermicalDevices\Conditioner\" />
+    <ProjectReference Include="..\BlaisePascal.SmartHouse.Domain\BlaisePascal.SmartHouse.Domain.csproj" />
   </ItemGroup>
 
 </Project>

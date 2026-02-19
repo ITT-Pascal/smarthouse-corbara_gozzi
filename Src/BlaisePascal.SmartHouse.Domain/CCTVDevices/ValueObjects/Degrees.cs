@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BlaisePascal.SmartHouse.Domain.Luminous;
 
 namespace BlaisePascal.SmartHouse.Domain.CCTVDevices.ValueObjects
 {
@@ -22,6 +21,20 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVDevices.ValueObjects
         public static Degrees NewDegrees(uint angle)
         {
             return new Degrees(angle);
+        }
+
+        //OVERRIDE DEGLI OPERATORI + E - PER AVER UINT SENZA PROBLEMI DI OVER O UNDERFLOW
+        public static Degrees operator +(Degrees degree, uint jump)
+        {
+            if (degree.Angle + jump > maxDegrees)
+                return NewDegrees(degree.Angle + jump - maxDegrees);
+            return NewDegrees(degree.Angle + jump);
+        }
+        public static Degrees operator -(Degrees degree, uint jump)
+        {
+            if (degree.Angle - jump < minDegrees)
+                return NewDegrees(maxDegrees + degree.Angle - jump);
+            return NewDegrees(degree.Angle - jump);
         }
     }
 }

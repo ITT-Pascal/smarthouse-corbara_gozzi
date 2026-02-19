@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Runtime.CompilerServices;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
 using BlaisePascal.SmartHouse.Domain.CCTVDevices.ValueObjects;
-using BlaisePascal.SmartHouse.Domain.Shared;
 
 namespace BlaisePascal.SmartHouse.Domain.CCTVDevices
 {
@@ -40,7 +39,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVDevices
                 AccessPermission = true;
             else
                 throw new UnauthorizedAccessException($"Password[{Try}]: Wrong password");
-		}
+        }
         private void CheckAccessPermission()
         {
             if (!AccessPermission)
@@ -76,24 +75,24 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVDevices
                 throw new Exception($"Position[{position}]: Cannot add CCTV in positions already taken");
             SetOfCCTV.Insert(position, camera);
         }
-        public void RemoveCCTVAt(int position, Password password)
+        public void RemoveCCTVAt(int position)
         {
             if (position < 0 || position >= SetOfCCTV.Count)
                 throw new ArgumentException($"Position[{position}]: Position out of range");
 			CheckAccessPermission();
 			SetOfCCTV.RemoveAt(position);
         }
-        public void RemoveCCTVBy(Guid id, Password password)
+        public void RemoveCCTVBy(Guid id)
         {
 			CheckAccessPermission();
 			SetOfCCTV.Remove(SetOfCCTV[GetPositionOfCCTVBy(id)]);
         }
-        public void RemoveCCTVBy(DeviceName name, Password password)
+        public void RemoveCCTVBy(DeviceName name)
         {
 			CheckAccessPermission();
 			foreach (CCTV cam in SetOfCCTV)
                 if (cam.Name == name)
-                    RemoveCCTVBy(cam.ID, password);
+                    RemoveCCTVBy(cam.ID);
         }
 
         //--SWITCH METHODS--
@@ -126,7 +125,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVDevices
                     SwitchOnBy(cam.ID);
         }
 
-        public void SwitchOff(Password password)
+        public void SwitchOff()
         {
 			CheckAccessPermission();
 			foreach (CCTV cam in SetOfCCTV)
@@ -138,7 +137,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVDevices
         /// Spegne telecamera in base all'ID
         /// </summary>
         /// <param name="guid"></param>
-        public void SwitchOffBy(Guid id, Password password)
+        public void SwitchOffBy(Guid id)
         {
 			CheckAccessPermission();
             SetOfCCTV[GetPositionOfCCTVBy(id)].SwitchOff();
@@ -148,12 +147,12 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVDevices
         /// Spegne telecamera in base al nome
         /// </summary>
         /// <param name="name"></param>
-        public void SwitchOffBy(DeviceName name, Password password)
+        public void SwitchOffBy(DeviceName name)
         {
 			CheckAccessPermission();
 			foreach (CCTV cam in SetOfCCTV)
                 if (cam.Name == name)
-                    SwitchOffBy(cam.ID, password);
+                    SwitchOffBy(cam.ID);
         }
 
         //--CHANGER METHODS--

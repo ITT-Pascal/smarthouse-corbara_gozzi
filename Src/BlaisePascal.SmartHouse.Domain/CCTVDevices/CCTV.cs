@@ -5,7 +5,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
-using BlaisePascal.SmartHouse.Domain.Shared;
 using BlaisePascal.SmartHouse.Domain.CCTVDevices.ValueObjects;
 using BlaisePascal.SmartHouse.Domain.LuminousDevices;
 
@@ -59,40 +58,42 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVDevices
 
         public void IncreaseDegreesBy()
         {
-            CheckMethodCompatibilityWith(DeviceStatus.Off);
-            Degrees = Degrees.NewDegrees(Degrees.Angle + basicJump);
+            CheckIsNot(DeviceStatus.Off);
+            Degrees += basicJump;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void DecreaseDegreesBy()
         {
-            CheckMethodCompatibilityWith(DeviceStatus.Off);
-            Degrees = Degrees.NewDegrees(Degrees.Angle - basicJump);
+            CheckIsNot(DeviceStatus.Off);
+            Degrees -= basicJump;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void SetCCTVDegreesTo(Degrees newDegrees)
         {
-            CheckMethodCompatibilityWith(DeviceStatus.Off);
+            CheckIsNot(DeviceStatus.Off);
             Degrees = newDegrees;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void IncreaseZoomBy()
         {
-            Zoom = Zoom.NewZoom(Zoom.Value + basicJump);
+            CheckIsNot(DeviceStatus.Off);
+            Zoom += basicJump;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void DecreaseZoomBy()
         {
-            Zoom = Zoom.NewZoom(Zoom.Value - basicJump);
+            CheckIsNot(DeviceStatus.Off);
+            Zoom -= basicJump;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void SetCCTVZoomTo(Zoom zoom)
         {
-            CheckMethodCompatibilityWith(DeviceStatus.Off);
+            CheckIsNot(DeviceStatus.Off);
             Zoom = zoom;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);

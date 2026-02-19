@@ -1,4 +1,4 @@
-﻿namespace BlaisePascal.SmartHouse.Domain.Shared
+﻿namespace BlaisePascal.SmartHouse.Domain.Abstractions
 {
     public enum DeviceStatus
     {

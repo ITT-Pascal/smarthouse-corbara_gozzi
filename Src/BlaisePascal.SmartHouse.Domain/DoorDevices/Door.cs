@@ -1,10 +1,9 @@
 ﻿using BlaisePascal.SmartHouse.Domain.Abstractions;
 using BlaisePascal.SmartHouse.Domain.DoorDevices.ValueObjects;
-using BlaisePascal.SmartHouse.Domain.Shared;
 using System.ComponentModel.Design;
 using System.Text;
 
-namespace BlaisePascal.SmartHouse.Domain.DoorClasses
+namespace BlaisePascal.SmartHouse.Domain.DoorDevices
 {
     public class Door: AbstractDevice, IToggable
     {
@@ -63,7 +62,7 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
 
         public void Toggle()
         {
-            CheckMethodCompatibilityWith(DeviceStatus.Locked);
+            CheckIsNot(DeviceStatus.Locked);
             if (DeviceStatus == DeviceStatus.Closed)
                 OpenDoor();
             else
@@ -73,14 +72,14 @@ namespace BlaisePascal.SmartHouse.Domain.DoorClasses
         }
         public void OpenDoor()
         {
-            CheckMethodCompatibilityWith(DeviceStatus.Locked);
+            CheckIsNot(DeviceStatus.Locked);
             DeviceStatus = DeviceStatus.Open;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfDoorMod.Add(DateTime.UtcNow);
         }
         public void CloseDoor()
         {
-            CheckMethodCompatibilityWith(DeviceStatus.Locked);
+            CheckIsNot(DeviceStatus.Locked);
             DeviceStatus = DeviceStatus.Closed;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfDoorMod.Add(DateTime.UtcNow);

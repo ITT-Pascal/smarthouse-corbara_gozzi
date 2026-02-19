@@ -38,7 +38,6 @@ namespace BlaisePascal.SmartHouse.Domain.ThermicalDevices
         {
             CurrentTemperature = Temperature.NewTemperature(tempAtOn);
             TargetTemperature = targetTemperature;
-            AirConditioner cond = new();
         }
        
         //        ------METHODS------
@@ -49,7 +48,6 @@ namespace BlaisePascal.SmartHouse.Domain.ThermicalDevices
         {
             base.SwitchOn();
             EqualsTemperatureToTarget();
-            LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }
         public override void SwitchOff()
@@ -69,6 +67,7 @@ namespace BlaisePascal.SmartHouse.Domain.ThermicalDevices
         }
         public void ChangeTargetTemperatureTo(Temperature newTemp)
         {
+            CheckIsNot(DeviceStatus.Off);
             TargetTemperature = newTemp;
             EqualsTemperatureToTarget();
             LastModifierAtUtc = DateTime.UtcNow;

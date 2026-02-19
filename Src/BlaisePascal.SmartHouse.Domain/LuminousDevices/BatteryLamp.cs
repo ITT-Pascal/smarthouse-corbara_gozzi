@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using BlaisePascal.SmartHouse.Domain.Abstractions;
 using BlaisePascal.SmartHouse.Domain.LuminousDevices.ValueObjects;
-using BlaisePascal.SmartHouse.Domain.Shared;
 
 namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
 {
@@ -20,7 +19,7 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
 
         private int TimeOfUseInMin;
         private int TimeOfChargeInMin;
-        private DateTime SwitchOnTime;
+        private DateTime LastActionTime;
         private DateTime ChargeStarterTime;
 
         //        ------CONSTRUCTORS------
@@ -46,8 +45,8 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
         private void IsNotOutOfCharge()
         {
             if (LampBattery.ChargeValue == Battery.minPercentage)
-                throw new Exception($"Battery[{LampBattery.ChargeValue}]: LampBattery is out of charge");
-            SwitchOff();
+                SwitchOff();
+            throw new Exception($"Battery[{LampBattery.ChargeValue}]: LampBattery is out of charge");
         }
 
         //--ON/OFF METHODS--
@@ -55,18 +54,21 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
         {
             IsNotOutOfCharge();
             base.SwitchOn();
-            SwitchOnTime = DateTime.UtcNow;
+            LastActionTime = DateTime.UtcNow;
         }
         public override void SwitchOff()
         {
-            TimeOfUseInMin = DateTime.UtcNow.Minute - SwitchOnTime.Minute;
-            DecreaseLampBattery();
+            TimeOfUseInMin = DateTime.UtcNow.Minute - LastActionTime.Minute;
+            LampBattery -= (uint)(TimeOfUseInMin / dischargeCoefficientVal);
             base.SwitchOff();
         }
         public override void Toggle()
         {
             IsNotOutOfCharge();
             base.Toggle();
+            TimeOfUseInMin = DateTime.UtcNow.Minute - LastActionTime.Minute;
+            LampBattery -= (uint)(TimeOfUseInMin / dischargeCoefficientVal);
+            LastActionTime = DateTime.UtcNow;
         }
 
         //--CHANGER INTENSITY METHODS--
@@ -75,28 +77,28 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
         {
             IsNotOutOfCharge();
             base.IncreaseBy();
+            TimeOfUseInMin = DateTime.UtcNow.Minute - LastActionTime.Minute;
+            LampBattery -= (uint)(TimeOfUseInMin / dischargeCoefficientVal);
+            LastActionTime = DateTime.UtcNow;
         }
         public override void DecreaseBy()
         {
             IsNotOutOfCharge();
             base.DecreaseBy();
+            TimeOfUseInMin = DateTime.UtcNow.Minute - LastActionTime.Minute;
+            LampBattery -= (uint)(TimeOfUseInMin / dischargeCoefficientVal);
+            LastActionTime = DateTime.UtcNow;
         }
         public override void SetIntensityTo(Intensity intensity)
         {
             IsNotOutOfCharge();
             base.SetIntensityTo(intensity);
+            TimeOfUseInMin = DateTime.UtcNow.Minute - LastActionTime.Minute;
+            LampBattery -= (uint)(TimeOfUseInMin / dischargeCoefficientVal);
+            LastActionTime = DateTime.UtcNow;
         }
 
         //--CHANGER CHARGE--
-
-        private void IncreaseLampBattery()
-        {
-            LampBattery = Battery.NewChargeLevel(LampBattery.ChargeValue + TimeOfChargeInMin / rechargeCoefficientVal);
-        }
-        private void DecreaseLampBattery()
-        {
-            LampBattery = Battery.NewChargeLevel(LampBattery.ChargeValue - TimeOfUseInMin / dischargeCoefficientVal);
-        }
         public void PlugLamp()
         {
             if (DeviceStatus != DeviceStatus.Off)
@@ -108,7 +110,7 @@ namespace BlaisePascal.SmartHouse.Domain.LuminousDevices
         public void UnplugLamp()
         {
             TimeOfChargeInMin = DateTime.UtcNow.Minute - ChargeStarterTime.Minute;
-            IncreaseLampBattery();
+            LampBattery += (uint)(TimeOfChargeInMin / rechargeCoefficientVal);
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
         }

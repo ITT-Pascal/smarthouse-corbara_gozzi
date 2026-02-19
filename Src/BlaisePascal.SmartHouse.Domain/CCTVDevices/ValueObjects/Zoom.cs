@@ -24,5 +24,17 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVDevices.ValueObjects
         {
             return new Zoom(val);
         }
+        public static Zoom operator +(Zoom zoom, uint jump)
+        {
+            if (zoom.Value + jump > maxZoom)
+                return NewZoom(maxZoom);
+            return NewZoom(zoom.Value + jump);
+        }
+        public static Zoom operator -(Zoom zoom, uint jump)
+        {
+            if (zoom.Value + jump < minZoom)
+                return NewZoom(minZoom);
+            return NewZoom(zoom.Value - jump);
+        }
     }
 }

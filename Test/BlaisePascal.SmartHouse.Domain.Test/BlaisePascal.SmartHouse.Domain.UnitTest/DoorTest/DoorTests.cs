@@ -1,5 +1,4 @@
-﻿
-using BlaisePascal.SmartHouse.Domain.DoorClasses;
+﻿using BlaisePascal.SmartHouse.Domain.DoorDevices;
 using System.ComponentModel;
 
 namespace BlaisePascal.SmartHouse.Domain.UnitTest.DoorTests
