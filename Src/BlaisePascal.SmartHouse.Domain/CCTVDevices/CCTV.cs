@@ -12,6 +12,7 @@ namespace BlaisePascal.SmartHouse.Domain.CCTVDevices
 {
     public class CCTV : AbstractDevice, ISwitchable
     {
+
         private const int basicZoom = 100;
         private const int basicJump = 10;
         //    -------ATTRIBUTES AND PROPERTY-------
