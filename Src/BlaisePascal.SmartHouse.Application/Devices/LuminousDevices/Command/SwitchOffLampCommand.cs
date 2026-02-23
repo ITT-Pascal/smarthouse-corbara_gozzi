@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BlaisePascal.SmartHouse.Domain.LuminousDevices;
-using BlaisePascal.SmartHouse.Domain.LuminousDevices.Repositories;
+﻿using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices;
+using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices.Repositories;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Command
 {

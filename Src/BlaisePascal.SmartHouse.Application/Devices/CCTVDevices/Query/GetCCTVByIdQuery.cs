@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BlaisePascal.SmartHouse.Domain.CCTVDevices;
-using BlaisePascal.SmartHouse.Domain.CCTVDevices.Repositories;
-using BlaisePascal.SmartHouse.Domain.LuminousDevices;
-using BlaisePascal.SmartHouse.Domain.LuminousDevices.Repositories;
+﻿using BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices;
+using BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices.Repositories;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.CCTVDevices.Query
 {

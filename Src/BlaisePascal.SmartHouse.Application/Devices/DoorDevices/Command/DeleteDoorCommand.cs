@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BlaisePascal.SmartHouse.Domain.DoorDevices.Repositiories;
+﻿using BlaisePascal.SmartHouse.Domain.Devices.DoorDevices.Repositiories;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.DoorDevices.Command
 {
