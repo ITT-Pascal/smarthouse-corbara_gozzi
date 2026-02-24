@@ -8,6 +8,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{56306E2B-A10F-4747-8503-7E9BCA5A5214}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{416A3CAA-55BF-4F6E-9939-92039280FB9B}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\DOCUMENTAZIONE SMARTHOUSE.docx.pdf = ..\..\DOCUMENTAZIONE SMARTHOUSE.docx.pdf
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlaisePascal.SmartHouse.Domain", "Src\BlaisePascal.SmartHouse.Domain\BlaisePascal.SmartHouse.Domain.csproj", "{20B90505-9F4C-4961-BFBA-AF8B3C757A92}"
 EndProject

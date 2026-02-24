@@ -3,7 +3,7 @@ using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices.ValueObjects;
 
 namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
 {
-    public sealed class EcoLamp : AbstractLamp
+    public sealed class EcoLamp : Lamp
     {
         private const int DefaultAutoOffMinutes = 10;
         private const int MinAutoOffMinutes = 1;

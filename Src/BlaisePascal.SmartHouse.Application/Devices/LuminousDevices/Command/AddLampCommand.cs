@@ -12,7 +12,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Command
 			Repository = repository;
 		}
 
-		public void Execute(AbstractLamp lamp)
+		public void Execute(Lamp lamp)
 		{
 			Repository.AddLamp(lamp);
 		}

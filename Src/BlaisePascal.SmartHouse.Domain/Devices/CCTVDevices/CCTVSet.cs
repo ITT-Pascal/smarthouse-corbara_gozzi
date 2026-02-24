@@ -35,13 +35,15 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
             if(Try == AdminPassword)
                 AccessPermission = true;
             else
-                throw new UnauthorizedAccessException($"Password[{Try}]: Wrong password");
+                throw new ArgumentException($"Password: Wrong password", nameof(Try));
         }
         private void CheckAccessPermission()
         {
             if (!AccessPermission)
-                throw new UnauthorizedAccessException($"Access denied: You don't have permission to access the system");
-		}
+                throw new InvalidOperationException($"Access denied: You don't have permission to access the system");
+            //ERRORE CHE INDICA L'INCOMPATIBILITA' DI UNO STATO ALLA CHIAMATA DEL METODO
+
+        }
         public void CheckIsNotNull(object obj)
         {
             ArgumentNullException.ThrowIfNull(obj);
@@ -56,7 +58,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
             foreach (CCTV cam in SetOfCCTV)
                 GuidList.Add(cam.ID);
             if (Array.IndexOf([.. GuidList], id) == -1)   // [.. GuidList] <= (GuidList.ToArray())
-                throw new ArgumentException($"ID[{id}]: Id not identified");
+                throw new ArgumentException($"ID: Id not identified", nameof(id));
             return Array.IndexOf([.. GuidList], id);
         }
 
@@ -72,16 +74,16 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
         {
             CheckAccessPermission();
             if (position < 0 || position >= SetOfCCTV.Count)
-                throw new ArgumentException($"Position[{position}]: Position out of range");
+                throw new ArgumentOutOfRangeException(nameof(position), $"Position: Position out of range");
             if (SetOfCCTV[position] != null)
-                throw new Exception($"Position[{position}]: Cannot add CCTV in positions already taken");
+                throw new ArgumentException($"Position: Cannot add CCTV in positions already taken", nameof(position));
             SetOfCCTV.Insert(position, camera);
         }
         public void RemoveCCTVAt(int position)
         {
             if (position < 0 || position >= SetOfCCTV.Count)
-                throw new ArgumentException($"Position[{position}]: Position out of range");
-			CheckAccessPermission();
+                throw new ArgumentOutOfRangeException(nameof(position), $"Position: Position out of range");
+            CheckAccessPermission();
 			SetOfCCTV.RemoveAt(position);
         }
         public void RemoveCCTVBy(Guid id)

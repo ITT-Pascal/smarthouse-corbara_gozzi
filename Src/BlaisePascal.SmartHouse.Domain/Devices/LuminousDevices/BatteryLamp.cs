@@ -3,7 +3,7 @@ using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices.ValueObjects;
 
 namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
 {
-    public sealed class BatteryLamp: AbstractLamp
+    public sealed class BatteryLamp: Lamp
     {
         private const int batteryChargeAtCreation = 50;
         private const int dischargeCoefficientVal = 6;
@@ -41,7 +41,8 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         {
             if (LampBattery.ChargeValue == Battery.minPercentage)
                 SwitchOff();
-            throw new Exception($"Battery[{LampBattery.ChargeValue}]: LampBattery is out of charge");
+            throw new InvalidOperationException($"Battery: LampBattery is out of charge");
+            //ERRORE CHE INDICA L'INCOMPATIBILITA' DI UNO STATO ALLA CHIAMATA DEL METODO
         }
 
         //--ON/OFF METHODS--
@@ -97,7 +98,8 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         public void PlugLamp()
         {
             if (DeviceStatus != DeviceStatus.Off)
-                throw new Exception($"Status[{DeviceStatus}]: You need to switch off to charge lamp");
+                throw new InvalidOperationException($"Status: You need to switch off to charge lamp");
+            //ERRORE CHE INDICA L'INCOMPATIBILITA' DI UNO STATO ALLA CHIAMATA DEL METODO
             ChargeStarterTime = DateTime.UtcNow;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);

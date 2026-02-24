@@ -8,6 +8,6 @@
         Closed,
         Locked,
         Error,
-        Unknow
+        Unknown
     }
 }

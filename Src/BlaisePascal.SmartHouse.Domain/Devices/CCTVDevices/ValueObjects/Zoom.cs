@@ -10,7 +10,7 @@
         {
             if (!(val is >= minZoom and <= maxZoom))
             {
-                throw new ArgumentException($"Zoom[{val}]: Invalid Zoom value[out of 10..200]");
+                throw new ArgumentOutOfRangeException(nameof(val), $"Zoom: Invalid Zoom value[out of 10..200]");
             }
             Value = val;
         }

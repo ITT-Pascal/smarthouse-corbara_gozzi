@@ -2,11 +2,11 @@
 
 namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
 {
-    public sealed class TwoLampsDevice(AbstractLamp firstLamp, AbstractLamp secondLamp)
+    public sealed class TwoLampsDevice(Lamp firstLamp, Lamp secondLamp)
     {
         //   -------ATTRIBUTES AND PROPERTY-------
-        public AbstractLamp FirstLamp { get; private set; } = firstLamp;
-        public AbstractLamp SecondLamp { get; private set; } = secondLamp;
+        public Lamp FirstLamp { get; private set; } = firstLamp;
+        public Lamp SecondLamp { get; private set; } = secondLamp;
 
         //       ------METHODS------
 

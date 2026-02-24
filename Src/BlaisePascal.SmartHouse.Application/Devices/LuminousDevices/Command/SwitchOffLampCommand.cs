@@ -12,7 +12,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Command
         }
         public void Execute(Guid id)
         {
-            AbstractLamp lamp = Repository.GetLampById(id);
+            var lamp = Repository.GetLampById(id);
             if (lamp != null)
             {
                 lamp.SwitchOff();

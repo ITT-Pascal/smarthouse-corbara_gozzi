@@ -44,7 +44,8 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.Abstractions
         {
             if (DeviceStatus == status)
                 DeviceStatus = DeviceStatus.Error;
-                throw new ArgumentException($"Status[{status}]: This status is not compatible with this method actions");
+            throw new InvalidOperationException("Status: This status is not compatible with this method actions");
+            //ERRORE CHE INDICA L'INCOMPATIBILITA' DI UNO STATO ALLA CHIAMATA DEL METODO
         }
 
         //--SWITCH METHODS--

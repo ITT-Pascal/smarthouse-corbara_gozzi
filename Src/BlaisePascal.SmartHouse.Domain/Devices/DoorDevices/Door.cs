@@ -12,8 +12,6 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.DoorDevices
         //  -------ATTRIBUTES AND PROPERTY-------
         private DoorCode Code { get; set; }
 
-        public List<DateTime> HistoryOfDoorMod = [];
-
         //      ------CONSTRUCTORS------
         public Door() : this(DoorCode.NewDoorCode(basicCode)) 
         { 
@@ -48,7 +46,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.DoorDevices
         private void IsCodeCorrect(DoorCode Try)
         {
             if (Try != Code)
-                throw new ArgumentException($"Code[{Try}]: Incorrect try");
+                throw new ArgumentException($"Code: Incorrect try", nameof(Try));
         }
 
         /// <summary>
@@ -57,7 +55,8 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.DoorDevices
         public sealed override void SwitchOn() 
         {
             DeviceStatus = DeviceStatus.Error;
-            throw new ArgumentException($"Method call[Door.SwitchOn()]: Door is not switchable"); 
+            throw new NotSupportedException($"Method call[Door.SwitchOn()]: Door is not switchable"); 
+            //ERRORE CHE INDICA IL FATTO CHE LA FUNZIONALITA' NON E' SUPPORTATA
         }
         /// <summary>
         /// METODI CHE LANCIANO ERRORI PERCHE' EREDITATI MA IMPOSSIBILI DA CHIAMARE SENNO' CAUSEREBBERO ERRORI
@@ -65,7 +64,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.DoorDevices
         public sealed override void SwitchOff() 
         {
             DeviceStatus = DeviceStatus.Error;
-            throw new ArgumentException($"Method call[Door.SwitchOff()]: Door is not switchable"); 
+            throw new NotSupportedException($"Method call[Door.SwitchOff()]: Door is not switchable"); 
         }
 
         public void Toggle()
@@ -83,35 +82,35 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.DoorDevices
             CheckIsNot(DeviceStatus.Locked);
             DeviceStatus = DeviceStatus.Open;
             LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfDoorMod.Add(DateTime.UtcNow);
+            HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void CloseDoor()
         {
             CheckIsNot(DeviceStatus.Locked);
             DeviceStatus = DeviceStatus.Closed;
             LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfDoorMod.Add(DateTime.UtcNow);
+            HistoryOfMod.Add(DateTime.UtcNow);
             
         }
         public void LockDoor()
         {
             DeviceStatus = DeviceStatus.Locked;
             LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfDoorMod.Add(DateTime.UtcNow);
+            HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void UnlockDoor(DoorCode code)
         {
             IsCodeCorrect(code);
             DeviceStatus = DeviceStatus.Open;
             LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfDoorMod.Add(DateTime.UtcNow);
+            HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void ChangeCodeTo(DoorCode newCode, DoorCode code)
         {
             IsCodeCorrect(code);
             Code = newCode;
             LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfDoorMod.Add(DateTime.UtcNow);
+            HistoryOfMod.Add(DateTime.UtcNow);
         }
     }
 }      
