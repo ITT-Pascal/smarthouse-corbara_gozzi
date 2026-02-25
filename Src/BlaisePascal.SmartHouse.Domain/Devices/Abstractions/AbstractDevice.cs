@@ -9,7 +9,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.Abstractions
         public DeviceStatus DeviceStatus { get; protected set; }
         public DeviceName Name { get; protected set; }
         public DateTime DateTimeAtCreationUtc { get; init; }
-        public DateTime? LastModifierAtUtc { get; protected set; }
+        public DateTime LastModifierAtUtc { get; protected set; }
 
         public List<DateTime> HistoryOfMod = []; // <= new()  <= new List<DateTime>()
 

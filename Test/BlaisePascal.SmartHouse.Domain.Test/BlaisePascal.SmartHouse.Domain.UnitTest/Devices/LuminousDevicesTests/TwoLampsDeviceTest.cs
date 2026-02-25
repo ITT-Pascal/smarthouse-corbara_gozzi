@@ -40,7 +40,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevicesTests
         public void TwoLampsDevice_SwitchOnAllLamps_WhenSwitchedOnBothAreOn()
         {
             TwoLampsDevice twoLampsDevice = new TwoLampsDevice(lamp1, lamp2);
-            twoLampsDevice.SwitchOnAllLamps();
+            twoLampsDevice.SwitchOn();
             Assert.Equal(DeviceStatus.On, lamp1.DeviceStatus);
             Assert.Equal(DeviceStatus.On, lamp2.DeviceStatus);
         }
@@ -49,7 +49,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevicesTests
         public void TwoLampsDevice_SwitchOffFirstLamp_WhenSwitchedOffIsOff()
         {
             TwoLampsDevice twoLampsDevice = new TwoLampsDevice(lamp1, lamp2);
-            twoLampsDevice.SwitchOnAllLamps();
+            twoLampsDevice.SwitchOn();
             twoLampsDevice.SwitchOffFirstLamp();
             Assert.Equal(DeviceStatus.Off, lamp1.DeviceStatus);
             Assert.Equal(DeviceStatus.On, lamp2.DeviceStatus);
@@ -59,7 +59,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevicesTests
         public void TwoLampsDevice_SwitchOffSecondLamp_WhenSwitchedOffIsOff()
         {
             TwoLampsDevice twoLampsDevice = new TwoLampsDevice(lamp1, lamp2);
-            twoLampsDevice.SwitchOnAllLamps();
+            twoLampsDevice.SwitchOn();
             twoLampsDevice.SwitchOffSecondLamp();
             Assert.Equal(DeviceStatus.On, lamp1.DeviceStatus);
             Assert.Equal(DeviceStatus.Off, lamp2.DeviceStatus);
@@ -69,8 +69,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevicesTests
         public void TwoLampsDevice_SwitchOffAllLamps_WhenSwitchedOffBothAreOff()
         {
             TwoLampsDevice twoLampsDevice = new TwoLampsDevice(lamp1, lamp2);
-            twoLampsDevice.SwitchOnAllLamps();
-            twoLampsDevice.SwitchOffAllLamps();
+            twoLampsDevice.SwitchOn();
+            twoLampsDevice.SwitchOff();
             Assert.Equal(DeviceStatus.Off, lamp1.DeviceStatus);
             Assert.Equal(DeviceStatus.Off, lamp2.DeviceStatus);
         }
@@ -88,7 +88,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevicesTests
         public void TwoLampsDevice_ChangeBrightnessOfLamps_WhenBothAreOnBrightnessChanges()
         {
             TwoLampsDevice twoLampsDevice = new TwoLampsDevice(lamp1, lamp2);
-            twoLampsDevice.SwitchOnAllLamps();
+            twoLampsDevice.SwitchOn();
             twoLampsDevice.SetIntensityOfLamps(10);
             Assert.Equal(10, lamp1.Intensity);
             Assert.Equal(10, lamp2.Intensity);

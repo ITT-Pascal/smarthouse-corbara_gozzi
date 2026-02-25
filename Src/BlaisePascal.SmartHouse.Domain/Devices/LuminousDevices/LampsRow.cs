@@ -3,7 +3,7 @@ using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices.ValueObjects;
 
 namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
 {
-    public sealed class LampsRow: AbstractDevice, INullable
+    public sealed class LampsRow: AbstractDevice, ILamp
     {
         //     -------ATTRIBUTES AND PROPERTY-------
         public List<Lamp> LampRow { get; private set; }
@@ -79,6 +79,12 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
                     SwitchOffBy(lamp.ID);
         }
 
+        public void Toggle()
+        {
+            foreach (Lamp lamp in LampRow)
+                lamp.Toggle();
+        }
+
         //--ADDER/REMOVER METHODS--
 
         public void AddLamp(Lamp lamp) 
@@ -124,7 +130,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
 
         //--CHANGER INTENSITY METHODS--
 
-        public void SetIntensityForAllLampsTo(Intensity intensity)
+        public void SetIntensityTo(Intensity intensity)
         {
             foreach(Lamp lamp in LampRow)
                 lamp.SetIntensityTo(intensity);
@@ -150,6 +156,16 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
                 if(lamp.Name == name)
                     lamp.SetIntensityTo(intensity);
             }
+        }
+        public void IncreaseBy()
+        {
+            foreach (Lamp lamp in LampRow)
+                lamp.IncreaseBy();
+        }
+        public void DecreaseBy()
+        {
+            foreach (Lamp lamp in LampRow)
+                lamp.IncreaseBy();
         }
 
         //--DETECTIONER METHODS--

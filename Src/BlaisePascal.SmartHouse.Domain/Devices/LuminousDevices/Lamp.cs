@@ -25,6 +25,13 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         {
             Intensity = Intensity.NewIntensity(Intensity.minPercentage);
         }
+        public Lamp (Guid id, DeviceName name, DeviceStatus status, Intensity intensity, DateTime dateTimeCreation, DateTime lastModifier): base(id, name)
+        {
+            DeviceStatus = status;
+            Intensity = intensity;
+            DateTimeAtCreationUtc = dateTimeCreation;
+            LastModifierAtUtc = lastModifier;
+        }
 
         //     ------METHODS------
 

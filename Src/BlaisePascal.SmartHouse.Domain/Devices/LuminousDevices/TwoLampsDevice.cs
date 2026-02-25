@@ -2,7 +2,7 @@
 
 namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
 {
-    public sealed class TwoLampsDevice(Lamp firstLamp, Lamp secondLamp)
+    public sealed class TwoLampsDevice(Lamp firstLamp, Lamp secondLamp): ILamp
     {
         //   -------ATTRIBUTES AND PROPERTY-------
         public Lamp FirstLamp { get; private set; } = firstLamp;
@@ -20,12 +20,12 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         {
             SecondLamp.SwitchOn(); 
         }
-        public void SwitchOnAllLamps()
+        public void SwitchOn()
         {
             FirstLamp.SwitchOn();
             SecondLamp.SwitchOn();
         }
-        public void SwitchOffAllLamps()
+        public void SwitchOff()
         {
             FirstLamp.SwitchOff();
             SecondLamp.SwitchOff();
@@ -38,13 +38,28 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         { 
             SecondLamp.SwitchOff(); 
         }
+        public void Toggle()
+        {
+            FirstLamp.Toggle();
+            SecondLamp.Toggle();
+        }
 
         //--CHANGER INTENSITY METHODS--
 
-        public void SetIntensityOfLampsTo(Intensity intensity)
+        public void SetIntensityTo(Intensity intensity)
         {
             FirstLamp.SetIntensityTo(intensity);
             SecondLamp.SetIntensityTo(intensity);
+        }
+        public void IncreaseBy()
+        {
+            FirstLamp.IncreaseBy();
+            SecondLamp.IncreaseBy();
+        }
+        public void DecreaseBy()
+        {
+            FirstLamp.DecreaseBy();
+            SecondLamp.DecreaseBy();
         }
     }
 }
