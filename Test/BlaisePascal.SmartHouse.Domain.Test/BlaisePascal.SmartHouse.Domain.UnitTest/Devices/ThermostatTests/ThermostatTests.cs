@@ -1,36 +1,28 @@
 ﻿using BlaisePascal.SmartHouse.Domain.Devices.Abstractions;
 using BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices;
+using BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices.ValueObjects;
 
 namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.ThermostatTests
 {
     public class ThermostatTests
     {
-
+        Thermostat Thermo = new Thermostat();
+        
         [Fact]
-        public void Thermostat_CreationWithGuid_AtCreationStatusIsOffAndTemperatureAre0And20AndGuidIsCorrect()
+        public void Thermostat_Creation_WhenCreatedTempIs0AndTargetIs20AndStatusIsOff()
         {
-            Guid id = new Guid();
-            Thermostat Thermo = new Thermostat(id);
-            
-        }
-
-        [Fact]
-        public void Thermostat_CreationWithGuidAndName_AtCreationStatusIsOffAndTemperatureAre0And20AndOtherParameterAreCorrect()
-        {
-            Guid id = new Guid();
-         
-        }
-
-        [Fact]
-        public void Thermostat_CreationWithGuidAndNameAndTargetTemp_AtCreationStatusIsOffAndTemperatureAre0And20AndOtherParameterAreCorrect()
-        {
-            Guid id = new Guid();
-            Thermostat Thermo = new Thermostat(id, "Teodo", 26);
+            Assert.Equal(Temperature.NewTemperature(0), Thermo.CurrentTemperature);
+            Assert.Equal(Temperature.NewTemperature(20), Thermo.TargetTemperature);
             Assert.Equal(DeviceStatus.Off, Thermo.DeviceStatus);
-            Assert.Equal(0, Thermo.CurrentTemperature);
-            Assert.Equal(26, Thermo.TargetTemperature);
-            Assert.Equal(id, Thermo.ID);
-            Assert.Equal("Teodo", Thermo.Name);
+        }
+
+        [Fact]
+        public void Thermostat_CreationWithTargetTemp_WhenCreatedTempIs0AndTargetIs20AndStatusIsOff()
+        {
+            Thermostat Thermo = new Thermostat(Guid.NewGuid(), DeviceName.NewDeviceName("Ciao"), Temperature.NewTemperature(23));
+            Assert.Equal(Temperature.NewTemperature(0), Thermo.CurrentTemperature);
+            Assert.Equal(Temperature.NewTemperature(23), Thermo.TargetTemperature);
+            Assert.Equal(DeviceStatus.Off, Thermo.DeviceStatus);
         }
 
         [Fact]
@@ -44,47 +36,33 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.ThermostatTests
         [Fact]
         public void Thermostat_IsTemperatureEqual_ReturnTrueWith20And20()
         {
-            Thermostat Thermo = new Thermostat();
-            Thermo.AddTemperature();
+            Thermo.SwitchOn();
             Assert.True(Thermo.IsTemperatureEquals());
         }
 
         [Fact]
-        public void Thermostat_SwitchOn_WhenSwitchedOnStatusIsOffAndTheThermostatPutTemperatureToTarget()
+        public void Thermostat_SwitchOn_WhenSwitchedOnStatusIsOnAndTheThermostatPutTemperatureToTarget()
         {
-            Guid id = new Guid();
-            Thermostat Thermo = new Thermostat(id, "Teodo");
             Thermo.SwitchOn();
-            Assert.Equal(DeviceStatus.Off, Thermo.DeviceStatus);
-            Assert.Equal(20, Thermo.CurrentTemperature);
-            Assert.Equal(20, Thermo.TargetTemperature);
+            Assert.Equal(DeviceStatus.On, Thermo.DeviceStatus);
+            Assert.Equal(Temperature.NewTemperature(20), Thermo.CurrentTemperature);
         }
 
         [Fact]
-        public void Thermostat_ChangeTargetTemperature_WithNumberGreaterThan36TheTargetIs36()
+        public void Thermostat_SwitchOff_WhenSwitchedOffStatusIsOffAndTheThermostatPutTemperatureToTarget()
         {
-            Guid id = new Guid();
-            Thermostat Thermo = new Thermostat(id, "Teodo");
-            Thermo.ChangeTargetTemperatureTo(37);
-            Assert.Equal(36, Thermo.TargetTemperature);
+            Thermo.SwitchOn();
+            Thermo.SwitchOff();
+            Assert.Equal(DeviceStatus.On, Thermo.DeviceStatus);
+            Assert.Equal(Temperature.NewTemperature(20), Thermo.CurrentTemperature);
         }
 
         [Fact]
-        public void Thermostat_ChangeTargetTemperature_WithNumberLessThanMinTheTargetIs1()
+        public void Thermostat_ChangeTargetTemperature_ChangedTo30()
         {
-            Guid id = new Guid();
-            Thermostat Thermo = new Thermostat(id, "Teodo");
-            Thermo.ChangeTargetTemperatureTo(-37);
-            Assert.Equal(1, Thermo.TargetTemperature);
-        }
-
-        [Fact]
-        public void Thermostat_ChangeTargetTemperature_WithNumberInCorrectRangeTheNewTempIsSet()
-        {
-            Guid id = new Guid();
-            Thermostat Thermo = new Thermostat(id, "Teodo");
-            Thermo.ChangeTargetTemperatureTo(21);
-            Assert.Equal(21, Thermo.TargetTemperature);
+            Thermo.SwitchOn();
+            Thermo.ChangeTargetTemperatureTo(Temperature.NewTemperature(30));
+            Assert.Equal(Temperature.NewTemperature(30), Thermo.TargetTemperature);
         }
     }
 }
