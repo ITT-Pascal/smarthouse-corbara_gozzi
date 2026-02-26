@@ -1,4 +1,5 @@
 ﻿using BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices;
+using BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices.ValueObjects;
 
 namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.CCTVTests
 {

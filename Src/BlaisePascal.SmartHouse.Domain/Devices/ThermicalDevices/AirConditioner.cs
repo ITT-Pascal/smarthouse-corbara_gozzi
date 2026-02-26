@@ -56,6 +56,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
         {
             base.SwitchOff();
             Speed = SpeedRPM.NewSpeed(speedAtOff);
+            Temperature = Temperature.NewTemperature(minTemp);
         }
         public void Toggle()
         {
@@ -107,6 +108,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
         }
         public void ChangeCustomTemperatureTo(Temperature newTemp)
         {
+            CheckIsNot(DeviceStatus.Off);
             CustomTemperature = newTemp;
             LastModifierAtUtc = DateTime.UtcNow;
             HistoryOfMod.Add(DateTime.UtcNow);
