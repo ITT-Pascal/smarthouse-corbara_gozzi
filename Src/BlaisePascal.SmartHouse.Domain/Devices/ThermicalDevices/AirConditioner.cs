@@ -6,7 +6,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
     public class AirConditioner: AbstractDevice, IToggable, ISwitchable
     {
         private const int speedAtOff = 0;
-        private const int speedAtOn = 0;
+        private const int speedAtOn = 700;
         private const int minTemp = 0;
         private const int starterCustomTemp = 15;
         //     -------ATTRIBUTES AND PROPERTY-------

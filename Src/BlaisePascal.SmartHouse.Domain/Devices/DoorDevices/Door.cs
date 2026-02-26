@@ -43,7 +43,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.DoorDevices
 
         //METODO CHE LANCIA ERRORE PER PASSWORD ERRATA
 
-        private void IsCodeCorrect(DoorCode Try)
+        public void IsCodeCorrect(DoorCode Try)
         {
             if (Try != Code)
                 throw new ArgumentException($"Code: Incorrect try", nameof(Try));
