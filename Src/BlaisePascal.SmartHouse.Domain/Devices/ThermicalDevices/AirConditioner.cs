@@ -77,10 +77,10 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
             switch (AcMode)
             {
                 case AcMode.Dry:
-                    Speed = SpeedRPM.NewSpeed(-speed);
+                    Speed = SpeedRPM.NewSpeed(-Math.Abs(speed));
                     break;
                 default:
-                    Speed = SpeedRPM.NewSpeed(speed);
+                    Speed = SpeedRPM.NewSpeed(Math.Abs(speed));
                     break;
             }
             LastModifierAtUtc = DateTime.UtcNow;

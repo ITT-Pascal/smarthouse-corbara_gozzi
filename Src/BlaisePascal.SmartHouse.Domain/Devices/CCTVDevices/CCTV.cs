@@ -6,7 +6,6 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
 {
     public class CCTV : AbstractDevice, ISwitchable
     {
-
         private const int basicZoom = 100;
         private const int basicJump = 10;
         //    -------ATTRIBUTES AND PROPERTY-------
@@ -32,6 +31,15 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
             CameraLamp = new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName("CAMERA_LED"));
             Degrees = Degrees.NewDegrees(Degrees.minDegrees);
             Zoom = Zoom.NewZoom(basicZoom);
+        }
+        public CCTV(Guid id, DeviceName name, DeviceStatus deviceStatus, uint zoom, uint degrees, Lamp lamp, DateTime dateTimeAtCreationUtc, DateTime lastModifierAtUtc) : this(id, name)
+        {
+            DeviceStatus = deviceStatus;
+            Zoom = Zoom.NewZoom(zoom);
+            Degrees = Degrees.NewDegrees(degrees);
+            CameraLamp = lamp;
+            DateTimeAtCreationUtc = dateTimeAtCreationUtc;
+            LastModifierAtUtc = lastModifierAtUtc;
         }
 
         //          ------METHODS------

@@ -34,7 +34,16 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
             CurrentTemperature = Temperature.NewTemperature(tempAtOn);
             TargetTemperature = targetTemperature;
         }
-       
+
+        public Thermostat(Guid id, DeviceName name, DeviceStatus deviceStatus, Temperature currentTemperature, Temperature targetTemperature, DateTime dateTimeAtCreationUtc, DateTime lastModifierAtUtc) : this(id, name, targetTemperature)
+        {
+            DeviceStatus = deviceStatus;
+            CurrentTemperature = currentTemperature;
+            TargetTemperature = targetTemperature;
+            DateTimeAtCreationUtc = dateTimeAtCreationUtc;
+            LastModifierAtUtc = lastModifierAtUtc;
+        }
+
         //        ------METHODS------
 
         //--ON/OFF METHODS--

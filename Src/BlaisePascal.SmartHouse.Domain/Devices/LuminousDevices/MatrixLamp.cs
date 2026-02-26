@@ -3,7 +3,7 @@ using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices.ValueObjects;
 
 namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
 {
-    public class MatrixLamp: AbstractDevice, IToggable, INullable
+    public class MatrixLamp: AbstractDevice, ILamp, INullable
     {
         private const int size = 10;
 
@@ -52,7 +52,8 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
             {
                 for (int cols = 0; cols < size; cols++)
                 {
-                    LampMatrix[rows, cols].SwitchOn();
+                    if (LampMatrix[rows, cols] != null)
+                        LampMatrix[rows, cols].SwitchOn();
                 }
             }
         }
@@ -63,7 +64,8 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
             {
                 for (int cols = 0; cols < size; cols++)
                 {
-                    LampMatrix[rows, cols].SwitchOff();
+                    if (LampMatrix[rows, cols] != null)
+                        LampMatrix[rows, cols].SwitchOff();
                 }
             }
         }
@@ -73,7 +75,8 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
             {
                 for (int cols = 0; cols < size; cols++)
                 {
-                    LampMatrix[rows, cols].Toggle();
+                    if (LampMatrix[rows, cols] != null)
+                        LampMatrix[rows, cols].Toggle();
                 }
             }
         }
@@ -85,10 +88,11 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
             {
                 for (int cols = 0; cols < size; cols++)
                 {
-                    if ((rows + cols) % 2 == 0)
-                        LampMatrix[rows, cols].SwitchOn();
-                    else
-                        LampMatrix[rows, cols].SwitchOff();
+                    if (LampMatrix[rows, cols] != null)
+                        if ((rows + cols) % 2 == 0)
+                            LampMatrix[rows, cols].SwitchOn();
+                        else
+                            LampMatrix[rows, cols].SwitchOff();
                 }
             }
         }
@@ -105,7 +109,8 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
             {
                 for (int cols = 0; cols < size; cols++)
                 {
-                    LampMatrix[rows, cols].SetIntensityTo(intensity);
+                    if (LampMatrix[rows, cols] != null)
+                        LampMatrix[rows, cols].SetIntensityTo(intensity);
                 }
             }
         }
@@ -114,10 +119,33 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
             AreIdxsInRange(row, col);
             LampMatrix[row, col].SetIntensityTo(intensity);
         }
+        public void IncreaseBy()
+        {
+            for (int rows = 0; rows < size; rows++)
+            {
+                for (int cols = 0; cols < size; cols++)
+                {
+                    if (LampMatrix[rows, cols] != null)
+                        LampMatrix[rows, cols].IncreaseBy();
+                }
+            }
+        }
+        public void DecreaseBy()
+        {
+            for (int rows = 0; rows < size; rows++)
+            {
+                for (int cols = 0; cols < size; cols++)
+                {
+                    if (LampMatrix[rows, cols] != null)
+                        LampMatrix[rows, cols].DecreaseBy();
+                }
+            }
+        }
 
         public void CheckIsNotNull(object obj)
         {
             ArgumentNullException.ThrowIfNull(obj);
         }
+        
     }
 }

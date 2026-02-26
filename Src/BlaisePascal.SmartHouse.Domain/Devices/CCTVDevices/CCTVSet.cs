@@ -3,7 +3,7 @@ using BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices.ValueObjects;
 
 namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
 {
-    public sealed class CCTVSet: AbstractDevice, INullable
+    public sealed class CCTVSet: AbstractDevice, INullable, ISwitchable
     {
         // -------ATTRIBUTES AND PROPERTY-------
         public List<CCTV> SetOfCCTV { get; private set; }
@@ -100,9 +100,8 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
         }
 
         //--SWITCH METHODS--
-        public void SwitchOn(Password Try)
+        public override void SwitchOn()
         {
-            AccessToSistem(Try);
 			foreach (CCTV cam in SetOfCCTV)
                 cam.SwitchOn();
         }

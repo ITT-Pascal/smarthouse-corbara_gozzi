@@ -27,8 +27,9 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         public override void SwitchOn()
         {
             foreach(Lamp lamp in LampRow) 
-            { 
-                lamp.SwitchOn(); 
+            {
+                if (lamp != null)
+                    lamp.SwitchOn(); 
             }
         }
 
@@ -55,7 +56,8 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         {
             foreach (Lamp lamp in LampRow)
             {
-                lamp.SwitchOff();
+                if (lamp != null)
+                    lamp.SwitchOff();
             }
         }
 
@@ -133,7 +135,8 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         public void SetIntensityTo(Intensity intensity)
         {
             foreach(Lamp lamp in LampRow)
-                lamp.SetIntensityTo(intensity);
+                if (lamp != null)
+                    lamp.SetIntensityTo(intensity);
         }
 
         /// <summary>
@@ -160,12 +163,14 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         public void IncreaseBy()
         {
             foreach (Lamp lamp in LampRow)
-                lamp.IncreaseBy();
+                if (lamp != null)
+                    lamp.IncreaseBy();
         }
         public void DecreaseBy()
         {
             foreach (Lamp lamp in LampRow)
-                lamp.IncreaseBy();
+                if (lamp != null)
+                    lamp.DecreaseBy();
         }
 
         //--DETECTIONER METHODS--

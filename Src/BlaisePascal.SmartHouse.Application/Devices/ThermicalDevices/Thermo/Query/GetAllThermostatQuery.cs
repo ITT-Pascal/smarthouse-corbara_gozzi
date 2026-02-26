@@ -4,19 +4,22 @@ using BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices.Repositories;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.ThermicalDevices.Thermo.Query
 {
-    public class GetThermostatByIdQuery
+    public class GetAllThermostatQuery
     {
         private readonly IThermostatRepository _thermoRepository;
 
-        public GetThermostatByIdQuery(IThermostatRepository thermoRepository)
+        public GetAllThermostatQuery(IThermostatRepository thermoRepository)
         {
             _thermoRepository = thermoRepository;
         }
 
-        public ThermostatDto Execute(Guid id)
+        public List<ThermostatDto> Execute()
         {
-            var thermo = _thermoRepository.GetThermostatById(id);
-            return ThermostatMapper.ToDto(thermo);
+            List<ThermostatDto> thermostatDto = [];
+            foreach (var thermo in _thermoRepository.GetAllThermostat())
+                thermostatDto.Add(ThermostatMapper.ToDto(thermo));
+            return thermostatDto;
         }
+
     }
 }

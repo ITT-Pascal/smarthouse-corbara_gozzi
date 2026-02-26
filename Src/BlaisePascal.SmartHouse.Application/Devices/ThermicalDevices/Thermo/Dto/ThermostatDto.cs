@@ -1,11 +1,12 @@
-﻿namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Dto
+﻿namespace BlaisePascal.SmartHouse.Application.Devices.ThermicalDevices.Thermo.Dto
 {
-    public class LampDto
+    public class ThermostatDto
     {
         public Guid ID { get; set; }
         public string Name { get; set; }
         public string DeviceStatus { get; set; }
-        public uint Intensity { get; set; }
+        public int CurrentTemperature { get; set; }
+        public int TargetTemperature { get; set; }
         public DateTime DateTimeAtCreationUtc { get; set; }
         public DateTime LastModifierAtUtc { get; set; }
 
@@ -15,7 +16,8 @@
                 $"ID: {ID}\n" +
                 $"Name: {Name}\n" +
                 $"DeviceStatus: {DeviceStatus}\n" +
-                $"Intensity: {Intensity}\n" +
+                $"CurrentTemperature: {CurrentTemperature}\n" +
+                $"TargetTemperature: {TargetTemperature}\n" +
                 $"DateTimeAtCreation: {DateTimeAtCreationUtc}" +
                 $"LastModifierAtUtc: {LastModifierAtUtc}";
         }

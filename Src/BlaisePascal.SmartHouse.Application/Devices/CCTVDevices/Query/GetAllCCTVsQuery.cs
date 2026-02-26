@@ -4,17 +4,19 @@ using BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices.Repositories;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.CCTVDevices.Query
 {
-    public class GetCCTVByIdQuery
+    public class GetAllCCTVsQuery
     {
 		private readonly ICCTVRepository Repository;
-		public GetCCTVByIdQuery(ICCTVRepository repository)
+		public GetAllCCTVsQuery(ICCTVRepository repository)
 		{
 			Repository = repository;
 		}
-		public CCTVDto Execute(Guid id)
+		public List<CCTVDto> Execute()
 		{
-			var cam = Repository.GetCCTVById(id);
-			return CCTVMapper.ToDto(cam);
-		}
+            List<CCTVDto> camDto = [];
+            foreach (var cam in Repository.GetAllCCTV())
+                camDto.Add(CCTVMapper.ToDto(cam));
+            return camDto;
+        }
 	}
 }

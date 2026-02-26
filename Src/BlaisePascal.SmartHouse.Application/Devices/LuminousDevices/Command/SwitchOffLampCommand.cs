@@ -1,5 +1,4 @@
-﻿using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices;
-using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices.Repositories;
+﻿using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices.Repositories;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Command
 {

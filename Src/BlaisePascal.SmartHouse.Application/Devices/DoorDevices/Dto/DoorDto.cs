@@ -1,11 +1,11 @@
-﻿namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Dto
+﻿namespace BlaisePascal.SmartHouse.Application.Devices.DoorDevices.Dto
 {
-    public class LampDto
+    public class DoorDto
     {
         public Guid ID { get; set; }
         public string Name { get; set; }
         public string DeviceStatus { get; set; }
-        public uint Intensity { get; set; }
+        public uint Code { get; set; }
         public DateTime DateTimeAtCreationUtc { get; set; }
         public DateTime LastModifierAtUtc { get; set; }
 
@@ -15,7 +15,7 @@
                 $"ID: {ID}\n" +
                 $"Name: {Name}\n" +
                 $"DeviceStatus: {DeviceStatus}\n" +
-                $"Intensity: {Intensity}\n" +
+                $"Code: {Code}\n" +
                 $"DateTimeAtCreation: {DateTimeAtCreationUtc}" +
                 $"LastModifierAtUtc: {LastModifierAtUtc}";
         }

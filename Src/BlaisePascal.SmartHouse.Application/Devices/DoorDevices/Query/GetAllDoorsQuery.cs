@@ -4,17 +4,21 @@ using BlaisePascal.SmartHouse.Domain.Devices.DoorDevices.Repositiories;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.DoorDevices.Query
 {
-    public class GetDoorByIdQuery
+    public class GetAllDoorsQuery
     {
         private readonly IDoorRepository _doorRepository;
-        public GetDoorByIdQuery(IDoorRepository doorRepository)
+
+        public GetAllDoorsQuery(IDoorRepository doorRepository)
         {
             _doorRepository = doorRepository;
         }
-        public DoorDto Execute(Guid id)
+
+        public List<DoorDto> Execute()
         {
-            var door = _doorRepository.GetDoorById(id);
-            return DoorMapper.ToDto(door);
+            List<DoorDto> doors = [];
+            foreach (var door in _doorRepository.GetAllDoors())
+                doors.Add(DoorMapper.ToDto(door));
+            return doors;
         }
     }
 }

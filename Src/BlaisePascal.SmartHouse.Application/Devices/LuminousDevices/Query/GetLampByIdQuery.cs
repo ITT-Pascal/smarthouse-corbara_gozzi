@@ -1,6 +1,5 @@
 ﻿using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Dto;
 using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Mappers;
-using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices;
 using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices.Repositories;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Query
@@ -16,7 +15,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Query
 
 		public LampDto Execute(Guid id)
 		{
-			Lamp lamp = Repository.GetLampById(id);
+			var lamp = Repository.GetLampById(id);
 			return LampMapper.ToDto(lamp);
 		}
 	}

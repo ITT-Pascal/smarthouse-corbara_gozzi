@@ -27,14 +27,19 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.DoorDevices
             DeviceStatus = DeviceStatus.Closed;
             Code = DoorCode.NewDoorCode(basicCode);
         }
-        public Door(Guid id, DeviceName name) : base(id, name)
+        public Door(Guid id, DeviceName name) : this(id)
         {
-            DeviceStatus = DeviceStatus.Closed;
-            Code = DoorCode.NewDoorCode(basicCode);
+            Name = name;
         }
-        public Door(Guid id, DeviceName name, DoorCode code) : base(id, name)
+        public Door(Guid id, DeviceName name, DoorCode code) : this(id, name)
         {
             Code = code;
+        }
+        public Door(Guid id, DeviceName name, DeviceStatus deviceStatus, DoorCode doorCode, DateTime dateTimeAtCreationUtc, DateTime lastModifierAtUtc): this(id, name, doorCode)
+        {
+            DeviceStatus = deviceStatus;
+            DateTimeAtCreationUtc = dateTimeAtCreationUtc;
+            LastModifierAtUtc = lastModifierAtUtc;
         }
 
         //       ------METHODS------
