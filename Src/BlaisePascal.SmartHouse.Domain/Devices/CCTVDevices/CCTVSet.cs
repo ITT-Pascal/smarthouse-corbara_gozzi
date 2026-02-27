@@ -7,7 +7,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
     {
         // -------ATTRIBUTES AND PROPERTY-------
         public List<CCTV> SetOfCCTV { get; private set; }
-        private Password AdminPassword { get; }
+        public Password AdminPassword { get; }
         public bool AccessPermission { get; private set; } = false;
 
 		//    ------CONSTRUCTORS------
@@ -44,7 +44,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
             //ERRORE CHE INDICA L'INCOMPATIBILITA' DI UNO STATO ALLA CHIAMATA DEL METODO
 
         }
-        public void CheckIsNotNull(object obj)
+        private void CheckIsNotNull(object obj)
         {
             ArgumentNullException.ThrowIfNull(obj);
         }
@@ -72,6 +72,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
         }
         public void AddCCTVIn(int position, CCTV camera)
         {
+            CheckIsNotNull(camera);
             CheckAccessPermission();
             if (position < 0 || position >= SetOfCCTV.Count)
                 throw new ArgumentOutOfRangeException(nameof(position), $"Position: Position out of range");
