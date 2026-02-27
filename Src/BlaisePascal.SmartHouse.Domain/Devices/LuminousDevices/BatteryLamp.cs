@@ -39,7 +39,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         /// <exception cref="Exception"></exception>
         private void IsNotOutOfCharge()
         {
-            if (LampBattery.ChargeValue == Battery.minPercentage)
+            if (LampBattery.Percentage == Battery.minPercentage)
                 SwitchOff();
             throw new InvalidOperationException($"Battery: LampBattery is out of charge");
             //ERRORE CHE INDICA L'INCOMPATIBILITA' DI UNO STATO ALLA CHIAMATA DEL METODO

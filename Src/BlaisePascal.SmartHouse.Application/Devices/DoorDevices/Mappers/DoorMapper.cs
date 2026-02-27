@@ -15,7 +15,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.DoorDevices.Mappers
                 ID = door.ID,
                 Name = door.Name.Name,
                 DeviceStatus = DeviceStatusMapper.ToDto(door.DeviceStatus),
-                Code = door.Code.Value,
+                Code = door.Code.Digits,
                 DateTimeAtCreationUtc = door.DateTimeAtCreationUtc,
                 LastModifierAtUtc = door.LastModifierAtUtc
             };

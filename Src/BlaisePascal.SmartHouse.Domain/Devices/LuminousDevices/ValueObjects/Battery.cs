@@ -9,16 +9,16 @@
 
         //UNA RICARICA COMPLETA DURA 3 h (ca 200 min) 1 unità di carica = 2 min
 
-        public uint ChargeValue { get; }
+        public uint Percentage { get; }
 
         public Battery(uint charge)
         {
             if (charge < minPercentage)
-                ChargeValue = minPercentage;
+                Percentage = minPercentage;
             else if (charge > maxPercentage)
-                ChargeValue = maxPercentage;
+                Percentage = maxPercentage;
             else
-                ChargeValue = charge;
+                Percentage = charge;
         }
         public static Battery NewChargeLevel(uint charge)
         {
@@ -26,15 +26,15 @@
         }
         public static Battery operator +(Battery charge, uint jump)
         {
-            if (charge.ChargeValue + jump > maxPercentage)
+            if (charge.Percentage + jump > maxPercentage)
                 return NewChargeLevel(maxPercentage);
-            return NewChargeLevel(charge.ChargeValue + jump);
+            return NewChargeLevel(charge.Percentage + jump);
         }
         public static Battery operator -(Battery charge, uint jump)
         {
-            if (charge.ChargeValue - jump < minPercentage)
+            if (charge.Percentage - jump < minPercentage)
                 return NewChargeLevel(minPercentage);
-            return NewChargeLevel(charge.ChargeValue - jump);
+            return NewChargeLevel(charge.Percentage - jump);
         }
 
     }

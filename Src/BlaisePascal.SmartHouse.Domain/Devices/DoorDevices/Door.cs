@@ -10,7 +10,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.DoorDevices
         private const int basicCode = 123456;
 
         //  -------ATTRIBUTES AND PROPERTY-------
-        private DoorCode Code { get; set; }
+        public DoorCode Code { get; private set; }
 
         //      ------CONSTRUCTORS------
         public Door() : this(DoorCode.NewDoorCode(basicCode)) 

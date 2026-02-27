@@ -3,7 +3,7 @@
     public class Password
     {
         private const int passwordLenght = 8;
-        public string String { get; }
+        public string Word { get; }
 
         public Password(string str)
         {
@@ -18,7 +18,7 @@
                 throw new ArgumentException($"Password: Password must have letters[minusc and maiusc] and at least one special char", nameof(str));
             if (str.Length <= passwordLenght)
                 throw new ArgumentException($"Password: Password must have a lenght at least of 8", nameof(str));
-            String = str;
+            Word = str;
         }
         public static Password NewPassword(string str)
         {

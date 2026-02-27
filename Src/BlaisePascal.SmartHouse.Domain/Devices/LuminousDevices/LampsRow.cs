@@ -180,7 +180,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
             List<Lamp> lamps = [];
             foreach(Lamp lamp in LampRow)
             {
-                if (lamp.Intensity.Value == Intensity.maxPercentage)
+                if (lamp.Intensity.Percentage == Intensity.maxPercentage)
                     lamps.Add(lamp);
             }
             if (lamps.Count == 0)
@@ -192,7 +192,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
             List<Lamp> lamps = [];
             foreach (Lamp lamp in LampRow)
             {
-                if (lamp.Intensity.Value == Intensity.minPercentage)
+                if (lamp.Intensity.Percentage == Intensity.minPercentage)
                     lamps.Add(lamp);
             }
             if (lamps.Count == 0)
@@ -204,7 +204,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
             List<Lamp> lamps = [];
             foreach(Lamp lamp in LampRow)
             {
-                if (lamp.Intensity.Value >= min && lamp.Intensity.Value <= max)
+                if (lamp.Intensity.Percentage >= min && lamp.Intensity.Percentage <= max)
                     lamps.Add(lamp);
             }
             if (lamps.Count == 0)
@@ -256,9 +256,9 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         public List<Lamp> SortByIntensity(bool ascending)
         {
             if (ascending)
-                return [.. LampRow.OrderBy(lamp => lamp.Intensity.Value)];
+                return [.. LampRow.OrderBy(lamp => lamp.Intensity.Percentage)];
             else
-                return [.. LampRow.OrderByDescending(lamp => lamp.Intensity.Value)]; // [.. <expression>] == <expression>.ToList()
+                return [.. LampRow.OrderByDescending(lamp => lamp.Intensity.Percentage)]; // [.. <expression>] == <expression>.ToList()
         }
 
     }

@@ -20,7 +20,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Mappers
                 ID = lamp.ID,
                 Name = lamp.Name.Name,
                 DeviceStatus = DeviceStatusMapper.ToDto(lamp.DeviceStatus),
-                Intensity = lamp.Intensity.Value,
+                Intensity = lamp.Intensity.Percentage,
                 DateTimeAtCreationUtc = lamp.DateTimeAtCreationUtc,
                 LastModifierAtUtc = lamp.LastModifierAtUtc
             };

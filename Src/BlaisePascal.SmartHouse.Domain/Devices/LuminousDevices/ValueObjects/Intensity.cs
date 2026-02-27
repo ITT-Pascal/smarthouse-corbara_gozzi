@@ -5,16 +5,16 @@
         public const uint minPercentage  = 0;
         public const uint maxPercentage = 100;
 
-        public uint Value { get; }
+        public uint Percentage { get; }
 
         public Intensity(uint val)
         {
             if (val < minPercentage)
-                Value = minPercentage;
+                Percentage = minPercentage;
             else if (val > maxPercentage)
-                Value = maxPercentage;
+                Percentage = maxPercentage;
             else
-                Value = val;
+                Percentage = val;
         }
         public static Intensity NewIntensity(uint val)
         {
@@ -22,15 +22,15 @@
         }
         public static Intensity operator +(Intensity intensity, uint jump)
         {
-            if (intensity.Value + jump > maxPercentage)
+            if (intensity.Percentage + jump > maxPercentage)
                 return NewIntensity(maxPercentage);
-            return NewIntensity(intensity.Value + jump);
+            return NewIntensity(intensity.Percentage + jump);
         }
         public static Intensity operator -(Intensity intensity, uint jump)
         {
-            if (intensity.Value - jump < minPercentage)
+            if (intensity.Percentage - jump < minPercentage)
                 return NewIntensity(minPercentage);
-            return NewIntensity(intensity.Value - jump);
+            return NewIntensity(intensity.Percentage - jump);
         }
     }
 }

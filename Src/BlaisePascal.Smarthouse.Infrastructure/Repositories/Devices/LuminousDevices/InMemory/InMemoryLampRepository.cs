@@ -8,5 +8,11 @@ namespace BlaisePascal.Smarthouse.Infrastructure.Repositories.Devices.LuminousDe
 {
     public class InMemoryLampRepository
     {
+        private readonly List<Lamp> _lampRepo = [];
+
+        public InMemoryLampRepository()
+        {
+            _lampRepo = new { };
+        }
     }
 }

@@ -12,12 +12,12 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Command
             _lampRepository = lampRepository;
         }
 
-        public void Execute(Guid id, Intensity intensity)
+        public void Execute(Guid id, uint intensity)
         {
             var lamp = _lampRepository.GetLampById(id);
             if(lamp != null)
             {
-                lamp.SetIntensityTo(intensity);
+                lamp.SetIntensityTo(Intensity.NewIntensity(intensity));
                 _lampRepository.UpdateLamp(lamp);
             }
         }
