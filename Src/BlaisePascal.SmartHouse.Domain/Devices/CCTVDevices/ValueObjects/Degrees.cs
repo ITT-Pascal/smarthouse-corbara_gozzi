@@ -3,7 +3,7 @@
     public class Degrees
     {
         public const uint minDegrees = 0;
-        public const int maxDegrees = 360;
+        public const uint maxDegrees = 360;
         public uint Angle { get; }
 
         public Degrees(uint angle)
@@ -15,6 +15,18 @@
         public static Degrees NewDegrees(uint angle)
         {
             return new Degrees(angle);
+        }
+        public static Degrees NewZeroDegrees()
+        {
+            return new Degrees(0);
+        }
+        public static Degrees NewHalfDegrees()
+        {
+            return new Degrees(180);
+        }
+        public static Degrees NewMaxDegrees()
+        {
+            return new Degrees(360);
         }
 
         //OVERRIDE DEGLI OPERATORI + E - PER AVER UINT SENZA PROBLEMI DI OVER O UNDERFLOW

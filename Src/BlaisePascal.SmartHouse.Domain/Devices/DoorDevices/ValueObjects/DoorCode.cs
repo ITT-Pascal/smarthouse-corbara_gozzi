@@ -2,7 +2,7 @@
 {
     public class DoorCode
     {
-        private const int codeLenght = 6;
+        private const uint codeLenght = 6;
         public uint Digits {get; }
 
         //CODICE A 6 CIFRE

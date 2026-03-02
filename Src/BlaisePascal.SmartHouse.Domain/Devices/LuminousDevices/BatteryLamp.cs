@@ -5,7 +5,6 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
 {
     public sealed class BatteryLamp: Lamp
     {
-        private const int batteryChargeAtCreation = 50;
         private const int dischargeCoefficientVal = 6;
         private const int rechargeCoefficientVal = 2;
         //    -------ATTRIBUTES AND PROPERTY-------
@@ -20,15 +19,15 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         //        ------CONSTRUCTORS------
         public BatteryLamp() : base()
         {
-            LampBattery = Battery.NewChargeLevel(batteryChargeAtCreation);
+            LampBattery = Battery.NewBasicChargeLevel();
         }
         public BatteryLamp(Guid id) : base(id)
         {
-            LampBattery = Battery.NewChargeLevel(batteryChargeAtCreation);
+            LampBattery = Battery.NewBasicChargeLevel();
         }
         public BatteryLamp(Guid id, DeviceName name) : base(id, name)
         {
-            LampBattery = Battery.NewChargeLevel(batteryChargeAtCreation);
+            LampBattery = Battery.NewBasicChargeLevel();
         }
 
         //        -----METHODS-----
@@ -102,14 +101,12 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
             //ERRORE CHE INDICA L'INCOMPATIBILITA' DI UNO STATO ALLA CHIAMATA DEL METODO
             ChargeStarterTime = DateTime.UtcNow;
             LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void UnplugLamp()
         {
             TimeOfChargeInMin = DateTime.UtcNow.Minute - ChargeStarterTime.Minute;
             LampBattery += (uint)(TimeOfChargeInMin / rechargeCoefficientVal);
             LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
         }
     }
 }

@@ -2,8 +2,8 @@
 {
     public class Temperature
     {
-        private const int minHeat = -10; 
-        private const int maxHeat = 30;
+        public const int minHeat = -10; 
+        public const int maxHeat = 30;
         public int Heat { get; }
 
         public Temperature(int val)
@@ -15,6 +15,10 @@
         public static Temperature NewTemperature(int val)
         {
             return new Temperature(val);
+        }
+        public static Temperature NewZeroTemperature()
+        {
+            return new Temperature(0);
         }
     }
 }

@@ -19,6 +19,14 @@
         {
             return new SpeedRPM(val);
         }
+        public static SpeedRPM NewBasicSpeed()
+        {
+            return new SpeedRPM(700);
+        }
+        public static SpeedRPM NewZeroSpeed()
+        {
+            return new SpeedRPM(0);
+        }
 
     }
 }

@@ -24,6 +24,10 @@
         {
             return new Battery(charge);
         }
+        public static Battery NewBasicChargeLevel()
+        {
+            return new Battery(50);
+        }
         public static Battery operator +(Battery charge, uint jump)
         {
             if (charge.Percentage + jump > maxPercentage)

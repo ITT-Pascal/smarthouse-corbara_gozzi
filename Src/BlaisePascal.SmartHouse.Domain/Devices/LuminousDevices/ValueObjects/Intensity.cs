@@ -20,6 +20,18 @@
         {
             return new Intensity(val);
         }
+        public static Intensity NewMinIntensity()
+        {
+            return new Intensity(0);
+        }
+        public static Intensity NewMaxIntensity()
+        {
+            return new Intensity(100);
+        }
+        public static Intensity NewHalfIntensity()
+        {
+            return new Intensity(50);
+        }
         public static Intensity operator +(Intensity intensity, uint jump)
         {
             if (intensity.Percentage + jump > maxPercentage)

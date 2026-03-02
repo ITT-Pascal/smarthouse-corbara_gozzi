@@ -6,7 +6,6 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
 {
     public class CCTV : AbstractDevice, ISwitchable
     {
-        private const int basicZoom = 100;
         private const int basicJump = 10;
         //    -------ATTRIBUTES AND PROPERTY-------
         public Lamp CameraLamp { get; private set; }
@@ -18,19 +17,19 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
         {
             CameraLamp = new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName("CAMERA_LED"));
             Degrees = Degrees.NewDegrees(Degrees.minDegrees);
-            Zoom = Zoom.NewZoom(basicZoom);
+            Zoom = Zoom.NewHalfZoom();
         }
         public CCTV(Guid id): base(id)
         {
             CameraLamp = new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName("CAMERA_LED"));
-            Degrees = Degrees.NewDegrees(Degrees.minDegrees);
-            Zoom = Zoom.NewZoom(basicZoom);
+            Degrees = Degrees.NewZeroDegrees();
+            Zoom = Zoom.NewHalfZoom();
         }
         public CCTV(Guid id, DeviceName name): base(id, name)
         {
             CameraLamp = new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName("CAMERA_LED"));
-            Degrees = Degrees.NewDegrees(Degrees.minDegrees);
-            Zoom = Zoom.NewZoom(basicZoom);
+            Degrees = Degrees.NewZeroDegrees();
+            Zoom = Zoom.NewHalfZoom();
         }
         public CCTV(Guid id, DeviceName name, DeviceStatus deviceStatus, uint zoom, uint degrees, Lamp lamp, DateTime dateTimeAtCreationUtc, DateTime lastModifierAtUtc) : this(id, name)
         {
@@ -64,42 +63,36 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
             CheckIsNot(DeviceStatus.Off);
             Degrees += basicJump;
             LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void DecreaseDegreesBy()
         {
             CheckIsNot(DeviceStatus.Off);
             Degrees -= basicJump;
             LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void SetCCTVDegreesTo(Degrees newDegrees)
         {
             CheckIsNot(DeviceStatus.Off);
             Degrees = newDegrees;
             LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void IncreaseZoomBy()
         {
             CheckIsNot(DeviceStatus.Off);
             Zoom += basicJump;
             LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void DecreaseZoomBy()
         {
             CheckIsNot(DeviceStatus.Off);
             Zoom -= basicJump;
             LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void SetCCTVZoomTo(Zoom zoom)
         {
             CheckIsNot(DeviceStatus.Off);
             Zoom = zoom;
             LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
         }
     }
 }

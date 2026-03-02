@@ -5,24 +5,34 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
 {
     public class MatrixLamp: AbstractDevice, ILamp, INullable
     {
-        private const int size = 10;
+        private const int basicSize = 10;
 
         //    -------ATTRIBUTES AND PROPERTY-------
         public Lamp[,] LampMatrix { get; private set; }
+        public readonly uint rowSize;
+        public readonly uint colsSize;
 
         //       ------CONSTRUCTORS------
         public MatrixLamp()
         {
-            LampMatrix = new Lamp[size, size];
+            LampMatrix = new Lamp[basicSize, basicSize];
+            rowSize = basicSize;
+            colsSize = basicSize;
+        }
+        public MatrixLamp(uint rows, uint cols)
+        {
+            LampMatrix = new Lamp[rows, cols];
+            rowSize = rows;
+            colsSize = cols;
         }
 
         //        ------METHODS------
 
         //--CHECK METHODS--
 
-        private static void AreIdxsInRange(uint row, uint col)
+        private void AreIdxsInRange(uint row, uint col)
         {
-            if (row >= size || col >= size)
+            if (row >= rowSize|| col >= colsSize)
                 throw new ArgumentOutOfRangeException($"Indexes[{row},{col}]: Spotted index out of matrix range");
         }
 
@@ -48,9 +58,9 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         public sealed override void SwitchOn()
         {
             base.SwitchOn();
-            for (int rows = 0; rows < size; rows++)
+            for (int rows = 0; rows < rowSize; rows++)
             {
-                for (int cols = 0; cols < size; cols++)
+                for (int cols = 0; cols < colsSize; cols++)
                 {
                     if (LampMatrix[rows, cols] != null)
                         LampMatrix[rows, cols].SwitchOn();
@@ -60,9 +70,9 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         public sealed override void SwitchOff()
         {
             base.SwitchOff();
-            for (int rows = 0; rows < size; rows++)
+            for (int rows = 0; rows < rowSize; rows++)
             {
-                for (int cols = 0; cols < size; cols++)
+                for (int cols = 0; cols < colsSize; cols++)
                 {
                     if (LampMatrix[rows, cols] != null)
                         LampMatrix[rows, cols].SwitchOff();
@@ -71,9 +81,9 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         }
         public void Toggle()
         {
-            for (int rows = 0; rows < size; rows++)
+            for (int rows = 0; rows < rowSize; rows++)
             {
-                for (int cols = 0; cols < size; cols++)
+                for (int cols = 0; cols < colsSize; cols++)
                 {
                     if (LampMatrix[rows, cols] != null)
                         LampMatrix[rows, cols].Toggle();
@@ -84,9 +94,9 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         //ACCENDE UNA SI E UNA NO, TIPO SCACCHIERA
         public void SwitchOnLikeChessboard()
         {
-            for (int rows = 0; rows < size; rows++)
+            for (int rows = 0; rows < rowSize; rows++)
             {
-                for (int cols = 0; cols < size; cols++)
+                for (int cols = 0; cols < colsSize; cols++)
                 {
                     if (LampMatrix[rows, cols] != null)
                         if ((rows + cols) % 2 == 0)
@@ -105,9 +115,9 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         /// <param name="intensity"></param>
         public void SetIntensityTo(Intensity intensity)
         {
-            for (int rows = 0; rows < size; rows++)
+            for (int rows = 0; rows < rowSize; rows++)
             {
-                for (int cols = 0; cols < size; cols++)
+                for (int cols = 0; cols < colsSize; cols++)
                 {
                     if (LampMatrix[rows, cols] != null)
                         LampMatrix[rows, cols].SetIntensityTo(intensity);
@@ -121,9 +131,9 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         }
         public void IncreaseBy()
         {
-            for (int rows = 0; rows < size; rows++)
+            for (int rows = 0; rows < rowSize; rows++)
             {
-                for (int cols = 0; cols < size; cols++)
+                for (int cols = 0; cols < colsSize; cols++)
                 {
                     if (LampMatrix[rows, cols] != null)
                         LampMatrix[rows, cols].IncreaseBy();
@@ -132,9 +142,9 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         }
         public void DecreaseBy()
         {
-            for (int rows = 0; rows < size; rows++)
+            for (int rows = 0; rows < rowSize; rows++)
             {
-                for (int cols = 0; cols < size; cols++)
+                for (int cols = 0; cols < colsSize; cols++)
                 {
                     if (LampMatrix[rows, cols] != null)
                         LampMatrix[rows, cols].DecreaseBy();

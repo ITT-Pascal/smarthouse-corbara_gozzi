@@ -5,7 +5,6 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
 {
     public sealed class Thermostat : AbstractDevice, ISwitchable
     {
-        private const int tempAtOn = 0;
         private const int defaultTarget = 20;
         private const int tempAdder = 2;
 
@@ -16,22 +15,22 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
         //         ------CONSTRUCTORS------
         public Thermostat():base()
         {
-            CurrentTemperature = Temperature.NewTemperature(tempAtOn);
+            CurrentTemperature = Temperature.NewZeroTemperature();
             TargetTemperature = Temperature.NewTemperature(defaultTarget);
         }
         public Thermostat(Guid id): base(id)
         {
-            CurrentTemperature = Temperature.NewTemperature(tempAtOn);
+            CurrentTemperature = Temperature.NewZeroTemperature();
             TargetTemperature = Temperature.NewTemperature(defaultTarget);
         }
         public Thermostat(Guid id, DeviceName name): base(id, name)
         {
-            CurrentTemperature = Temperature.NewTemperature(tempAtOn);
+            CurrentTemperature = Temperature.NewZeroTemperature();
             TargetTemperature = Temperature.NewTemperature(defaultTarget);
         }
         public Thermostat(Guid id, DeviceName name, Temperature targetTemperature):base(id, name)
         {
-            CurrentTemperature = Temperature.NewTemperature(tempAtOn);
+            CurrentTemperature = Temperature.NewZeroTemperature();
             TargetTemperature = targetTemperature;
         }
 
@@ -52,7 +51,6 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
         {
             base.SwitchOn();
             EqualsTemperatureToTarget();
-            HistoryOfMod.Add(DateTime.UtcNow);
         }
         public override void SwitchOff()
         {
@@ -75,11 +73,10 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
             TargetTemperature = newTemp;
             EqualsTemperatureToTarget();
             LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
         }
         private void AddTemperature()
         {
-            CurrentTemperature = Temperature.NewTemperature(CurrentTemperature.Heat+tempAdder);
+            CurrentTemperature = Temperature.NewTemperature(CurrentTemperature.Heat + tempAdder);
         }
 
         //--OTHER METHODS--

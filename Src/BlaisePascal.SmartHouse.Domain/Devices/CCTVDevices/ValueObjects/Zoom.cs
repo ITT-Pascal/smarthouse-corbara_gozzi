@@ -10,7 +10,7 @@
         {
             if (!(val is >= minZoom and <= maxZoom))
             {
-                throw new ArgumentOutOfRangeException(nameof(val), $"Zoom: Invalid Zoom value[out of 10..200]");
+                throw new ArgumentOutOfRangeException(nameof(val), "Zoom: Invalid Zoom value[out of 10..200]");
             }
             Value = val;
         }
@@ -18,16 +18,28 @@
         {
             return new Zoom(val);
         }
+        public static Zoom NewMinZoom()
+        {
+            return new Zoom(10);
+        }
+        public static Zoom NewMaxZoom()
+        {
+            return new Zoom(200);
+        }
+        public static Zoom NewHalfZoom()
+        {
+            return new Zoom(100);
+        }
         public static Zoom operator +(Zoom zoom, uint jump)
         {
             if (zoom.Value + jump > maxZoom)
-                return NewZoom(maxZoom);
+                return NewMaxZoom();
             return NewZoom(zoom.Value + jump);
         }
         public static Zoom operator -(Zoom zoom, uint jump)
         {
             if (zoom.Value + jump < minZoom)
-                return NewZoom(minZoom);
+                return NewMinZoom();
             return NewZoom(zoom.Value - jump);
         }
     }

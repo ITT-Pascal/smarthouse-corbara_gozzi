@@ -7,7 +7,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.DoorDevices
 {
     public class Door: AbstractDevice, IToggable
     {
-        private const int basicCode = 123456;
+        private const uint basicCode = 123456;
 
         //  -------ATTRIBUTES AND PROPERTY-------
         public DoorCode Code { get; private set; }
@@ -80,42 +80,36 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.DoorDevices
             else
                 CloseDoor();
             LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void OpenDoor()
         {
             CheckIsNot(DeviceStatus.Locked);
             DeviceStatus = DeviceStatus.Open;
             LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void CloseDoor()
         {
             CheckIsNot(DeviceStatus.Locked);
             DeviceStatus = DeviceStatus.Closed;
             LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
             
         }
         public void LockDoor()
         {
             DeviceStatus = DeviceStatus.Locked;
             LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void UnlockDoor(DoorCode code)
         {
             IsCodeCorrect(code);
             DeviceStatus = DeviceStatus.Open;
             LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
         }
         public void ChangeCodeTo(DoorCode newCode, DoorCode code)
         {
             IsCodeCorrect(code);
             Code = newCode;
             LastModifierAtUtc = DateTime.UtcNow;
-            HistoryOfMod.Add(DateTime.UtcNow);
         }
     }
 }      

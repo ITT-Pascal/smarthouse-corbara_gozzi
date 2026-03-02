@@ -44,7 +44,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
             //ERRORE CHE INDICA L'INCOMPATIBILITA' DI UNO STATO ALLA CHIAMATA DEL METODO
 
         }
-        private void CheckIsNotNull(object obj)
+        public void CheckIsNotNull(object obj)
         {
             ArgumentNullException.ThrowIfNull(obj);
         }
