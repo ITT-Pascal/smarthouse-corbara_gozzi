@@ -36,7 +36,10 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         public void SwitchOn(int autoOffMinutes)
         {
             if (autoOffMinutes < MinAutoOffMinutes)
+            {
+                DeviceStatus = DeviceStatus.Error;
                 throw new ArgumentOutOfRangeException(nameof(autoOffMinutes));
+            }   
             SwitchOn();
             autoOffAtUtc = DateTime.UtcNow.AddMinutes(autoOffMinutes);
         }

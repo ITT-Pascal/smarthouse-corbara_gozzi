@@ -62,8 +62,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
             {
                 for (int cols = 0; cols < colsSize; cols++)
                 {
-                    if (LampMatrix[rows, cols] != null)
-                        LampMatrix[rows, cols].SwitchOn();
+                    LampMatrix[rows, cols]?.SwitchOn();
                 }
             }
         }
@@ -74,8 +73,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
             {
                 for (int cols = 0; cols < colsSize; cols++)
                 {
-                    if (LampMatrix[rows, cols] != null)
-                        LampMatrix[rows, cols].SwitchOff();
+                    LampMatrix[rows, cols]?.SwitchOff();
                 }
             }
         }
@@ -85,8 +83,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
             {
                 for (int cols = 0; cols < colsSize; cols++)
                 {
-                    if (LampMatrix[rows, cols] != null)
-                        LampMatrix[rows, cols].Toggle();
+                    LampMatrix[rows, cols]?.Toggle();
                 }
             }
         }
@@ -119,8 +116,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
             {
                 for (int cols = 0; cols < colsSize; cols++)
                 {
-                    if (LampMatrix[rows, cols] != null)
-                        LampMatrix[rows, cols].SetIntensityTo(intensity);
+                    LampMatrix[rows, cols]?.SetIntensityTo(intensity);
                 }
             }
         }
@@ -135,8 +131,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
             {
                 for (int cols = 0; cols < colsSize; cols++)
                 {
-                    if (LampMatrix[rows, cols] != null)
-                        LampMatrix[rows, cols].IncreaseBy();
+                    LampMatrix[rows, cols]?.IncreaseBy();
                 }
             }
         }
@@ -146,8 +141,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
             {
                 for (int cols = 0; cols < colsSize; cols++)
                 {
-                    if (LampMatrix[rows, cols] != null)
-                        LampMatrix[rows, cols].DecreaseBy();
+                    LampMatrix[rows, cols]?.DecreaseBy();
                 }
             }
         }

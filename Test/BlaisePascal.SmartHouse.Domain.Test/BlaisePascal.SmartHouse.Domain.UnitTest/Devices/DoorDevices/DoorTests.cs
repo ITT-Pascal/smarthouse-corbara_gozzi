@@ -2,7 +2,7 @@
 using BlaisePascal.SmartHouse.Domain.Devices.DoorDevices;
 using BlaisePascal.SmartHouse.Domain.Devices.DoorDevices.ValueObjects;
 
-namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.DoorTest
+namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.DoorDevices
 {
     public class DoorTests
     {
@@ -17,6 +17,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.DoorTest
         {
             Assert.Equal(DeviceStatus.Closed, testDoor.DeviceStatus);
             var exception = Record.Exception(() => testDoor.IsCodeCorrect(basicCode));
+            //per verificare che non vengano lanciati errori
             Assert.Null(exception);
         }
 

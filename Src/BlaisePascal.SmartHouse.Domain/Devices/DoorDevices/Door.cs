@@ -51,7 +51,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.DoorDevices
         public void IsCodeCorrect(DoorCode Try)
         {
             if (Try != Code)
-                throw new ArgumentException($"Code: Incorrect try", nameof(Try));
+                throw new ArgumentException("Code: Incorrect try", nameof(Try));
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.DoorDevices
         public sealed override void SwitchOn() 
         {
             DeviceStatus = DeviceStatus.Error;
-            throw new NotSupportedException($"Method call[Door.SwitchOn()]: Door is not switchable"); 
+            throw new NotSupportedException("Method call[Door.SwitchOn()]: Door is not switchable"); 
             //ERRORE CHE INDICA IL FATTO CHE LA FUNZIONALITA' NON E' SUPPORTATA
         }
         /// <summary>
@@ -69,7 +69,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.DoorDevices
         public sealed override void SwitchOff() 
         {
             DeviceStatus = DeviceStatus.Error;
-            throw new NotSupportedException($"Method call[Door.SwitchOff()]: Door is not switchable"); 
+            throw new NotSupportedException("Method call[Door.SwitchOff()]: Door is not switchable"); 
         }
 
         public void Toggle()

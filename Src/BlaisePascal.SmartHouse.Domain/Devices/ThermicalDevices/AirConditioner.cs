@@ -70,15 +70,12 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
         public void ChangeSpeedTo(int speed)
         {
             CheckIsNot(DeviceStatus.Off);
-            switch (AcMode)
+            Speed = AcMode switch
             {
-                case AcMode.Dry:
-                    Speed = SpeedRPM.NewSpeed(-Math.Abs(speed));
-                    break;
-                default:
-                    Speed = SpeedRPM.NewSpeed(Math.Abs(speed));
-                    break;
-            }
+                AcMode.Dry => SpeedRPM.NewSpeed(-Math.Abs(speed)),
+                _ => SpeedRPM.NewSpeed(Math.Abs(speed)),
+                //SE E' DRY FA COSI, _(altri casi) FAI COSA'
+            };
             LastModifierAtUtc = DateTime.UtcNow;            
         }
         public void ChangeModeTo(AcMode newMode)

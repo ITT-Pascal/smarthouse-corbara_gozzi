@@ -2,13 +2,13 @@
 using BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices;
 using BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices.ValueObjects;
 
-namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.ThermostatTests
+namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.ThermicalDevice
 {
     public class ThermostatTests
     {
         private readonly Thermostat Thermo = new();
         private readonly Temperature basicTemp = Temperature.NewTemperature(20);
-        private readonly Temperature zeroTemp = Temperature.NewTemperature(0);
+        private readonly Temperature zeroTemp = Temperature.NewZeroTemperature();
         
         [Fact]
         public void Thermostat_Creation_WhenCreatedTempIs0AndTargetIs20AndStatusIsOff()

@@ -1,9 +1,9 @@
 ﻿using BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices;
 using BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices.ValueObjects;
 
-namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.CCTVTests
+namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.CCTVDevices
 {
-    public class CCTVSetTest
+    public class CCTVSetTests
     {
         CCTVSet cctvPass = new CCTVSet(Password.NewPassword("676767"));
         CCTVSet cctvSet = new CCTVSet();

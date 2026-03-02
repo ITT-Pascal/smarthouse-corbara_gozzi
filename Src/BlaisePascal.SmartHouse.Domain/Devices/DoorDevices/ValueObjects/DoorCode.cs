@@ -9,7 +9,7 @@
         public DoorCode(uint code)
         {
             if (code.ToString().Length != codeLenght)
-                throw new ArgumentException($"Code: Code value must be positive and a lenght of 6");
+                throw new ArgumentException("Code: Code value must be positive and a lenght of 6", nameof(code));
             Digits = code;
         }
         public static DoorCode NewDoorCode(uint code)

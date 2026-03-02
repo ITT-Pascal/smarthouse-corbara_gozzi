@@ -11,7 +11,7 @@
             if(speed != 0)
             {
                 if (!(Math.Abs(speed) is >= minSpeed and <= maxSpeed))
-                    throw new ArgumentOutOfRangeException(nameof(speed), $"AcSpeed: Speed out of operating range[out of 450..1200 / -1200..-450]");
+                    throw new ArgumentOutOfRangeException(nameof(speed), "AcSpeed: Speed out of operating range[out of 450..1200 / -1200..-450]");
             }
             Value = speed;
         }

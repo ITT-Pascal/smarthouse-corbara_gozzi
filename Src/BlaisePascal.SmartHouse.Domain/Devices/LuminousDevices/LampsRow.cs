@@ -1,9 +1,10 @@
-﻿using BlaisePascal.SmartHouse.Domain.Devices.Abstractions;
+﻿using System.Xml.Linq;
+using BlaisePascal.SmartHouse.Domain.Devices.Abstractions;
 using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices.ValueObjects;
 
 namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
 {
-    public sealed class LampsRow: AbstractDevice, ILamp
+    public sealed class LampsRow: AbstractDevice, ILamp, INullable
     {
         //     -------ATTRIBUTES AND PROPERTY-------
         public List<Lamp> LampRow { get; private set; }
@@ -16,7 +17,6 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
 
         //          ------METHODS------
 
-
         public void CheckIsNotNull(object obj)
         {
             ArgumentNullException.ThrowIfNull(obj);
@@ -28,8 +28,8 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         {
             foreach(Lamp lamp in LampRow) 
             {
-                if (lamp != null)
-                    lamp.SwitchOn(); 
+                lamp?.SwitchOn(); 
+                //? = SE E' NULL, NON FA SWITCH ON
             }
         }
 
@@ -48,16 +48,13 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         /// <param name="name"></param>
         public void SwitchOnBy(DeviceName name)
         {
-            foreach (Lamp lamp in LampRow)
-                if (lamp.Name == name)
-                    SwitchOnBy(lamp.ID);
+            LampRow.First(lamp => lamp.Name == name).SwitchOn();
         }
         public override void SwitchOff()
         {
             foreach (Lamp lamp in LampRow)
             {
-                if (lamp != null)
-                    lamp.SwitchOff();
+                lamp?.SwitchOff();
             }
         }
 
@@ -76,9 +73,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         /// <param name="name"></param>
         public void SwitchOffBy(DeviceName name)
         {
-            foreach (Lamp lamp in LampRow)
-                if (lamp.Name == name)
-                    SwitchOffBy(lamp.ID);
+            LampRow.First(lamp => lamp.Name == name).SwitchOff();
         }
 
         public void Toggle()
@@ -98,9 +93,9 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         {
             CheckIsNotNull(lamp);
             if (position < 0 || position >= LampRow.Count)
-                throw new ArgumentOutOfRangeException(nameof(position), $"Position: Position out of range");
+                throw new ArgumentOutOfRangeException(nameof(position), "Position: Position out of range");
             if (LampRow[position] != null)
-                throw new ArgumentException($"Position: There is already a lamp", nameof(position));
+                throw new ArgumentException("Position: There is already a lamp", nameof(position));
             LampRow.Insert(position, lamp);
         }
 
@@ -119,14 +114,12 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         /// <param name="Id"></param>
         public void RemoveLampBy(DeviceName name)
         {
-            foreach (Lamp lamp in LampRow)
-                if (lamp.Name == name)
-                    RemoveLampBy(lamp.ID);
+            RemoveLampBy(LampRow.First(lamp => lamp.Name == name).ID);
         }
         public void RemoveLampAt(int position)
         {
             if (position < 0 || position >= LampRow.Count)
-                throw new ArgumentOutOfRangeException(nameof(position), $"Position: Position out of range");
+                throw new ArgumentOutOfRangeException(nameof(position), "Position: Position out of range");
             LampRow.RemoveAt(position);
         }
 
@@ -135,8 +128,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         public void SetIntensityTo(Intensity intensity)
         {
             foreach(Lamp lamp in LampRow)
-                if (lamp != null)
-                    lamp.SetIntensityTo(intensity);
+                lamp?.SetIntensityTo(intensity);
         }
 
         /// <summary>
@@ -154,23 +146,17 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         /// <param name="Id"></param>
         public void SetIntensityForLampBy(DeviceName name, Intensity intensity)
         {
-            foreach(Lamp lamp in LampRow)
-            {
-                if(lamp.Name == name)
-                    lamp.SetIntensityTo(intensity);
-            }
+            LampRow.First(lamp => lamp.Name == name).SetIntensityTo(intensity);
         }
         public void IncreaseBy()
         {
             foreach (Lamp lamp in LampRow)
-                if (lamp != null)
-                    lamp.IncreaseBy();
+                lamp?.IncreaseBy();
         }
         public void DecreaseBy()
         {
             foreach (Lamp lamp in LampRow)
-                if (lamp != null)
-                    lamp.DecreaseBy();
+                lamp?.DecreaseBy();
         }
 
         //--DETECTIONER METHODS--
@@ -242,12 +228,10 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         //Metodo privato per poter individuare l'index di una lamp in base al guid
         private int GetIdxOfLampBy(Guid id)
         {
-            List<Guid> GuidList = [];
-            foreach (Lamp lamp in LampRow)
-                GuidList.Add(lamp.ID);
-            if (Array.IndexOf([.. GuidList], id) == -1)
-                throw new ArgumentException($"ID: Id not identified", nameof(id));
-            return Array.IndexOf([.. GuidList], id);
+            int pos = LampRow.FindIndex(lamp => lamp.ID == id);
+            if (pos == -1)
+                throw new ArgumentException("ID: Id not identified", nameof(id));
+            return pos;
         }
 
         //--SORTER METHODS--

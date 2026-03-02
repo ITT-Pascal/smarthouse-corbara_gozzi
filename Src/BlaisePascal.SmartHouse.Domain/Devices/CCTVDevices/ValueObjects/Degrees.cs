@@ -9,7 +9,7 @@
         public Degrees(uint angle)
         {
             if (angle > maxDegrees)
-                throw new ArgumentOutOfRangeException(nameof(angle), $"Degrees: Invalid Degrees value[out of 0..360]");
+                throw new ArgumentOutOfRangeException(nameof(angle), "Degrees: Invalid Degrees value[out of 0..360]");
             Angle = angle;
         }
         public static Degrees NewDegrees(uint angle)

@@ -1,4 +1,5 @@
-﻿using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices;
+﻿using BlaisePascal.SmartHouse.Domain.Devices.Abstractions;
+using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices;
 using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices.Repositories;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Command
@@ -12,9 +13,9 @@ namespace BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Command
 			Repository = repository;
 		}
 
-		public void Execute(Lamp lamp)
+		public void Execute(string name)
 		{
-			Repository.AddLamp(lamp);
+			Repository.AddLamp(new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName(name)));
 		}
 	}
 }

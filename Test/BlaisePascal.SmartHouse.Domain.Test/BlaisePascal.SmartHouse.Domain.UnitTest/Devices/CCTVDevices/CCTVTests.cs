@@ -3,15 +3,15 @@ using BlaisePascal.SmartHouse.Domain.Devices.Abstractions;
 using BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices;
 
 
-namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.CCTVTests
+namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.CCTVDevices
 {
-    public class CCTVTest        // #AvePulga 
+    public class CCTVTests        // #AvePulga 
     {                                   
         private readonly Guid id;
         private readonly CCTV cctv;
 
 
-        public CCTVTest()
+        public CCTVTests()
         {
             id = Guid.NewGuid();
             cctv = new CCTV(id, DeviceName.NewDeviceName("MR.Braso"));

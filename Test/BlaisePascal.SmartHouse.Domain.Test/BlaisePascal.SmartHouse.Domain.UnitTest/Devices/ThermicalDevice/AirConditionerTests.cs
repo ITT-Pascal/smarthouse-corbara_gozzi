@@ -2,15 +2,15 @@
 using BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices;
 using BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices.ValueObjects;
 
-namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.AirConditionerTests
+namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.ThermicalDevice
 {
     public class AirConditionersTest
     {
         private readonly AirConditioner cond = new();
-        private readonly Temperature zeroTemp = Temperature.NewTemperature(0);
-        private readonly SpeedRPM zeroSpeed = SpeedRPM.NewSpeed(0);
-        private readonly SpeedRPM basicSpeed = SpeedRPM.NewSpeed(700);
-        private readonly SpeedRPM newSpeed = SpeedRPM.NewSpeed(700);
+        private readonly Temperature zeroTemp = Temperature.NewZeroTemperature();
+        private readonly SpeedRPM zeroSpeed = SpeedRPM.NewZeroSpeed();
+        private readonly SpeedRPM basicSpeed = SpeedRPM.NewBasicSpeed();
+        private readonly SpeedRPM newSpeed = SpeedRPM.NewSpeed(670);
 
         [Fact]
         public void AirConditioner_Constructor_WhenCreatedHeatAndSpeedAre0()
