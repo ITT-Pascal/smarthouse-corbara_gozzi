@@ -1,4 +1,5 @@
-﻿using BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices;
+﻿using BlaisePascal.SmartHouse.Domain.Devices.Abstractions;
+using BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices;
 using BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices.Repositories;
 
 namespace BlaisePascal.SmartHouse.Application.Devices.CCTVDevices.Command
@@ -12,9 +13,9 @@ namespace BlaisePascal.SmartHouse.Application.Devices.CCTVDevices.Command
             _cctvRepository = cctvRepository;
 		}
 
-        public void Execute(CCTV cam)
-        { 
-            _cctvRepository.AddCCTV(cam);
+        public void Execute(string name)
+        {
+            _cctvRepository.AddCCTV(new CCTV(Guid.NewGuid(), DeviceName.NewDeviceName(name)));
 		}
 	}
 }
