@@ -1,17 +1,15 @@
-﻿using System;
+﻿using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Command;
+using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Query;
+using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Command;
-using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Query;
-using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices;
-using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices.Repositories;
 
-namespace BlaisePascal.SmartHouse.Console
+namespace BlaisePascal.SmartHouse.Consoles
 {
     public class LampController
-
     {
         private readonly ILampRepository repo;
 
@@ -37,8 +35,8 @@ namespace BlaisePascal.SmartHouse.Console
 
         public void RemoveLamp()
         {
-            Console.Write("Lamp Id: ");
-            string id = Console.ReadLine();
+            Console.Write("Lamp number: ");
+            uint n = Console.ReadLine();
 
             if (string.IsNullOrWhiteSpace(id))
             {
@@ -122,6 +120,17 @@ namespace BlaisePascal.SmartHouse.Console
                 var l = lamps[i];
                 Console.WriteLine($"{i + 1}. {l.Name}\n{l}");
             }
+        }
+        public void ShowMenu()
+        {
+            StringBuilder menu = new();
+            menu.Append("1 - AddLamp\n");
+            menu.Append("2 - RemoveLamp\n");
+            menu.Append("3 - SetIntensity\n");
+            menu.Append("4 - SwitchOnLamp\n");
+            menu.Append("5 - SwitchOffLamp\n");
+            menu.Append("0 - Exit");
+            Console.WriteLine(menu);
         }
     }
 }

@@ -16,7 +16,7 @@
                 $"Name: {Name}\n" +
                 $"DeviceStatus: {DeviceStatus}\n" +
                 $"Intensity: {Intensity}\n" +
-                $"DateTimeAtCreation: {DateTimeAtCreationUtc}" +
+                $"DateTimeAtCreation: {DateTimeAtCreationUtc}\n" +
                 $"LastModifierAtUtc: {LastModifierAtUtc}";
         }
     }
