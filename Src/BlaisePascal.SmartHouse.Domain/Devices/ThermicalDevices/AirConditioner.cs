@@ -61,7 +61,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
                 SwitchOff();
             else
                 SwitchOn();
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
 
         //--CHANGER METHODS--
@@ -76,7 +76,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
                 _ => SpeedRPM.NewSpeed(Math.Abs(speed)),
                 //SE E' DRY FA COSI, _(altri casi) FAI COSA'
             };
-            LastModifierAtUtc = DateTime.UtcNow;            
+            LastModifierAtUtc = DateTime.Now;            
         }
         public void ChangeModeTo(AcMode newMode)
         {
@@ -91,13 +91,13 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
                     Temperature = AcDictionary[AcMode];
                     break;
             }
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
         public void ChangeCustomTemperatureTo(Temperature newTemp)
         {
             CheckIsNot(DeviceStatus.Off);
             CustomTemperature = newTemp;
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
 
         //--OTHER METHODS--
@@ -107,7 +107,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
             AcMode = AcMode.Cool;
             Temperature = AcDictionary[AcMode];
             Speed = SpeedRPM.NewBasicSpeed();
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BlaisePascal.SmartHouse.Application.Devices.CCTVDevices.Command;
+﻿using System.Text;
 using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Command;
 using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Dto;
 using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Query;
@@ -98,7 +93,7 @@ namespace BlaisePascal.SmartHouse.Consoles
             {
                 Console.WriteLine();
                 var l = lamps[i];
-                Console.WriteLine($"{i + 1}. {l.Name}\n{l}");
+                Console.WriteLine($"{i + 1}. {l.Name}\n\n{l}");
             }
         }
         public void ShowMenu()

@@ -52,7 +52,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
                 SwitchOff();
             else
                 SwitchOn();
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
 
         //--CHANGER INTENSITY METHODS--
@@ -61,19 +61,19 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         {
             CheckIsNot(DeviceStatus.Off);
             Intensity += intensityJump;
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
         public virtual void DecreaseBy()
         {
             CheckIsNot(DeviceStatus.Off);
             Intensity -= intensityJump;
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
         public virtual void SetIntensityTo(Intensity intensity)
         {
             CheckIsNot(DeviceStatus.Off);
             Intensity = intensity;
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
     }
 }
