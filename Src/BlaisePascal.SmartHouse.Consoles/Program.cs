@@ -14,6 +14,7 @@ class Program()
         while (!exit)
         {
             Console.Clear();
+
             LampController.ShowLamps();
 
             AddSeparator();
