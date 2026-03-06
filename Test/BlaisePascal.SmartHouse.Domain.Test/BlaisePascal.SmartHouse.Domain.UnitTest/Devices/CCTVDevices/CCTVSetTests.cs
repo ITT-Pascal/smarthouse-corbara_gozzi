@@ -1,4 +1,5 @@
-﻿using BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices;
+﻿using BlaisePascal.SmartHouse.Domain.Devices.Abstractions;
+using BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices;ì
 using BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices.ValueObjects;
 
 namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.CCTVDevices
@@ -7,6 +8,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.CCTVDevices
     {
         CCTVSet cctvPass = new CCTVSet(Password.NewPassword("676767"));
         CCTVSet cctvSet = new CCTVSet();
+
 
         [Fact]
         public void CCTVSetTest_Constructor_Empty()
@@ -118,7 +120,131 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.CCTVDevices
         }
 
         [Fact]
-        public void CCTVSetTest_RemoveCCTVAt_() { }
+        public void CCTVSetTest_RemoveCCTVBy_NameNoAccess() 
+        {
+            CCTV c = new CCTV(Guid.NewGuid(), DeviceName.NewDeviceName("Braso"));
+            cctvSet.AccessToSistem(Password.NewPassword("123456789"));
+            cctvSet.AddCCTV(c);
+            cctvSet.AccessToSistem(Password.NewPassword("12345678"));
+            Assert.Throws<InvalidOperationException>(() => cctvSet.RemoveCCTVBy(DeviceName.NewDeviceName("Braso")));
+        }
+
+        [Fact]
+        public void CCTVSetTest_RemoveCCTVBy_NameItRemoveIt()
+        {
+            CCTV c = new CCTV(Guid.NewGuid(), DeviceName.NewDeviceName("Braso"));
+            cctvSet.AccessToSistem(Password.NewPassword("123456789"));
+            cctvSet.AddCCTV(c);
+            cctvSet.RemoveCCTVBy(DeviceName.NewDeviceName("Braso"));
+            Assert.Equal(0, cctvSet.SetOfCCTV.Count);
+        }
+
+        [Fact]
+        public void CCTVSetTest_RemoveCCTVBy_GuidNoAccess()
+        {
+            CCTV c = new CCTV(Guid.NewGuid(), DeviceName.NewDeviceName("Braso"));
+            cctvSet.AccessToSistem(Password.NewPassword("123456789"));
+            cctvSet.AddCCTV(c);
+            cctvSet.AccessToSistem(Password.NewPassword("12345678"));
+            Assert.Throws<InvalidOperationException>(() => cctvSet.RemoveCCTVBy(c.ID));
+        }
+
+        [Fact]
+        public void CCTVSetTest_RemoveCCTVBy_GuidItRemoveIt()
+        {
+            CCTV c = new CCTV(Guid.NewGuid(), DeviceName.NewDeviceName("Braso"));
+            cctvSet.AccessToSistem(Password.NewPassword("123456789"));
+            cctvSet.AddCCTV(c);
+            cctvSet.RemoveCCTVBy(c.ID);
+            Assert.Equal(0, cctvSet.SetOfCCTV.Count);
+        }
+
+        [Fact]
+        public void CCTVSetTest_SwitchOnBy_GuidNoAccess()
+        {
+            CCTV c = new CCTV(Guid.NewGuid(), DeviceName.NewDeviceName("Braso"));
+            cctvSet.AccessToSistem(Password.NewPassword("123456789"));
+            cctvSet.AddCCTV(c);
+            cctvSet.AccessToSistem(Password.NewPassword("12345678"));
+            Assert.Throws<InvalidOperationException>(() => cctvSet.SwitchOnBy(c.ID));
+        }
+
+        [Fact]
+        public void CCTVSetTest_SwitchOnBy_GuidItSwitchOnIt()
+        {
+            CCTV c = new CCTV(Guid.NewGuid(), DeviceName.NewDeviceName("Braso"));
+            cctvSet.AccessToSistem(Password.NewPassword("123456789"));
+            cctvSet.AddCCTV(c);
+            cctvSet.SwitchOnBy(c.ID);         
+            Assert.Equal(DeviceStatus.On, cctvSet.SetOfCCTV[0].DeviceStatus); 
+        }
+
+        [Fact]
+        public void CCTVSetTest_SwitchOnBy_NameNoAccess()
+        {
+            CCTV c = new CCTV(Guid.NewGuid(), DeviceName.NewDeviceName("Braso"));
+            cctvSet.AccessToSistem(Password.NewPassword("123456789"));
+            cctvSet.AddCCTV(c);
+            cctvSet.AccessToSistem(Password.NewPassword("12345678"));
+            Assert.Throws<InvalidOperationException>(() => cctvSet.SwitchOnBy(new DeviceName("Braso")));
+        }
+
+        [Fact]
+        public void CCTVSetTest_SwitchOnBy_NameItSwitchOn() 
+        {
+            CCTV c = new CCTV(Guid.NewGuid(), DeviceName.NewDeviceName("Braso"));
+            cctvSet.AccessToSistem(Password.NewPassword("123456789"));
+            cctvSet.AddCCTV(c);
+            cctvSet.SwitchOnBy(c.Name);
+            Assert.Equal(DeviceStatus.On, cctvSet.SetOfCCTV[0].DeviceStatus);
+        }
+
+        [Fact]
+        public void CCTVSetTest_SwitchOffBy_GuidNoAccess() 
+        {
+            CCTV c = new CCTV(Guid.NewGuid(), DeviceName.NewDeviceName("Braso"));
+            cctvSet.AccessToSistem(Password.NewPassword("123456789"));
+            cctvSet.AddCCTV(c);
+            cctvSet.SwitchOnBy(c.ID);
+            cctvSet.AccessToSistem(Password.NewPassword("12345678"));
+            Assert.Throws<InvalidOperationException>(() => cctvSet.SwitchOffBy(c.ID));
+        }
+
+        [Fact]
+        public void CCTVSetTest_SwitchOffBy_GuidItSwitchOnIt() 
+        {
+            CCTV c = new CCTV(Guid.NewGuid(), DeviceName.NewDeviceName("Braso"));
+            cctvSet.AccessToSistem(Password.NewPassword("123456789"));
+            cctvSet.AddCCTV(c);
+            cctvSet.SwitchOnBy(c.ID);
+            cctvSet.SwitchOffBy(c.ID);
+            Assert.Equal(DeviceStatus.Off, cctvSet.SetOfCCTV[0].DeviceStatus);
+        }
+
+        [Fact]
+        public void CCTVSetTest_SwitchOffBy_NameNoAccess() 
+        {
+            CCTV c = new CCTV(Guid.NewGuid(), DeviceName.NewDeviceName("Braso"));
+            cctvSet.AccessToSistem(Password.NewPassword("123456789"));
+            cctvSet.AddCCTV(c);
+            cctvSet.SwitchOnBy(c.Name);
+            cctvSet.AccessToSistem(Password.NewPassword("12345678"));
+            Assert.Throws<InvalidOperationException>(() => cctvSet.SwitchOffBy(new DeviceName("Braso")));
+        }
+
+        [Fact]
+        public void CCTVSetTest_SwitchOffBy_NameItSwitchOn() 
+        {
+            CCTV c = new CCTV(Guid.NewGuid(), DeviceName.NewDeviceName("Braso"));
+            cctvSet.AccessToSistem(Password.NewPassword("123456789"));
+            cctvSet.AddCCTV(c);
+            cctvSet.SwitchOnBy(c.Name);
+            cctvSet.SwitchOffBy(c.Name);
+            Assert.Equal(DeviceStatus.Off, cctvSet.SetOfCCTV[0].DeviceStatus);
+        }
+
+        
+
 
     }
-} //InvalidOperationException
+} 
