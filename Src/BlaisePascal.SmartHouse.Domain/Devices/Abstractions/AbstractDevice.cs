@@ -15,23 +15,26 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.Abstractions
         public AbstractDevice()
         {
             DeviceStatus = DeviceStatus.Off;
-            DateTimeAtCreationUtc = DateTime.UtcNow;
+            DateTimeAtCreationUtc = DateTime.Now;
             ID = Guid.NewGuid();
             Name = DeviceName.NewBasicName();
+            LastModifierAtUtc = DateTime.Now;
         }
         public AbstractDevice(Guid id)
         {
             DeviceStatus = DeviceStatus.Off;
-            DateTimeAtCreationUtc = DateTime.UtcNow;
+            DateTimeAtCreationUtc = DateTime.Now;
             ID = id;
             Name = DeviceName.NewBasicName();
+            LastModifierAtUtc = DateTime.Now;
         }
         public AbstractDevice(Guid id, DeviceName name)
         {
             DeviceStatus = DeviceStatus.Off;
-            DateTimeAtCreationUtc = DateTime.UtcNow;
+            DateTimeAtCreationUtc = DateTime.Now;
             ID = id;
             Name = name;
+            LastModifierAtUtc = DateTime.Now;
         }
 
         //        ------METHODS------
@@ -52,12 +55,12 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.Abstractions
         public virtual void SwitchOn()
         {
             DeviceStatus = DeviceStatus.On;
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
         public virtual void SwitchOff()
         {
             DeviceStatus = DeviceStatus.Off;
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
 
         //--CHANGER METHODS--
@@ -65,7 +68,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.Abstractions
         public void RenameTo(DeviceName newName)
         {
             Name = newName;
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
     }
 }

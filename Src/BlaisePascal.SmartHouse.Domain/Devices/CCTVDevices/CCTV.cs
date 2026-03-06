@@ -62,37 +62,37 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
         {
             CheckIsNot(DeviceStatus.Off);
             Degrees += basicJump;
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
         public void DecreaseDegreesBy()
         {
             CheckIsNot(DeviceStatus.Off);
             Degrees -= basicJump;
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
         public void SetCCTVDegreesTo(Degrees newDegrees)
         {
             CheckIsNot(DeviceStatus.Off);
             Degrees = newDegrees;
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
         public void IncreaseZoomBy()
         {
             CheckIsNot(DeviceStatus.Off);
             Zoom += basicJump;
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
         public void DecreaseZoomBy()
         {
             CheckIsNot(DeviceStatus.Off);
             Zoom -= basicJump;
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
         public void SetCCTVZoomTo(Zoom zoom)
         {
             CheckIsNot(DeviceStatus.Off);
             Zoom = zoom;
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
     }
 }

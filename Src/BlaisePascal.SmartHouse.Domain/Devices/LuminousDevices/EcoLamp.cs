@@ -41,7 +41,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
                 throw new ArgumentOutOfRangeException(nameof(autoOffMinutes));
             }   
             SwitchOn();
-            autoOffAtUtc = DateTime.UtcNow.AddMinutes(autoOffMinutes);
+            autoOffAtUtc = DateTime.Now.AddMinutes(autoOffMinutes);
         }
         public override void SwitchOff()
         {
@@ -51,13 +51,13 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         public void CheckAutoOff()
         {
             CheckIsNot(DeviceStatus.Off);
-            if (autoOffAtUtc.HasValue && DateTime.UtcNow >= autoOffAtUtc.Value)
+            if (autoOffAtUtc.HasValue && DateTime.Now >= autoOffAtUtc.Value)
                 SwitchOff();
         }
         private void ResetAutoOffIfNeeded()
         {
             if (autoOffAtUtc.HasValue)
-                autoOffAtUtc = DateTime.UtcNow.AddMinutes(DefaultAutoOffMinutes);
+                autoOffAtUtc = DateTime.Now.AddMinutes(DefaultAutoOffMinutes);
         }
 
         //--CHANGER INTENSITY METHODS--

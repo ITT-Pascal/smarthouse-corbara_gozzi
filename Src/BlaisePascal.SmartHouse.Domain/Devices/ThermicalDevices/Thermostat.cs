@@ -72,7 +72,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
             CheckIsNot(DeviceStatus.Off);
             TargetTemperature = newTemp;
             EqualsTemperatureToTarget();
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
         private void AddTemperature()
         {

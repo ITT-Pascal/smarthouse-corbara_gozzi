@@ -79,37 +79,37 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.DoorDevices
                 OpenDoor();
             else
                 CloseDoor();
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
         public void OpenDoor()
         {
             CheckIsNot(DeviceStatus.Locked);
             DeviceStatus = DeviceStatus.Open;
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
         public void CloseDoor()
         {
             CheckIsNot(DeviceStatus.Locked);
             DeviceStatus = DeviceStatus.Closed;
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
             
         }
         public void LockDoor()
         {
             DeviceStatus = DeviceStatus.Locked;
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
         public void UnlockDoor(DoorCode code)
         {
             IsCodeCorrect(code);
             DeviceStatus = DeviceStatus.Open;
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
         public void ChangeCodeTo(DoorCode newCode, DoorCode code)
         {
             IsCodeCorrect(code);
             Code = newCode;
-            LastModifierAtUtc = DateTime.UtcNow;
+            LastModifierAtUtc = DateTime.Now;
         }
     }
 }      
