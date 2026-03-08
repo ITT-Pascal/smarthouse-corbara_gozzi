@@ -2,11 +2,11 @@
 
 namespace BlaisePascal.SmartHouse.Application.Devices.ThermicalDevices.Thermo.Command
 {
-    public class DeleteThermostaCommand
+    public class DeleteThermostatCommand
     {
         private readonly IThermostatRepository _thermoRepository;
 
-        public DeleteThermostaCommand(IThermostatRepository thermoRepository)
+        public DeleteThermostatCommand(IThermostatRepository thermoRepository)
         {
             _thermoRepository = thermoRepository;
         }

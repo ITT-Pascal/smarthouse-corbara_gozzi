@@ -14,7 +14,6 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
         public AcMode AcMode { get; private set; }
         public Dictionary<AcMode, Temperature> AcDictionary { get; init; } = new()
         {
-            
             { AcMode.Hot, Temperature.NewTemperature(Temperature.maxHeat) },
             { AcMode.Heat, Temperature.NewTemperature(20) },
             { AcMode.Cool, Temperature.NewTemperature(10) },
@@ -38,6 +37,18 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
         {
             Speed = SpeedRPM.NewZeroSpeed();
             Temperature = Temperature.NewZeroTemperature();
+        }
+
+        public AirConditioner(Guid id, DeviceName name, DeviceStatus deviceStatus, SpeedRPM speedRPM, Temperature temperature, Temperature customTemperature, AcMode acMode, Dictionary<AcMode, Temperature> dictionary, DateTime dateTimeAtCreationUtc, DateTime lastModifierAtUtc) : this(id, name)
+        {
+            DeviceStatus = deviceStatus;
+            Speed = speedRPM;
+            Temperature = temperature;
+            CustomTemperature = customTemperature;
+            AcMode = acMode;
+            AcDictionary = dictionary;
+            DateTimeAtCreationUtc = dateTimeAtCreationUtc;
+            LastModifierAtUtc = lastModifierAtUtc;
         }
 
         //      ------METHODS------
