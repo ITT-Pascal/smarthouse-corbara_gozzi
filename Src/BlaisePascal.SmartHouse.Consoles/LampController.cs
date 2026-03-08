@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Command;
-using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Dto;
 using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Query;
 using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices;
 using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices.Repositories;
@@ -11,6 +10,7 @@ namespace BlaisePascal.SmartHouse.Consoles
     {
         private readonly ILampRepository repo;
         readonly List<Lamp> lamps;
+        private Guid ID;
 
         public LampController(ILampRepository repos)
         {
@@ -21,58 +21,69 @@ namespace BlaisePascal.SmartHouse.Consoles
         public void AddLamp()
         {
             Console.Write("Lamp name: ");
-            string name = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(name))
+            try
             {
-                Console.Write("Invalid name");
-                return;
+                string name = Console.ReadLine();
+                new AddLampCommand(repo).Execute(name);
+                Console.WriteLine("Lamp added to your lamp repo");
             }
-            new AddLampCommand(repo).Execute(name);
-            Console.WriteLine("Lamp added to your lamp repo");
+            catch (ArgumentException)
+            {
+                Console.WriteLine("ERROR: Name of lamp does not follow device name's rules");
+            }
+            catch (Exception) 
+            {
+                Console.WriteLine("UNEXPECTED ERROR: restart console");
+            }
         }
 
         public void RemoveLamp()
         {
-            new DeleteLampCommand(repo).Execute(ReturnIDLampByNumber());
-            Console.WriteLine("Lamp removed ");
-        }
-        private Guid ReturnIDLampByNumber()
+            if (IsError())
+                return;
+			new DeleteLampCommand(repo).Execute(ID);
+            Console.WriteLine("Lamp removed from your lamp repo");
+		}
+        public bool IsError()
         {
-            Console.Write("Lamp number: ");
-            string n = Console.ReadLine();
-            return lamps[CheckNumber(n) - 1].ID;
-        }
-        private int CheckNumber(string n)
-        {
-            if (!int.TryParse(n, out int number))
-                Console.WriteLine("Number not definied");
-            if (number < 1 || number > lamps.Count)
-                Console.WriteLine("Number not definied");
-            return number;
-        }
+			Console.Write("Lamp number: ");
+			string n = Console.ReadLine();
+			if (!int.TryParse(n, out int number) || number < 1 || number > lamps.Count)
+			{
+				Console.WriteLine("ERROR: idx out of range");
+				return true;
+			}
+            ID = lamps[number - 1].ID;
+			return false;
+		}
         public void SetIntensity()
         {
-            Guid ID = ReturnIDLampByNumber();
-            Console.Write("New intensity: ");
+			if (IsError())
+				return;
+			Console.Write("New intensity: ");
             string newIntensity = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(newIntensity))
-            {
-                Console.WriteLine("Invalid intensity");
-                return;
-            }
-            new SetIntensityCommand(repo).Execute(ID, uint.Parse(newIntensity));
-            Console.WriteLine("Intensity of lamp changed");
+			new SetIntensityCommand(repo).Execute(ID, uint.Parse(newIntensity));
+			if (uint.Parse(newIntensity) > 100)
+				Console.WriteLine("Intensity set to max");
+			if (uint.Parse(newIntensity) < 0)
+				Console.WriteLine("Intensity set to min");
+            else
+                Console.WriteLine("Intensity of lamp changed");
         }
 
         public void SwitchOn()
         {
-            new SwitchOnLampCommand(repo).Execute(ReturnIDLampByNumber());
+			if (IsError())
+				return;
+			new SwitchOnLampCommand(repo).Execute(ID);
             Console.WriteLine("Lamp switched on");
         }
 
         public void SwitchOff()
         {
-            new SwitchOffLampCommand(repo).Execute(ReturnIDLampByNumber());
+			if (IsError())
+				return;
+			new SwitchOffLampCommand(repo).Execute(ID);
             Console.WriteLine("Lamp switched on");
         }
 
