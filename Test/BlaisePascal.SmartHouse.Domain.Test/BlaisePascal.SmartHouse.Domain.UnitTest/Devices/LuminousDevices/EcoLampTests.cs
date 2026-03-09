@@ -5,112 +5,64 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
 {
     public class EcoLampTests
     {
+        EcoLamp ecoLamp = new EcoLamp(Guid.NewGuid(), new DeviceName("Test EcoLamp"));
+
         [Fact]
-        public void Created_EcoLamp_IsOff_WithZeroBrightness()
+        public void EcoLampTest_Created_NameAndGuid()
         {
-            EcoLamp lamp = new EcoLamp();
-            Assert.Equal(0, lamp.Intensity);
-            Assert.Equal(DeviceStatus.Off, lamp.DeviceStatus);
+            Assert.NotNull(ecoLamp);
+            Assert.Equal(DeviceStatus.Off, ecoLamp.DeviceStatus);
+            Assert.Equal(new DeviceName("Test EcoLamp"), ecoLamp.Name);
         }
 
         [Fact]
-        public void EcoLamp_SwitchOn_WhenTurnedOnTheBrightnessIs30()
+        public void EcoLampTest_SwitchOnWithAutoOff_ItTurnOnAndSetAutoOff()
         {
-            EcoLamp lamp = new EcoLamp();
-            lamp.SwitchOn();
-            Assert.Equal(DeviceStatus.On, lamp.DeviceStatus);
-            Assert.Equal(30, lamp.Intensity);
+            ecoLamp.SwitchOn(true);
+            Assert.Equal(DeviceStatus.On, ecoLamp.DeviceStatus);
         }
 
         [Fact]
-        public void EcoLamp_SwitchOff_WhenSwitchedOffTheBrightnessIs0AndIsOff()
+        public void EcoLampTest_SwitchOnWithAutoOff_ItTurnOnAndSetAutoOff2()
         {
-            EcoLamp lamp = new EcoLamp();
-            lamp.SwitchOff();
-            Assert.Equal(DeviceStatus.Off, lamp.DeviceStatus);
-            Assert.Equal(0, lamp.Intensity);
+            ecoLamp.SwitchOn(15);
+            Assert.Equal(DeviceStatus.On, ecoLamp.DeviceStatus);
         }
 
         [Fact]
-        public void EcoLamp_Toggle_ALampWithStatusOffBecameOn()
+        public void EcoLampTest_SwitchOnWithAutoOff_ItGavesError()
         {
-            EcoLamp lamp = new EcoLamp();
-            lamp.Toggle();
-            Assert.Equal(DeviceStatus.On, lamp.DeviceStatus);
+            Assert.Throws<ArgumentOutOfRangeException>(() => ecoLamp.SwitchOn(0));
         }
 
         [Fact]
-        public void EcoLamp_Toggle_ALampWithStatusOnBecameOff()
+        public void EcoLampTest_SwitchOff_ItTurnOffAndResetAutoOff()
         {
-            EcoLamp lamp = new EcoLamp();
-            lamp.SwitchOn();
-            lamp.Toggle();
-            Assert.Equal(DeviceStatus.Off, lamp.DeviceStatus);
+            ecoLamp.SwitchOn(true);
+            ecoLamp.SwitchOff();
+            Assert.Equal(DeviceStatus.Off, ecoLamp.DeviceStatus);
         }
 
         [Fact]
-        public void EcoLamp_IncreaseBy_With30BrightnessTheNewBrightnessIs40()
+        public void EcoLampTest_CheckAutoOff_ItTurnOffIfTimePassed()
         {
-            EcoLamp lamp = new EcoLamp();
-            lamp.SwitchOn(); 
-            lamp.IncreaseBy();
-            Assert.Equal(40, lamp.Intensity);
+            ecoLamp.SwitchOn(true);
+            ecoLamp.CheckAutoOff();
+            Assert.Equal(DeviceStatus.Off, ecoLamp.DeviceStatus);
         }
 
         [Fact]
-        public void EcoLamp_DecreaseBy_With30BrightnessTheNewBrightnessIs20()
+        public void EcoLampTest_CheckAutoOff_ItDoesNothingIfTimeNotPassed()
         {
-            EcoLamp lamp = new EcoLamp();
-            lamp.SwitchOn();
-            lamp.DecreaseBy();
-            Assert.Equal(20, lamp.Intensity);
+            ecoLamp.SwitchOn(true);
+            ecoLamp.CheckAutoOff();
+            Assert.Equal(DeviceStatus.On, ecoLamp.DeviceStatus);
         }
 
         [Fact]
-        public void EcoLamp_IncreaseBy_With30BrightnessTheNewBrightnessIs50BecauseOfNewChangerValue()
+        public void EcoLampTest_CheckAutoOff_ItGavesErrorIfOff()
         {
-            EcoLamp lamp = new EcoLamp();
-            lamp.SwitchOn(); // 30
-            lamp.IncreaseBy();
-            Assert.Equal(50, lamp.Intensity);
+            Assert.Throws<InvalidOperationException>(() => ecoLamp.CheckAutoOff());
         }
-
-        [Fact]
-        public void EcoLamp_DecreaseBy_With30BrightnessTheNewBrightnessIs10BecauseOfNewChangerValue()
-        {
-            EcoLamp lamp = new EcoLamp();
-            lamp.SwitchOn(); // 30
-            lamp.DecreaseBy();
-            Assert.Equal(10, lamp.Intensity);
-        }
-
-        [Fact]
-        public void EcoLamp_SetIntensity_NewIntensityIsSetTo50()
-        {
-            EcoLamp lamp = new EcoLamp();
-            lamp.SwitchOn();
-            lamp.SetIntensity(50);
-            Assert.Equal(50, lamp.Intensity);
-        }
-
-        [Fact]
-        public void EcoLamp_SetIntensity_NewIntensityIsSetToMin()
-        {
-            EcoLamp lamp = new EcoLamp();
-            lamp.SwitchOn();
-            lamp.SetIntensity(1);
-            Assert.Equal(1, lamp.Intensity);
-        }
-
-        [Fact]
-        public void EcoLamp_SetIntensity_NewIntensityIsSetToMax()
-        {
-            EcoLamp lamp = new EcoLamp();
-            lamp.SwitchOn();
-            lamp.SetIntensity(70);
-            Assert.Equal(70, lamp.Intensity);
-        }
-
-       
     }
 }
