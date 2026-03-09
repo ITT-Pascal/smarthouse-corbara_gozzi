@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlaisePascal.SmartHouse.Infrastructure
+namespace BlaisePascal.SmartHouse.Infrastructure.Repositories.Devices.DoorDevices.InMemory
 {
     public class InMemoryDoorRepository
     {

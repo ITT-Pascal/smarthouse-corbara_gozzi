@@ -1,7 +1,5 @@
-﻿using BlaisePascal.SmartHouse.Consoles;
-using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices.Repositories;
-using BlaisePascal.SmartHouse.Infrastructure;
-
+﻿using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices.Repositories;
+using BlaisePascal.SmartHouse.Infrastructure.Repositories.Devices.LuminousDevices.InMemory;
 class Program()
 {
     static void Main()
@@ -10,13 +8,13 @@ class Program()
         LampController LampController = new(repository);
 
         bool exit = false;
-		
-		while (!exit)
-        {
-			Console.Clear();
 
-			LampController.ShowLamps();
-		    
+        while (!exit)
+        {
+            Console.Clear();
+
+            LampController.ShowLamps();
+
             AddSeparator();
 
             Console.WriteLine("Choose an option:");
@@ -55,24 +53,26 @@ class Program()
             }
             Pause();
         }
-        
+
     }
-	static void Pause()
-	{
-		Console.WriteLine();
-		var continuePause = true;
-		Console.WriteLine("Press ENTER to continue...");
-		while (continuePause)
-		{
-			ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-			if (keyInfo.Key == ConsoleKey.Enter)
-				continuePause = false;
-		}
-	}
-	static void AddSeparator()
-	{
-		Console.WriteLine();
-		Console.WriteLine("-----------------------------------");
-		Console.WriteLine();
-	}
+    static void Pause()
+    {
+        Console.WriteLine();
+        var continuePause = true;
+        Console.WriteLine("Press ENTER to continue...");
+        while (continuePause)
+        {
+            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+            if (keyInfo.Key == ConsoleKey.Enter)
+                continuePause = false;
+        }
+    }
+    static void AddSeparator()
+    {
+        Console.WriteLine();
+        Console.WriteLine("-----------------------------------");
+        Console.WriteLine();
+    }
 }
+
+

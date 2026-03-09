@@ -1,13 +1,7 @@
 ﻿using BlaisePascal.SmartHouse.Domain.Devices.Abstractions;
-using BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices;
 using BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BlaisePascal.SmartHouse.Infrastructure
+namespace BlaisePascal.SmartHouse.Infrastructure.Repositories.Devices.ThermicalDevices.Thermo.InMemory
 {
     public class InMemoryThermostatRepository
     {

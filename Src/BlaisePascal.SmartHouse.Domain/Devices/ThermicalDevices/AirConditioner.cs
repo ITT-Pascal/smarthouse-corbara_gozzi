@@ -41,14 +41,16 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
 
         public AirConditioner(Guid id, DeviceName name, DeviceStatus deviceStatus, SpeedRPM speedRPM, Temperature temperature, Temperature customTemperature, AcMode acMode, Dictionary<AcMode, Temperature> dictionary, DateTime dateTimeAtCreationUtc, DateTime lastModifierAtUtc) : this(id, name)
         {
+            ID = id;
+            Name = name;
             DeviceStatus = deviceStatus;
             Speed = speedRPM;
             Temperature = temperature;
             CustomTemperature = customTemperature;
             AcMode = acMode;
             AcDictionary = dictionary;
-            DateTimeAtCreationUtc = dateTimeAtCreationUtc;
             LastModifierAtUtc = lastModifierAtUtc;
+            DateTimeAtCreationUtc = dateTimeAtCreationUtc;
         }
 
         //      ------METHODS------

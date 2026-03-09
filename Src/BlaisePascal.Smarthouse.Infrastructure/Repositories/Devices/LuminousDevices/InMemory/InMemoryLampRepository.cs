@@ -2,9 +2,9 @@
 using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices;
 using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices.Repositories;
 
-namespace BlaisePascal.SmartHouse.Infrastructure
+namespace BlaisePascal.SmartHouse.Infrastructure.Repositories.Devices.LuminousDevices.InMemory
 {
-    public class InMemoryLampRepository: ILampRepository
+    public class InMemoryLampRepository : ILampRepository
     {
         private readonly List<Lamp> _lamps;
 

@@ -15,7 +15,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
 		public CCTVSet() 
         {
             SetOfCCTV = [];
-            AdminPassword = Password.NewPassword("1234567890");
+            AdminPassword = Password.NewPassword("Ale6767!");
         }
         public CCTVSet(Password adminPassword)
         {
@@ -70,12 +70,14 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
 
         public void AddCCTV(CCTV camera) 
         {
+            CheckIsNotNull(camera);
 			CheckAccessPermission();
 			SetOfCCTV.Add(camera); 
         }
         public void AddCCTVIn(int position, CCTV camera)
         {
             CheckAccessPermission();
+            CheckIsNotNull(camera);
             CheckIsInRange(position);
             if (SetOfCCTV[position] != null)
                 throw new ArgumentException("Position: Cannot add CCTV in positions already taken", nameof(position));
