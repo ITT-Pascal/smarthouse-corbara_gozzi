@@ -23,7 +23,7 @@ public class LampController
         try
         {
             string name = Console.ReadLine();
-            new AddLampCommand(repo).Execute(new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName(name)));
+            new AddLampCommand(repo).Execute(name);
             Console.WriteLine("Lamp added to your lamp repo");
             if (string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException();
@@ -132,4 +132,3 @@ public class LampController
         Console.WriteLine(menu);
     }
 }
-
