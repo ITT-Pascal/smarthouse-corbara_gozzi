@@ -16,8 +16,7 @@ class Program()
 			Console.Clear();
 
 			LampController.ShowLamps();
-			
-
+		    
             AddSeparator();
 
             Console.WriteLine("Choose an option:");
@@ -54,7 +53,6 @@ class Program()
                     Console.WriteLine("Errore: Opzione non disponibile");
                     break;
             }
-            LampController.ShowLamps();
             Pause();
         }
         

@@ -23,30 +23,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.CCTVDevices
             Assert.NotNull(cctv);
             Assert.NotNull(cctv.CameraLamp);
             Assert.Equal(id, cctv.ID);
-            Assert.Equal(new Zoom(100) , cctv.Zoom);
-            Assert.Equal(new Degrees(0), cctv.Degrees);
-            Assert.Equal(DeviceStatus.Off, cctv.DeviceStatus);
-        }
-
-        [Fact]
-        public void CCTVTest_Created_Guid()
-        {
-            Assert.NotNull(cctv);
-            Assert.NotNull(cctv.CameraLamp);
-            Assert.Equal(id, cctv.ID);
-            Assert.Equal(new Zoom(100), cctv.Zoom);
-            Assert.Equal(new Degrees(0), cctv.Degrees);
-            Assert.Equal(DeviceStatus.Off, cctv.DeviceStatus);
-        }
-
-        [Fact]
-        public void CCTVTest_Created_Empty()
-        {
-            Assert.NotNull(cctv);
-            Assert.NotNull(cctv.CameraLamp);
-            Assert.Equal(id, cctv.ID);
-            Assert.Equal(new Zoom(100), cctv.Zoom);
-            Assert.Equal(new Degrees(0), cctv.Degrees);
+            Assert.Equal(Zoom.NewHalfZoom() , cctv.Zoom);
+            Assert.Equal(Degrees.NewZeroDegrees(), cctv.Degrees);
             Assert.Equal(DeviceStatus.Off, cctv.DeviceStatus);
         }
 
@@ -80,20 +58,17 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.CCTVDevices
             cctv.IncreaseDegreesBy();
             Assert.Equal(new Degrees(110), cctv.Degrees);
         }
-
         [Fact]
         public void CCTVTest_IncreaseDegreesBy_IfMax()
         {
             cctv.SwitchOn();
-            for(int i = 0; i < 36; i++)
-            {
-                cctv.IncreaseDegreesBy();
-            }
+            cctv.SetCCTVDegreesTo(new Degrees(350));
+			cctv.IncreaseDegreesBy();
             cctv.IncreaseDegreesBy();
-            Assert.Equal(new Degrees(360), cctv.Degrees);
-        }
+			Assert.Equal(new Degrees(10), cctv.Degrees);
+		}
 
-        [Fact]
+		[Fact]
         public void CCTVTest_DecreaseDegreesBy_ErrorBecouseOff()
         {
             Assert.Throws<ArgumentException>(() => cctv.DecreaseDegreesBy());
@@ -114,7 +89,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.CCTVDevices
         {
             cctv.SwitchOn();
             cctv.DecreaseDegreesBy();
-            Assert.Equal(new Degrees(0), cctv.Degrees);
+            Assert.Equal(new Degrees(350), cctv.Degrees);
         }
 
         [Fact]
@@ -135,12 +110,10 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.CCTVDevices
         public void CCTVTest_DecreaseZoomBy_IfMin()  
         {
             cctv.SwitchOn();
-            for (int i = 0; i < 10; i++)
-            {
-                cctv.DecreaseZoomBy();
-            }
+            cctv.SetCCTVZoomTo(new Zoom(15));
             cctv.DecreaseZoomBy();
-            Assert.Equal(new Zoom(0), cctv.Zoom);
+            cctv.DecreaseZoomBy();
+			Assert.Equal(new Zoom(0), cctv.Zoom);
         }
 
         [Fact]
@@ -150,7 +123,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.CCTVDevices
         }
 
         [Fact]
-        public void CCTVTest_IncreaseZoomBy_ItDecrease()
+        public void CCTVTest_IncreaseZoomBy_ItIncrease()
         {
             cctv.SwitchOn();
             cctv.IncreaseZoomBy();
@@ -161,13 +134,10 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.CCTVDevices
         public void CCTVTest_IncreaseZoomBy_IfMin()
         {
             cctv.SwitchOn();
-            for (int i = 0; i < 10; i++)
-            {
-                cctv.IncreaseZoomBy();
-            }
+            cctv.SetCCTVZoomTo(new Zoom(195));
             cctv.IncreaseZoomBy();
             Assert.Equal(new Zoom(200), cctv.Zoom);
-        }
+		}
 
         [Fact]
         public void CCTVTest_SetCCTVDegreesTo_ErrorBecouseOff()

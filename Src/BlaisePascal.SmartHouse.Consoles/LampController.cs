@@ -26,7 +26,9 @@ namespace BlaisePascal.SmartHouse.Consoles
                 string name = Console.ReadLine();
                 new AddLampCommand(repo).Execute(name);
                 Console.WriteLine("Lamp added to your lamp repo");
-            }
+                if(string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name))
+                    throw new ArgumentException();
+			}
             catch (ArgumentException)
             {
                 Console.WriteLine("ERROR: Name of lamp does not follow device name's rules");
@@ -58,17 +60,27 @@ namespace BlaisePascal.SmartHouse.Consoles
 		}
         public void SetIntensity()
         {
-			if (IsError())
-				return;
-			Console.Write("New intensity: ");
-            string newIntensity = Console.ReadLine();
-			new SetIntensityCommand(repo).Execute(ID, uint.Parse(newIntensity));
-			if (uint.Parse(newIntensity) > 100)
-				Console.WriteLine("Intensity set to max");
-			if (uint.Parse(newIntensity) < 0)
-				Console.WriteLine("Intensity set to min");
-            else
-                Console.WriteLine("Intensity of lamp changed");
+            try
+            {
+				if (IsError())
+					return;
+				Console.Write("New intensity: ");
+				string newIntensity = Console.ReadLine();
+				new SetIntensityCommand(repo).Execute(ID, uint.Parse(newIntensity));
+				if (uint.Parse(newIntensity) > 100)
+					Console.WriteLine("Intensity set to max");
+				if (uint.Parse(newIntensity) < 0)
+					Console.WriteLine("Intensity set to min");
+				else
+					Console.WriteLine("Intensity of lamp changed");
+			} catch (InvalidOperationException)
+            {
+                Console.WriteLine("ERROR: Cannot change intensity. Switch on lamp first");
+            } catch
+            {
+                Console.WriteLine("ERROR: Invalid intensity");
+			}
+			
         }
 
         public void SwitchOn()
