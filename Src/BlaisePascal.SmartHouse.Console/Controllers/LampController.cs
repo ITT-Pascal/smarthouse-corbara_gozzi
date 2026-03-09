@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Command;
+using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Mappers;
 using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Query;
 using BlaisePascal.SmartHouse.Domain.Devices.Abstractions;
 using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices;
@@ -24,34 +25,34 @@ public class LampController
         {
             string name = Console.ReadLine();
             new AddLampCommand(repo).Execute(name);
-            Console.WriteLine("Lamp added to your lamp repo");
+            Console.WriteLine($"SUCCESS: Lamp {name} added to your lamps repo");
             if (string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException();
         }
         catch (ArgumentException)
         {
-            Console.WriteLine("ERROR: Name of lamp does not follow device name's rules");
+            Console.WriteLine("ERROR: Name of lamp does not follow name's rules");
         }
         catch (Exception)
         {
-            Console.WriteLine("UNEXPECTED ERROR: restart console");
+            Console.WriteLine("UNEXPECTED ERROR: Restart console");
         }
     }
 
     public void RemoveLamp()
     {
-        if (IsError())
+        if (CheckIndexes())
             return;
         new DeleteLampCommand(repo).Execute(ID);
-        Console.WriteLine("Lamp removed from your lamp repo");
+        Console.WriteLine("SUCCESS: Lamp removed from your lamp repo");
     }
-    public bool IsError()
+    public bool CheckIndexes()
     {
         Console.Write("Lamp number: ");
         string n = Console.ReadLine();
         if (!int.TryParse(n, out int number) || number < 1 || number > lamps.Count)
         {
-            Console.WriteLine("ERROR: idx out of range");
+            Console.WriteLine("ERROR: Index out of range");
             return true;
         }
         ID = lamps[number - 1].ID;
@@ -61,17 +62,17 @@ public class LampController
     {
         try
         {
-            if (IsError())
+            if (CheckIndexes())
                 return;
             Console.Write("New intensity: ");
             string newIntensity = Console.ReadLine();
             new SetIntensityCommand(repo).Execute(ID, uint.Parse(newIntensity));
             if (uint.Parse(newIntensity) > 100)
-                Console.WriteLine("Intensity set to max");
+                Console.WriteLine("SUCCESS: Intensity set to max because you set an overflow value");
             if (uint.Parse(newIntensity) < 0)
-                Console.WriteLine("Intensity set to min");
+                Console.WriteLine("SUCCESS: Intensity set to min because you set an underflow value");
             else
-                Console.WriteLine("Intensity of lamp changed");
+                Console.WriteLine("SUCCESS: Intensity of lamp set to yuor value");
         }
         catch (InvalidOperationException)
         {
@@ -86,7 +87,7 @@ public class LampController
 
     public void SwitchOn()
     {
-        if (IsError())
+        if (CheckIndexes())
             return;
         new SwitchOnLampCommand(repo).Execute(ID);
         Console.WriteLine("Lamp switched on");
@@ -94,7 +95,7 @@ public class LampController
 
     public void SwitchOff()
     {
-        if (IsError())
+        if (CheckIndexes())
             return;
         new SwitchOffLampCommand(repo).Execute(ID);
         Console.WriteLine("Lamp switched on");

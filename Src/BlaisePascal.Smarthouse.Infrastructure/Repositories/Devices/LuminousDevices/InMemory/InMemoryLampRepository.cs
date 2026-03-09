@@ -1,4 +1,5 @@
-﻿using BlaisePascal.SmartHouse.Domain.Devices.Abstractions;
+﻿using BlaisePascal.SmartHouse.Application.Devices.LuminousDevices.Dto;
+using BlaisePascal.SmartHouse.Domain.Devices.Abstractions;
 using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices;
 using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices.Repositories;
 

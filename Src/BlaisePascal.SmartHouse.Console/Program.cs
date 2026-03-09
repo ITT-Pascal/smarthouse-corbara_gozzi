@@ -15,7 +15,9 @@ class Program()
 
             LampController.ShowLamps();
 
-            AddSeparator();
+            Console.WriteLine();
+            Console.WriteLine("----------------------------------------");
+            Console.WriteLine();
 
             Console.WriteLine("Choose an option:");
 
@@ -48,7 +50,7 @@ class Program()
                     exit = true;
                     break;
                 default:
-                    Console.WriteLine("Errore: Opzione non disponibile");
+                    Console.WriteLine("Error: Option not avariable or incorrect");
                     break;
             }
             Pause();
@@ -66,12 +68,6 @@ class Program()
             if (keyInfo.Key == ConsoleKey.Enter)
                 continuePause = false;
         }
-    }
-    static void AddSeparator()
-    {
-        Console.WriteLine();
-        Console.WriteLine("-----------------------------------");
-        Console.WriteLine();
     }
 }
 
