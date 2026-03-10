@@ -5,14 +5,14 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
 {
     public class EcoLampTests
     {
-        EcoLamp ecoLamp = new EcoLamp(Guid.NewGuid(), new DeviceName("Test EcoLamp"));
+        EcoLamp ecoLamp = new EcoLamp(Guid.NewGuid(), new DeviceName("TestEcoLamp"));
 
         [Fact]
         public void EcoLampTest_Created_NameAndGuid()
         {
             Assert.NotNull(ecoLamp);
             Assert.Equal(DeviceStatus.Off, ecoLamp.DeviceStatus);
-            Assert.Equal(new DeviceName("Test EcoLamp"), ecoLamp.Name);
+            Assert.Equal("TestEcoLamp", ecoLamp.Name.Name);
         }
 
         [Fact]

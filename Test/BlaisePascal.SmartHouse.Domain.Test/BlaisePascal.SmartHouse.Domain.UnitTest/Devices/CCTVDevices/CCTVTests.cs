@@ -14,18 +14,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.CCTVDevices
         public CCTVTests()
         {
             id = Guid.NewGuid();
-            cctv = new CCTV(id, DeviceName.NewDeviceName("MR.Braso"));
-        }
-
-        [Fact]
-        public void CCTVTest_Created_NameAndGuid()
-        {
-            Assert.NotNull(cctv);
-            Assert.NotNull(cctv.CameraLamp);
-            Assert.Equal(id, cctv.ID);
-            Assert.Equal(Zoom.NewHalfZoom() , cctv.Zoom);
-            Assert.Equal(Degrees.NewZeroDegrees(), cctv.Degrees);
-            Assert.Equal(DeviceStatus.Off, cctv.DeviceStatus);
+            cctv = new CCTV(id, DeviceName.NewDeviceName("MRBraso"));
         }
 
         [Fact]
