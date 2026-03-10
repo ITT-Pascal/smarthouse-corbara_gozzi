@@ -139,8 +139,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
         {
             Lamp lamp1 = new Lamp();
             Lamp lamp2 = new Lamp();
-            TestLampsRow.AddLampIn(0, lamp1);
-            Assert.Throws<ArgumentException>(() => TestLampsRow.AddLampIn(0, lamp2));
+            Assert.Throws<ArgumentOutOfRangeException>(() => TestLampsRow.AddLampIn(0, lamp2));
         }
 
         [Fact]
@@ -337,8 +336,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
             lamp1.SwitchOn();
             lamp2.SwitchOn();
             TestLampsRow.DecreaseBy();
-            Assert.Equal(new Intensity(40), lamp1.Intensity);
-            Assert.Equal(new Intensity(40), lamp2.Intensity);
+            Assert.Equal(Intensity.NewIntensity(40), lamp1.Intensity);
+            Assert.Equal(Intensity.NewIntensity(40), lamp2.Intensity);
         }
 
         [Fact]
