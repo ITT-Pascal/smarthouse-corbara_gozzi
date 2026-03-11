@@ -1,4 +1,6 @@
-﻿namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices.ValueObjects
+﻿using System.Runtime.CompilerServices;
+
+namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices.ValueObjects
 {
     public class Password
     {
@@ -16,7 +18,7 @@
                 throw new ArgumentException("Password: Password can't start with points[.]", nameof(str));
             if (!str.Any(char.IsUpper) || !str.Any(char.IsLower) || !str.Any(char.IsLetterOrDigit))
                 throw new ArgumentException("Password: Password must have letters[minusc and maiusc] and at least one special char", nameof(str));
-            if (str.Length <= passwordLenght)
+            if (str.Length < passwordLenght)
                 throw new ArgumentException("Password: Password must have a lenght at least of 8", nameof(str));
             Word = str;
         }
@@ -24,6 +26,14 @@
         {
             return new Password(str);
         }
+		public static bool operator ==(Password pass1, Password pass2)
+		{
+			return pass1.Word == pass2.Word;
+		}
+		public static bool operator !=(Password pass1, Password pass2)
+		{
+			return pass1.Word != pass2.Word;
+		}
 
-    }
+	}
 }

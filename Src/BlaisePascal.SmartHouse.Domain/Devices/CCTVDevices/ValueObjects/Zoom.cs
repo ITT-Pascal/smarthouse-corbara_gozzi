@@ -32,13 +32,13 @@
         }
         public static Zoom operator +(Zoom zoom, uint jump)
         {
-            if (zoom.Value + jump > maxZoom)
+            if (zoom.Value > maxZoom - jump)
                 return NewMaxZoom();
             return NewZoom(zoom.Value + jump);
         }
         public static Zoom operator -(Zoom zoom, uint jump)
         {
-            if (zoom.Value + jump < minZoom)
+            if (zoom.Value < minZoom + jump)
                 return NewMinZoom();
             return NewZoom(zoom.Value - jump);
         }

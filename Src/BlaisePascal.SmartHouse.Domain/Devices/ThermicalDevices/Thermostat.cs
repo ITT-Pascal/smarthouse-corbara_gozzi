@@ -6,7 +6,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
     public sealed class Thermostat : AbstractDevice, ISwitchable
     {
         private const int defaultTarget = 20;
-        private const int tempAdder = 2;
+        private const int tempAdder = 1;
 
         //     -------ATTRIBUTES AND PROPERTY-------
         public Temperature CurrentTemperature { get; private set; }

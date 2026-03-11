@@ -97,30 +97,33 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
         [Fact]
         public void TwoLampsDevice_SetIntensityTo_SetIntensityToBothLamps()
         {
-            TwoLampsDevice twoLampsDevice = new TwoLampsDevice(lamp1, lamp2);
+            TwoLampsDevice twoLampsDevice = new(lamp1, lamp2);
+            twoLampsDevice.SwitchOn();
             twoLampsDevice.SetIntensityTo(Intensity.NewHalfIntensity());
-            Assert.Equal(Intensity.NewHalfIntensity(), twoLampsDevice.FirstLamp.Intensity);
-            Assert.Equal(Intensity.NewHalfIntensity(), twoLampsDevice.SecondLamp.Intensity);
+            Assert.Equal(Intensity.NewHalfIntensity().Percentage, twoLampsDevice.FirstLamp.Intensity.Percentage);
+            Assert.Equal(Intensity.NewHalfIntensity().Percentage, twoLampsDevice.SecondLamp.Intensity.Percentage);
         }
 
         [Fact]
         public void TwoLampsDevice_IncreaseBy_IncreaseIntensityByOneLevel()
         {
-            TwoLampsDevice twoLampsDevice = new TwoLampsDevice(lamp1, lamp2);
-            twoLampsDevice.SetIntensityTo(Intensity.NewHalfIntensity());
+            TwoLampsDevice twoLampsDevice = new(lamp1, lamp2);
+			twoLampsDevice.SwitchOn();
+			twoLampsDevice.SetIntensityTo(Intensity.NewHalfIntensity());
             twoLampsDevice.IncreaseBy();
-            Assert.Equal(Intensity.NewIntensity(60), twoLampsDevice.FirstLamp.Intensity);
-            Assert.Equal(Intensity.NewIntensity(60), twoLampsDevice.SecondLamp.Intensity);
+            Assert.Equal(Intensity.NewIntensity(60).Percentage, twoLampsDevice.FirstLamp.Intensity.Percentage);
+            Assert.Equal(Intensity.NewIntensity(60).Percentage, twoLampsDevice.SecondLamp.Intensity.Percentage);
         }
 
         [Fact]
         public void TwoLampsDevice_DecreaseBy_DecreaseIntensityByOneLevel()
         {
-            TwoLampsDevice twoLampsDevice = new TwoLampsDevice(lamp1, lamp2);
-            twoLampsDevice.SetIntensityTo(Intensity.NewHalfIntensity());
+            TwoLampsDevice twoLampsDevice = new(lamp1, lamp2);
+			twoLampsDevice.SwitchOn();
+			twoLampsDevice.SetIntensityTo(Intensity.NewHalfIntensity());
             twoLampsDevice.DecreaseBy();
-            Assert.Equal(Intensity.NewIntensity(40), twoLampsDevice.FirstLamp.Intensity);
-            Assert.Equal(Intensity.NewIntensity(40), twoLampsDevice.SecondLamp.Intensity);
+            Assert.Equal(Intensity.NewIntensity(40).Percentage, twoLampsDevice.FirstLamp.Intensity.Percentage);
+            Assert.Equal(Intensity.NewIntensity(40).Percentage, twoLampsDevice.SecondLamp.Intensity.Percentage);
         }
     }
 }

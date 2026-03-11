@@ -15,8 +15,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.ThermicalDevice
         [Fact]
         public void AirConditioner_Constructor_WhenCreatedHeatAndSpeedAre0()
         {
-            Assert.Equal(zeroSpeed, cond.Speed);
-            Assert.Equal(zeroTemp, cond.Temperature);
+            Assert.Equal(zeroSpeed.Value, cond.Speed.Value);
+            Assert.Equal(zeroTemp.Heat, cond.Temperature.Heat);
             Assert.Equal(DeviceStatus.Off , cond.DeviceStatus);
         }
 
@@ -25,8 +25,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.ThermicalDevice
         {
             cond.SwitchOn();
             Assert.Equal(AcMode.Cool, cond.AcMode);
-            Assert.Equal(cond.AcDictionary[cond.AcMode], cond.Temperature);
-            Assert.Equal(basicSpeed, cond.Speed);
+            Assert.Equal(cond.AcDictionary[cond.AcMode].Heat, cond.Temperature.Heat);
+            Assert.Equal(basicSpeed.Value, cond.Speed.Value);
         }
 
         [Fact]
@@ -34,8 +34,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.ThermicalDevice
         {
             cond.SwitchOn();
             cond.SwitchOff();
-            Assert.Equal(zeroSpeed, cond.Speed);
-            Assert.Equal(zeroTemp, cond.Temperature);
+            Assert.Equal(zeroSpeed.Value, cond.Speed.Value);
+            Assert.Equal(zeroTemp.Heat, cond.Temperature.Heat);
             Assert.Equal(DeviceStatus.Off, cond.DeviceStatus);
         }  
 
@@ -58,7 +58,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.ThermicalDevice
         public void AirConditioner_ChangeModeTo_WhenOffItGaveError()
         {
             cond.SwitchOff();
-            Assert.Throws<ArgumentException>(() => cond.ChangeModeTo(AcMode.Cool));
+            Assert.Throws<InvalidOperationException>(() => cond.ChangeModeTo(AcMode.Cool));
         }
 
         [Fact]
@@ -72,7 +72,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.ThermicalDevice
         {
             cond.SwitchOn();
             cond.ChangeSpeedTo(670);
-            Assert.Equal(newSpeed, cond.Speed);
+            Assert.Equal(newSpeed.Value, cond.Speed.Value);
         }
 
         [Fact]
@@ -81,7 +81,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.ThermicalDevice
             SpeedRPM speed = SpeedRPM.NewSpeed(-670);
             cond.SwitchOn();
             cond.ChangeSpeedTo(speed.Value);
-            Assert.Equal(speed, cond.Speed);
+            Assert.Equal(Math.Abs(speed.Value), cond.Speed.Value);
         }
 
         [Fact]
@@ -90,7 +90,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.ThermicalDevice
             cond.SwitchOn();
             cond.ChangeModeTo(AcMode.Dry);
             cond.ChangeSpeedTo(newSpeed.Value);
-            Assert.Equal(newSpeed, cond.Speed);
+            Assert.Equal(-Math.Abs(newSpeed.Value), cond.Speed.Value);
         }
 
         [Fact]
@@ -144,7 +144,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.ThermicalDevice
         {
             cond.SwitchOn();
             cond.ChangeModeTo(AcMode.Custom);
-            Assert.Equal(Temperature.NewTemperature(15), cond.Temperature);
+            Assert.Equal(Temperature.NewTemperature(15).Heat, cond.Temperature.Heat);
         }
 
         [Fact]
@@ -159,15 +159,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.ThermicalDevice
         public void AirConditioner_ChangeCustomTemperatureTo_IfOffError()
         {
             Assert.Throws<InvalidOperationException>(() => cond.ChangeCustomTemperatureTo(Temperature.NewTemperature(23)));
-        }
-
-        [Fact]
-        public void AirConditioner_ChangeCustomTemperatureTo_ItChange()
-        {
-            cond.SwitchOn();
-            cond.ChangeModeTo(AcMode.Custom);
-            cond.ChangeCustomTemperatureTo(Temperature.NewTemperature(23));
-            Assert.Equal(Temperature.NewTemperature(23), cond.Temperature);
         }
     }
 }

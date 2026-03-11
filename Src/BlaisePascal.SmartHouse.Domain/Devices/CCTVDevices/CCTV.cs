@@ -49,7 +49,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
         {
             base.SwitchOn();
             CameraLamp.SwitchOn();
-        }
+		}
         public override void SwitchOff()
         {
             base.SwitchOff();

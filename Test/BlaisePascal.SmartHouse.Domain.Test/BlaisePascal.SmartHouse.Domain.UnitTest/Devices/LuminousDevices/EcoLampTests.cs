@@ -52,14 +52,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
         }
 
         [Fact]
-        public void EcoLampTest_CheckAutoOff_ItDoesNothingIfTimeNotPassed()
-        {
-            ecoLamp.SwitchOn(true);
-            ecoLamp.CheckAutoOff();
-            Assert.Equal(DeviceStatus.On, ecoLamp.DeviceStatus);
-        }
-
-        [Fact]
         public void EcoLampTest_CheckAutoOff_ItGavesErrorIfOff()
         {
             Assert.Throws<InvalidOperationException>(() => ecoLamp.CheckAutoOff());

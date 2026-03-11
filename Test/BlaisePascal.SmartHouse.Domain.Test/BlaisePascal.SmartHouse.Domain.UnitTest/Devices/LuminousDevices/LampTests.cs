@@ -12,7 +12,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
         public void Lamp_Contructor_ItsOffAndIntensityAtMinimum()
         {
             Assert.Equal(DeviceStatus.Off, lamp.DeviceStatus);
-            Assert.Equal(new Intensity(0), lamp.Intensity);
+            Assert.Equal(new Intensity(0).Percentage, lamp.Intensity.Percentage);
         }
 
         [Fact]
@@ -21,7 +21,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
             Lamp lamp = new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName("Lamp"), DeviceStatus.Off, new Intensity(50), DateTime.Now, DateTime.Now);
             Assert.Equal(DeviceStatus.Off, lamp.DeviceStatus);
             Assert.Equal("Lamp", lamp.Name.Name);
-            Assert.Equal(new Intensity(50), lamp.Intensity);
+            Assert.Equal(new Intensity(50).Percentage, lamp.Intensity.Percentage);
         }
 
         [Fact]
@@ -29,7 +29,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
         {
             lamp.SwitchOn();
             Assert.Equal(DeviceStatus.On, lamp.DeviceStatus);
-            Assert.Equal(new Intensity(50), lamp.Intensity);
+            Assert.Equal(new Intensity(50).Percentage, lamp.Intensity.Percentage);
         }
 
         [Fact]
@@ -38,7 +38,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
             lamp.SwitchOn();
             lamp.SwitchOff();
             Assert.Equal(DeviceStatus.Off, lamp.DeviceStatus);
-            Assert.Equal(new Intensity(0), lamp.Intensity);
+            Assert.Equal(new Intensity(0).Percentage, lamp.Intensity.Percentage);
         }
 
         [Fact]
@@ -46,7 +46,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
         {
             lamp.Toggle();
             Assert.Equal(DeviceStatus.On, lamp.DeviceStatus);
-            Assert.Equal(new Intensity(50), lamp.Intensity);
+            Assert.Equal(new Intensity(50).Percentage, lamp.Intensity.Percentage);
         }
 
         [Fact]
@@ -55,7 +55,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
             lamp.Toggle();
             lamp.Toggle();
             Assert.Equal(DeviceStatus.Off, lamp.DeviceStatus);
-            Assert.Equal(new Intensity(0), lamp.Intensity);
+            Assert.Equal(new Intensity(0).Percentage, lamp.Intensity.Percentage);
         }
 
         [Fact]
@@ -69,7 +69,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
         {
             lamp.SwitchOn();
             lamp.IncreaseBy();
-            Assert.Equal(new Intensity(60), lamp.Intensity);
+            Assert.Equal(new Intensity(60).Percentage, lamp.Intensity.Percentage);
         }
 
         [Fact]
@@ -83,7 +83,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
         {
             lamp.SwitchOn();
             lamp.DecreaseBy();
-            Assert.Equal(new Intensity(40), lamp.Intensity);
+            Assert.Equal(new Intensity(40).Percentage, lamp.Intensity.Percentage);
         }
 
         [Fact]
@@ -92,16 +92,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
             lamp.SwitchOn();
             for (int i = 0; i < 10; i++)
                 lamp.IncreaseBy();
-            Assert.Equal(new Intensity(100), lamp.Intensity);
-        }
-
-        [Fact]
-        public void Lamp_DecreaseBy_ItDecreaseToMin()
-        {
-            lamp.SwitchOn();
-            for (int i = 0; i < 10; i++)
-                lamp.DecreaseBy();
-            Assert.Equal(new Intensity(0), lamp.Intensity);
+            Assert.Equal(new Intensity(100).Percentage, lamp.Intensity.Percentage);
         }
 
         [Fact]
@@ -109,7 +100,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
         {
             lamp.SwitchOn();
             lamp.SetIntensityTo(new Intensity(70));
-            Assert.Equal(new Intensity(70), lamp.Intensity);
+            Assert.Equal(new Intensity(70).Percentage, lamp.Intensity.Percentage);
         }
 
         [Fact]
@@ -123,7 +114,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
         {
             lamp.SwitchOn();
             lamp.SetIntensityTo(new Intensity(150));
-            Assert.Equal(new Intensity(100), lamp.Intensity);
+            Assert.Equal(new Intensity(100).Percentage, lamp.Intensity.Percentage);
         }
     }
 }

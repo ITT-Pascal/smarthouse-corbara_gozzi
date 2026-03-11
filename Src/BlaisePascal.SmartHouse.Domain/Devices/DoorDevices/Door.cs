@@ -50,7 +50,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.DoorDevices
 
         public void IsCodeCorrect(DoorCode Try)
         {
-            if (Try != Code)
+            if (Try.Digits != Code.Digits)
                 throw new ArgumentException("Code: Incorrect try", nameof(Try));
         }
 

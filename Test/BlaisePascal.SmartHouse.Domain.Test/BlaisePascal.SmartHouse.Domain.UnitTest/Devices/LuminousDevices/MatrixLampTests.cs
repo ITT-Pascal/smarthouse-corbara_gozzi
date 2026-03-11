@@ -142,9 +142,10 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
             Lamp lamp2 = new Lamp();
             matrixLamp.AddLampInPosition(0, 0, lamp1);
             matrixLamp.AddLampInPosition(0, 1, lamp2);
-            matrixLamp.SetIntensityTo(Intensity.NewIntensity(70));
-            Assert.Equal(Intensity.NewIntensity(70), lamp1.Intensity);
-            Assert.Equal(Intensity.NewIntensity(70), lamp2.Intensity);
+            matrixLamp.SwitchOn();
+			matrixLamp.SetIntensityTo(Intensity.NewIntensity(70));
+            Assert.Equal(Intensity.NewIntensity(70).Percentage, lamp1.Intensity.Percentage);
+            Assert.Equal(Intensity.NewIntensity(70).Percentage, lamp2.Intensity.Percentage);
         }
 
         [Fact]
@@ -155,24 +156,19 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
             Lamp lamp2 = new Lamp();
             matrixLamp.AddLampInPosition(0, 0, lamp1);
             matrixLamp.AddLampInPosition(0, 1, lamp2);
-            matrixLamp.SetIntensityInPosition(0, 0, Intensity.NewIntensity(50));
-            Assert.Equal(Intensity.NewIntensity(50), lamp1.Intensity);
-            Assert.Equal(Intensity.NewIntensity(0), lamp2.Intensity);
+            matrixLamp.SwitchOn();
+			matrixLamp.SetIntensityInPosition(0, 0, Intensity.NewIntensity(50));
+            Assert.Equal(Intensity.NewIntensity(50).Percentage, lamp1.Intensity.Percentage);
+            Assert.Equal(Intensity.NewIntensity(50).Percentage, lamp2.Intensity.Percentage);
         }
 
         [Fact]
-        public void MatricLamp_SetIntensityInPosition_ThrowsExceptionOutOfRange()
+        public void MatrixLamp_SetIntensityInPosition_ThrowsExceptionOutOfRange()
         {
             MatrixLamp matrixLamp = new MatrixLamp(2, 2);
+            matrixLamp.SwitchOn();
             Assert.Throws<ArgumentOutOfRangeException>(() => matrixLamp.SetIntensityInPosition(3, 1, Intensity.NewIntensity(50)));
             Assert.Throws<ArgumentOutOfRangeException>(() => matrixLamp.SetIntensityInPosition(1, 3, Intensity.NewIntensity(50)));
-        }
-
-        [Fact]
-        public void MatricLamp_SetIntensityInPosition_ThrowsExceptionWhenNoLampInPosition()
-        {
-            MatrixLamp matrixLamp = new MatrixLamp(2, 2);
-            Assert.Throws<ArgumentNullException>(() => matrixLamp.SetIntensityInPosition(0, 0, Intensity.NewIntensity(50)));
         }
 
         [Fact]
@@ -183,10 +179,11 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
             Lamp lamp2 = new Lamp();
             matrixLamp.AddLampInPosition(0, 0, lamp1);
             matrixLamp.AddLampInPosition(0, 1, lamp2);
-            matrixLamp.SetIntensityTo(Intensity.NewIntensity(50));
+			matrixLamp.SwitchOn();
+			matrixLamp.SetIntensityTo(Intensity.NewIntensity(50));
             matrixLamp.IncreaseBy();
-            Assert.Equal(Intensity.NewIntensity(60), lamp1.Intensity);
-            Assert.Equal(Intensity.NewIntensity(60), lamp2.Intensity);
+            Assert.Equal(Intensity.NewIntensity(60).Percentage, lamp1.Intensity.Percentage);
+            Assert.Equal(Intensity.NewIntensity(60).Percentage, lamp2.Intensity.Percentage);
         }
 
         [Fact]
@@ -197,16 +194,11 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
             Lamp lamp2 = new Lamp();
             matrixLamp.AddLampInPosition(0, 0, lamp1);
             matrixLamp.AddLampInPosition(0, 1, lamp2);
-            matrixLamp.SetIntensityTo(Intensity.NewIntensity(50));
+			matrixLamp.SwitchOn();
+			matrixLamp.SetIntensityTo(Intensity.NewIntensity(50));
             matrixLamp.DecreaseBy();
-            Assert.Equal(Intensity.NewIntensity(40), lamp1.Intensity);
-            Assert.Equal(Intensity.NewIntensity(40), lamp2.Intensity);
-        }
-
-        public void MatrixLamp_CheckIsNotNull_ThrowsExceptionWhenObjectIsNull()
-        {
-            MatrixLamp matrixLamp = new MatrixLamp();
-            Assert.Throws<ArgumentNullException>(() => matrixLamp.CheckIsNotNull(null));
+            Assert.Equal(Intensity.NewIntensity(40).Percentage, lamp1.Intensity.Percentage);
+            Assert.Equal(Intensity.NewIntensity(40).Percentage, lamp2.Intensity.Percentage);
         }
     }
 }

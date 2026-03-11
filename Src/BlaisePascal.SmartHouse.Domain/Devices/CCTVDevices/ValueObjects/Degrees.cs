@@ -9,8 +9,11 @@
         public Degrees(uint angle)
         {
             if (angle > maxDegrees)
-                throw new ArgumentOutOfRangeException(nameof(angle), "Degrees: Invalid Degrees value[out of 0..360]");
-            Angle = angle;
+                Angle = angle - maxDegrees;
+			else if (angle < minDegrees)
+                Angle = maxDegrees - angle;
+			else
+				Angle = angle;
         }
         public static Degrees NewDegrees(uint angle)
         {
@@ -32,15 +35,16 @@
         //OVERRIDE DEGLI OPERATORI + E - PER AVER UINT SENZA PROBLEMI DI OVER O UNDERFLOW
         public static Degrees operator +(Degrees degree, uint jump)
         {
-            if (degree.Angle + jump > maxDegrees)
+            if (degree.Angle > maxDegrees + jump)
                 return NewDegrees(degree.Angle + jump - maxDegrees);
             return NewDegrees(degree.Angle + jump);
         }
         public static Degrees operator -(Degrees degree, uint jump)
         {
-            if (degree.Angle - jump < minDegrees)
+            if (degree.Angle < minDegrees + jump)
                 return NewDegrees(maxDegrees + degree.Angle - jump);
-            return NewDegrees(degree.Angle - jump);
-        }
+            else 
+                return NewDegrees(degree.Angle - jump);
+		}
     }
 }

@@ -15,7 +15,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
 		public CCTVSet() 
         {
             SetOfCCTV = [];
-            AdminPassword = Password.NewPassword("Ale6767!");
+            AdminPassword = Password.NewPassword("Ale6767?");
         }
         public CCTVSet(Password adminPassword)
         {

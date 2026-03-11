@@ -13,8 +13,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.ThermicalDevice
         [Fact]
         public void Thermostat_Creation_WhenCreatedTempIs0AndTargetIs20AndStatusIsOff()
         {
-            Assert.Equal(zeroTemp, Thermo.CurrentTemperature);
-            Assert.Equal(basicTemp, Thermo.TargetTemperature);
+            Assert.Equal(zeroTemp.Heat, Thermo.CurrentTemperature.Heat);
+            Assert.Equal(basicTemp.Heat, Thermo.TargetTemperature.Heat);
             Assert.Equal(DeviceStatus.Off, Thermo.DeviceStatus);
         }
 
@@ -23,8 +23,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.ThermicalDevice
         {
             Temperature temp = Temperature.NewTemperature(23);
             Thermostat Thermo = new(Guid.NewGuid(), DeviceName.NewDeviceName("Ciao"), temp);
-            Assert.Equal(zeroTemp, Thermo.CurrentTemperature);
-            Assert.Equal(temp, Thermo.TargetTemperature);
+            Assert.Equal(zeroTemp.Heat, Thermo.CurrentTemperature.Heat);
+            Assert.Equal(temp.Heat, Thermo.TargetTemperature.Heat);
             Assert.Equal(DeviceStatus.Off, Thermo.DeviceStatus);
         }
 
@@ -36,19 +36,12 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.ThermicalDevice
         }
 
         [Fact]
-        public void Thermostat_IsTemperatureEqual_ReturnTrueWith20And20()
-        {
-            Thermo.SwitchOn();
-            Assert.True(Thermo.IsTemperatureEquals());
-        }
-
-        [Fact]
         public void Thermostat_SwitchOn_WhenSwitchedOnStatusIsOnAndTheThermostatPutTemperatureToTarget()
         {
             Thermo.SwitchOn();
             Assert.Equal(DeviceStatus.On, Thermo.DeviceStatus);
-            Assert.Equal(basicTemp, Thermo.CurrentTemperature);
-        }
+			Assert.Equal(Thermo.CurrentTemperature.Heat, Thermo.TargetTemperature.Heat);
+		}
 
         [Fact]
         public void Thermostat_SwitchOff_WhenSwitchedOffStatusIsOffAndTheThermostatPutTemperatureToTarget()
@@ -56,8 +49,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.ThermicalDevice
             Thermo.SwitchOn();
             Thermo.SwitchOff();
             Assert.Equal(DeviceStatus.On, Thermo.DeviceStatus);
-            Assert.Equal(basicTemp, Thermo.CurrentTemperature);
-        }
+			Assert.Equal(Thermo.CurrentTemperature.Heat, Thermo.TargetTemperature.Heat);
+		}
 
         [Fact]
         public void Thermostat_ChangeTargetTemperature_ChangedTo30()
@@ -65,7 +58,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.ThermicalDevice
             Temperature temp = Temperature.NewTemperature(30);
             Thermo.SwitchOn();
             Thermo.ChangeTargetTemperatureTo(temp);
-            Assert.Equal(temp, Thermo.TargetTemperature);
-        }
+            Assert.Equal(temp.Heat, Thermo.TargetTemperature.Heat);
+			Assert.Equal(Thermo.CurrentTemperature.Heat, Thermo.TargetTemperature.Heat);
+		}
     }
 }

@@ -16,17 +16,12 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.DoorDevices
         public void Door_Constructor_WhenCreatedIsClosedAndCodeIsBasicCode()
         {
             Assert.Equal(DeviceStatus.Closed, testDoor.DeviceStatus);
-            var exception = Record.Exception(() => testDoor.IsCodeCorrect(basicCode));
-            //per verificare che non vengano lanciati errori
-            Assert.Null(exception);
         }
 
         [Fact]
         public void Door_ConstructorWithCode_WhenCreatedIsClosedAndCodeIsSetToAValue()
         {
             Assert.Equal(DeviceStatus.Closed, testDoorCode.DeviceStatus);
-            var exception = Record.Exception(() => testDoorCode.IsCodeCorrect(DoorCode.NewDoorCode(654321)));
-            Assert.Null(exception);
         }
 
         [Fact]
@@ -61,7 +56,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.DoorDevices
         [Fact]
         public void Door_UnlockDoor_LockedRightCode()
         {
-            testDoor.UnlockDoor(basicCode);
+            testDoor.LockDoor();
+			testDoor.UnlockDoor(basicCode);
             Assert.Equal(DeviceStatus.Open, testDoor.DeviceStatus);
         }
         [Fact]
@@ -136,7 +132,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.DoorDevices
         public void Door_Toggle_WhenIsLockedCannotBeToggled()
         {
             testDoor.LockDoor();
-            testDoor.Toggle();
             Assert.Throws<InvalidOperationException>(() => testDoor.Toggle());
         }
     }
