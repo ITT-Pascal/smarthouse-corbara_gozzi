@@ -25,17 +25,23 @@ public class LampController
         {
             string name = Console.ReadLine();
             new AddLampCommand(repo).Execute(name);
-            Console.WriteLine($"SUCCESS: Lamp {name} added to your lamps repo");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"[SUCCESS: Lamp {name} added to your lamps repo]");
+            Console.ResetColor();
             if (string.IsNullOrEmpty(name) || string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException();
         }
         catch (ArgumentException)
         {
-            Console.WriteLine("ERROR: Name of lamp does not follow name's rules");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("[ERROR: Name of lamp does not follow name's rules]");
+            Console.ResetColor();
         }
         catch (Exception)
         {
-            Console.WriteLine("UNEXPECTED ERROR: Restart console");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("[UNEXPECTED ERROR: Restart console]");
+            Console.ResetColor();
         }
     }
 
@@ -44,7 +50,9 @@ public class LampController
         if (CheckIndexes())
             return;
         new DeleteLampCommand(repo).Execute(ID);
-        Console.WriteLine("SUCCESS: Lamp removed from your lamp repo");
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("[SUCCESS: Lamp removed from your lamp repo]");
+        Console.ResetColor();
     }
     public bool CheckIndexes()
     {
@@ -52,7 +60,9 @@ public class LampController
         string n = Console.ReadLine();
         if (!int.TryParse(n, out int number) || number < 1 || number > lamps.Count)
         {
-            Console.WriteLine("ERROR: Index out of range");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("[ERROR: Index out of range]");
+            Console.ResetColor();
             return true;
         }
         ID = lamps[number - 1].ID;
@@ -66,23 +76,73 @@ public class LampController
                 return;
             Console.Write("New intensity: ");
             string newIntensity = Console.ReadLine();
+            uint intensityValue = uint.Parse(newIntensity);
             new SetIntensityCommand(repo).Execute(ID, uint.Parse(newIntensity));
-            if (uint.Parse(newIntensity) > 100)
-                Console.WriteLine("SUCCESS: Intensity set to max because you set an overflow value");
-            if (uint.Parse(newIntensity) < 0)
-                Console.WriteLine("SUCCESS: Intensity set to min because you set an underflow value");
+            if (intensityValue > 100)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("[WARNING: Intensity set to max because you set an overflow value]");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("[SUCCESS: Intensity of lamp set to yuor value]");
+                Console.ResetColor();
+            }
             else
-                Console.WriteLine("SUCCESS: Intensity of lamp set to yuor value");
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("[SUCCESS: Intensity of lamp set to yuor value]");
+                Console.ResetColor();
+            }   
         }
         catch (InvalidOperationException)
         {
-            Console.WriteLine("ERROR: Cannot change intensity. Switch on lamp first");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("[ERROR: Cannot change intensity. Switch on lamp first]");
+            Console.ResetColor();
         }
-        catch
+        catch (Exception)
         {
-            Console.WriteLine("ERROR: Invalid intensity");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("[ERROR: Invalid intensity]");
+            Console.ResetColor();
         }
 
+    }
+
+    public void IncreaseBy()
+    {
+        try
+        {
+            if (CheckIndexes())
+                return;
+            new IncreaseIntensityLampCommand(repo).Execute(ID);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("[SUCCESS: Lamp got increase by 10]");
+            Console.ResetColor();
+        }
+        catch (InvalidOperationException)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("[ERROR: Cannot change intensity. Switch on lamp first]");
+            Console.ResetColor();
+        }
+    }
+    public void DecreaseBy()
+    {
+        try
+        {
+            if (CheckIndexes())
+                return;
+            new DecreaseIntensityLampCommand(repo).Execute(ID);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("[SUCCESS: Lamp got decrease by 10]");
+            Console.ResetColor();
+        }
+        catch (InvalidOperationException)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("[ERROR: Cannot change intensity. Switch on lamp first]");
+            Console.ResetColor();
+        }
     }
 
     public void SwitchOn()
@@ -90,7 +150,9 @@ public class LampController
         if (CheckIndexes())
             return;
         new SwitchOnLampCommand(repo).Execute(ID);
-        Console.WriteLine("Lamp switched on");
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("[SUCCESS: Lamp switched on]");
+        Console.ResetColor();
     }
 
     public void SwitchOff()
@@ -98,7 +160,9 @@ public class LampController
         if (CheckIndexes())
             return;
         new SwitchOffLampCommand(repo).Execute(ID);
-        Console.WriteLine("Lamp switched on");
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("[SUCCESS: Lamp switched off]");
+        Console.ResetColor();
     }
 
     public void ShowLamps()
@@ -110,6 +174,7 @@ public class LampController
 
         if (lamps.Count == 0)
         {
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("There is no lamps in your repo");
             return;
         }
@@ -129,6 +194,8 @@ public class LampController
         menu.Append("3 - SetIntensity\n");
         menu.Append("4 - SwitchOnLamp\n");
         menu.Append("5 - SwitchOffLamp\n");
+        menu.Append("6 - IncreaseBy\n");
+        menu.Append("7 - DecreaseBy\n");
         menu.Append("0 - Exit");
         Console.WriteLine(menu);
     }

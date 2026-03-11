@@ -83,7 +83,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
 
         public bool IsTemperatureEquals()
         {
-            return CurrentTemperature == TargetTemperature;
+            return CurrentTemperature.Heat == TargetTemperature.Heat;
         }
     }
 }

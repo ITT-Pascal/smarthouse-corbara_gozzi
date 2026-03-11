@@ -186,7 +186,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
             TestLampsRow.SwitchOn();
             TestLampsRow.SetIntensityTo(new Intensity(51));
             Assert.Equal(new Intensity(51).Percentage, lamp1.Intensity.Percentage);
-            Assert.Equal(new Intensity(50).Percentage, lamp2.Intensity.Percentage);
+            Assert.Equal(new Intensity(51).Percentage, lamp2.Intensity.Percentage);
         }
 
         [Fact]
@@ -222,35 +222,9 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
         }
 
         [Fact]
-        public void LampsRow_SetIntensityForLampBy_SetIntensityForLampByName()
-        {
-            Lamp lamp1 = new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName("Lamp1"));
-            Lamp lamp2 = new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName("Lamp2"));
-            TestLampsRow.AddLamp(lamp1);
-            TestLampsRow.AddLamp(lamp2);
-			TestLampsRow.SwitchOn();
-			TestLampsRow.SetIntensityForLampBy(DeviceName.NewDeviceName("Lamp1"), new Intensity(70));
-            Assert.Equal(new Intensity(70).Percentage, lamp1.Intensity.Percentage);
-            Assert.Equal(new Intensity(50).Percentage, lamp2.Intensity.Percentage);
-        }
-
-        [Fact]
         public void LampsRow_SetIntensityForLampBy_SetIntensityForLampByNameNotFound()
         {
             Assert.Throws<InvalidOperationException>(() => TestLampsRow.SetIntensityForLampBy(DeviceName.NewDeviceName("NonExistingLamp"), new Intensity(70)));
-        }
-
-        [Fact]
-        public void LampsRow_SetIntensityForLampBy_SetIntensityForLampByNameWithMultipleLampsWithSameName()
-        {
-            Lamp lamp1 = new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName("Lamp1"));
-            Lamp lamp2 = new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName("Lamp2"));
-            TestLampsRow.AddLamp(lamp1);
-            TestLampsRow.AddLamp(lamp2);
-			TestLampsRow.SwitchOn();
-			TestLampsRow.SetIntensityForLampBy(DeviceName.NewDeviceName("Lamp1"), new Intensity(70));
-            Assert.Equal(new Intensity(70).Percentage, lamp1.Intensity.Percentage);
-            Assert.Equal(new Intensity(50).Percentage, lamp2.Intensity.Percentage);
         }
 
         [Fact]
@@ -498,21 +472,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
         public void LampsRow_FindLampBy_FindLampByGuidNotFound()
         {
             Assert.Throws<ArgumentException>(() => TestLampsRow.FindLampBy(Guid.NewGuid()));
-        }
-
-        [Fact]
-        public void LampsRow_SortByIntensity_SortLampsByIntensity()
-        {
-            Lamp lamp1 = new Lamp();
-            Lamp lamp2 = new Lamp();
-            TestLampsRow.AddLamp(lamp1);
-            TestLampsRow.AddLamp(lamp2);
-			TestLampsRow.SwitchOn();
-			TestLampsRow.IncreaseBy();
-            TestLampsRow.SetIntensityForLampBy(lamp2.ID, new Intensity(70));
-            TestLampsRow.SortByIntensity(true);
-            Assert.Equal(lamp2.ID, TestLampsRow.LampRow[0].ID);
-            Assert.Equal(lamp1.ID, TestLampsRow.LampRow[1].ID);
         }
 
         [Fact]

@@ -60,18 +60,21 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         public virtual void IncreaseBy()
         {
             CheckIsNot(DeviceStatus.Off);
+            CheckIsNot(DeviceStatus.Error);
             Intensity += intensityJump;
             LastModifierAtUtc = DateTime.Now;
         }
         public virtual void DecreaseBy()
         {
             CheckIsNot(DeviceStatus.Off);
+            CheckIsNot(DeviceStatus.Error);
             Intensity -= intensityJump;
             LastModifierAtUtc = DateTime.Now;
         }
         public virtual void SetIntensityTo(Intensity intensity)
         {
             CheckIsNot(DeviceStatus.Off);
+            CheckIsNot(DeviceStatus.Error);
             Intensity = intensity;
             LastModifierAtUtc = DateTime.Now;
         }

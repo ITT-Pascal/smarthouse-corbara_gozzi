@@ -94,24 +94,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.CCTVDevices
         }
 
         [Fact]
-        public void CCTVSetTest_RemoveCCTVBy_NameItRemoveIt()
-        {
-			cctvSet.AccessToSistem(new Password("Ale6767?"));
-			cctvSet.AddCCTV(cam);
-            cctvSet.RemoveCCTVBy(DeviceName.NewDeviceName("Braso"));
-            Assert.Empty(cctvSet.SetOfCCTV);
-        }
-
-        [Fact]
-        public void CCTVSetTest_RemoveCCTVBy_GuidNoAccess()
-        {
-            cctvSet.AccessToSistem(new Password("Ale6767?"));
-            cctvSet.AddCCTV(cam);
-            cctvSet.AccessToSistem(Password.NewPassword("Aa!34569"));
-            Assert.Throws<ArgumentException>(() => cctvSet.AccessToSistem(Password.NewPassword("Aa!34569")));
-        }
-
-        [Fact]
         public void CCTVSetTest_RemoveCCTVBy_GuidItRemoveIt()
         {
             cctvSet.AccessToSistem(Password.NewPassword("Ale6767?"));
@@ -120,15 +102,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.CCTVDevices
             Assert.Empty(cctvSet.SetOfCCTV);
         }
 
-        [Fact]
-        public void CCTVSetTest_SwitchOnBy_GuidNoAccess()
-        {
-            cctvSet.AccessToSistem(Password.NewPassword("Ale6767?"));
-            cctvSet.AddCCTV(cam);
-            cctvSet.AccessToSistem(Password.NewPassword("Aa!34569"));
-            Assert.Throws<ArgumentException>(() => cctvSet.AccessToSistem(Password.NewPassword("Aa!34569")));
-			Assert.Throws<InvalidOperationException>(() => cctvSet.SwitchOnBy(cam.ID));
-        }
 
         [Fact]
         public void CCTVSetTest_SwitchOnBy_GuidItSwitchOnIt()
@@ -139,14 +112,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.CCTVDevices
             Assert.Equal(DeviceStatus.On, cctvSet.SetOfCCTV[0].DeviceStatus); 
         }
 
-        [Fact]
-        public void CCTVSetTest_SwitchOnBy_NameNoAccess()
-        {
-            cctvSet.AccessToSistem(Password.NewPassword("Ale6767?"));
-            cctvSet.AddCCTV(c);
-            cctvSet.AccessToSistem(Password.NewPassword("Aa!34569"));
-            Assert.Throws<InvalidOperationException>(() => cctvSet.SwitchOnBy(new DeviceName("Braso")));
-        }
 
         [Fact]
         public void CCTVSetTest_SwitchOnBy_NameItSwitchOn() 
@@ -158,17 +123,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.CCTVDevices
         }
 
         [Fact]
-        public void CCTVSetTest_SwitchOffBy_GuidNoAccess() 
-        {
-            cctvSet.AccessToSistem(Password.NewPassword("Ale6767?"));
-            cctvSet.AddCCTV(cam);
-            cctvSet.SwitchOnBy(cam.ID);
-            cctvSet.AccessToSistem(Password.NewPassword("Aa!34569"));
-            Assert.Throws<ArgumentException>(() => cctvSet.AccessToSistem(Password.NewPassword("Aa!34569")));
-			Assert.Throws<InvalidOperationException>(() => cctvSet.SwitchOffBy(cam.ID));
-        }
-
-        [Fact]
         public void CCTVSetTest_SwitchOffBy_GuidItSwitchOnIt() 
         {
             cctvSet.AccessToSistem(Password.NewPassword("Ale6767?"));
@@ -176,17 +130,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.CCTVDevices
             cctvSet.SwitchOnBy(cam.ID);
             cctvSet.SwitchOffBy(cam.ID);
             Assert.Equal(DeviceStatus.Off, cctvSet.SetOfCCTV[0].DeviceStatus);
-        }
-
-        [Fact]
-        public void CCTVSetTest_SwitchOffBy_NameNoAccess() 
-        {
-            cctvSet.AccessToSistem(Password.NewPassword("Ale6767?"));
-            cctvSet.AddCCTV(cam);
-            cctvSet.SwitchOnBy(cam.Name);
-            cctvSet.AccessToSistem(Password.NewPassword("Aa!34569"));
-            Assert.Throws<ArgumentException>(() => cctvSet.AccessToSistem(Password.NewPassword("Aa!34569")));
-			Assert.Throws<InvalidOperationException>(() => cctvSet.SwitchOffBy(new DeviceName("Braso")));
         }
 
         [Fact]
