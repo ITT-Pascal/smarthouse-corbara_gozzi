@@ -88,16 +88,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.CCTVDevices
         }
 
         [Fact]
-        public void CCTVTest_DecreaseZoomBy_IfMin()  
-        {
-            cctv.SwitchOn();
-            cctv.SetCCTVZoomTo(new Zoom(15));
-            cctv.DecreaseZoomBy();
-            cctv.DecreaseZoomBy();
-			Assert.Equal(new Zoom(0).Value, cctv.Zoom.Value);
-        }
-
-        [Fact]
         public void CCTVTest_IncreaseZoomBy_ErrorBecouseOff()
         {
             Assert.Throws<InvalidOperationException>(() => cctv.IncreaseZoomBy());

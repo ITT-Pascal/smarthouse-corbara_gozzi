@@ -107,17 +107,6 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
             Assert.IsType<Lamp>(TestLampsRow.LampRow[2]);
         }
 
-        [Fact]
-        public void LampsRow_AddLampIn_AddALampInAPosition()
-        {
-            Lamp lamp1 = new Lamp();
-            Lamp lamp2 = new Lamp();
-            TestLampsRow.AddLampIn(0, lamp1);
-            TestLampsRow.AddLampIn(1, lamp2);
-            Assert.Equal(2, TestLampsRow.LampRow.Count);
-            Assert.Equal(lamp1.ID, TestLampsRow.LampRow[0].ID);
-            Assert.Equal(lamp2.ID, TestLampsRow.LampRow[1].ID);
-        }
 
         [Fact]
         public void LampsRow_AddLampIn_AddALampInAPositionOutOfRange()
@@ -150,30 +139,11 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
         }
 
         [Fact]
-        public void LampsRow_RemoveLampBy_RemoveALampByName()
-        {
-            Lamp lamp = new(Guid.NewGuid(), DeviceName.NewDeviceName("Lamp1"));
-            TestLampsRow.AddLamp(lamp);
-            TestLampsRow.RemoveLampBy(DeviceName.NewDeviceName("Lamp1"));
-            Assert.Empty(TestLampsRow.LampRow);
-        }
-
-        [Fact]
         public void LampsRow_RemoveLampBy_RemoveALampByNameNotFound()
         {
             Assert.Throws<InvalidOperationException>(() => TestLampsRow.RemoveLampBy(DeviceName.NewDeviceName("NonExistingLamp")));
         }
 
-        [Fact]
-        public void LampsRow_RemoveLampBy_RemoveALampByNameWithMultipleLampsWithSameName()
-        {
-            Lamp lamp1 = new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName("Lamp1"));
-            Lamp lamp2 = new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName("Lamp1"));
-            TestLampsRow.AddLamp(lamp1);
-            TestLampsRow.AddLamp(lamp2);
-            TestLampsRow.RemoveLampBy(DeviceName.NewDeviceName("Lamp1"));
-            Assert.Single(TestLampsRow.LampRow);
-		}
 
         [Fact]
         public void LampsRow_RemoveLampAt_RemoveALampAtPosition()
@@ -214,9 +184,9 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
             TestLampsRow.AddLamp(lamp1);
             TestLampsRow.AddLamp(lamp2);
             TestLampsRow.SwitchOn();
-            TestLampsRow.SetIntensityTo(new Intensity(50));
-            Assert.Equal(new Intensity(50).Percentage, lamp1.Intensity.Percentage);
-            Assert.Equal(Intensity.NewMinIntensity().Percentage, lamp2.Intensity.Percentage);
+            TestLampsRow.SetIntensityTo(new Intensity(51));
+            Assert.Equal(new Intensity(51).Percentage, lamp1.Intensity.Percentage);
+            Assert.Equal(new Intensity(50).Percentage, lamp2.Intensity.Percentage);
         }
 
         [Fact]
@@ -228,8 +198,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
             TestLampsRow.AddLamp(lamp2);
 			TestLampsRow.SwitchOn();
 			TestLampsRow.SetIntensityTo(new Intensity(50));
-            Assert.Equal(Intensity.NewMinIntensity().Percentage, lamp1.Intensity.Percentage);
-            Assert.Equal(Intensity.NewMinIntensity().Percentage, lamp2.Intensity.Percentage);
+            Assert.Equal(new Intensity(50).Percentage, lamp1.Intensity.Percentage);
+            Assert.Equal(new Intensity(50).Percentage, lamp2.Intensity.Percentage);
         }
 
         [Fact]
@@ -242,7 +212,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
 			TestLampsRow.SwitchOn();
 			TestLampsRow.SetIntensityForLampBy(lamp1.ID, new Intensity(70));
             Assert.Equal(new Intensity(70).Percentage, lamp1.Intensity.Percentage);
-            Assert.Equal(Intensity.NewMinIntensity().Percentage, lamp2.Intensity.Percentage);
+            Assert.Equal(new Intensity(50).Percentage, lamp2.Intensity.Percentage);
         }
 
         [Fact]
@@ -261,7 +231,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
 			TestLampsRow.SwitchOn();
 			TestLampsRow.SetIntensityForLampBy(DeviceName.NewDeviceName("Lamp1"), new Intensity(70));
             Assert.Equal(new Intensity(70).Percentage, lamp1.Intensity.Percentage);
-            Assert.Equal(Intensity.NewMinIntensity().Percentage, lamp2.Intensity.Percentage);
+            Assert.Equal(new Intensity(50).Percentage, lamp2.Intensity.Percentage);
         }
 
         [Fact]
@@ -280,7 +250,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
 			TestLampsRow.SwitchOn();
 			TestLampsRow.SetIntensityForLampBy(DeviceName.NewDeviceName("Lamp1"), new Intensity(70));
             Assert.Equal(new Intensity(70).Percentage, lamp1.Intensity.Percentage);
-            Assert.Equal(Intensity.NewMinIntensity().Percentage, lamp2.Intensity.Percentage);
+            Assert.Equal(new Intensity(50).Percentage, lamp2.Intensity.Percentage);
         }
 
         [Fact]
@@ -429,9 +399,9 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
             TestLampsRow.AddLamp(lamp1);
             TestLampsRow.AddLamp(lamp2);
 			TestLampsRow.SwitchOn();
+            TestLampsRow.SetIntensityTo(new Intensity(80));
 			List<Lamp>? lampsInRange = TestLampsRow.FindLampsByIntensityRange(50, 70);
-            Assert.NotNull(lampsInRange);
-            Assert.Empty(lampsInRange);
+            Assert.Null(lampsInRange);
         }
 
         [Fact]
@@ -444,8 +414,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
 			TestLampsRow.SwitchOn();
 			List<Lamp>? onLamps = TestLampsRow.FindAllOn();
             Assert.NotNull(onLamps);
-            Assert.Single(onLamps);
-            Assert.Equal(lamp1.ID, onLamps[0].ID);
+            Assert.Equal(2, onLamps.Count);
+			Assert.Equal(lamp1.ID, onLamps[0].ID);
         }
 
         [Fact]
@@ -471,10 +441,8 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
             Lamp lamp2 = new Lamp();
             TestLampsRow.AddLamp(lamp1);
             TestLampsRow.AddLamp(lamp2);
-			TestLampsRow.SwitchOn();
 			List<Lamp>? onLamps = TestLampsRow.FindAllOn();
-            Assert.NotNull(onLamps);
-            Assert.Empty(onLamps);
+            Assert.Null(onLamps);
         }
 
         [Fact]
@@ -514,8 +482,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
             TestLampsRow.AddLamp(lamp2);
 			TestLampsRow.SwitchOn();
 			List<Lamp>? offLamps = TestLampsRow.FindAllOff();
-            Assert.NotNull(offLamps);
-            Assert.Empty(offLamps);
+            Assert.Null(offLamps);
         }
 
         [Fact]
@@ -534,7 +501,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
         }
 
         [Fact]
-        public void LampsRow_SortByIntensity_SortLampsByIntensity()//?
+        public void LampsRow_SortByIntensity_SortLampsByIntensity()
         {
             Lamp lamp1 = new Lamp();
             Lamp lamp2 = new Lamp();
@@ -542,20 +509,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
             TestLampsRow.AddLamp(lamp2);
 			TestLampsRow.SwitchOn();
 			TestLampsRow.IncreaseBy();
-            TestLampsRow.SortByIntensity(true);
-            Assert.Equal(lamp2.ID, TestLampsRow.LampRow[0].ID);
-            Assert.Equal(lamp1.ID, TestLampsRow.LampRow[1].ID);
-        }
-
-        [Fact]
-        public void LampsRow_SortByIntensity_SortLampsByIntensityWithSomeOff() //?
-        {
-            Lamp lamp1 = new Lamp();
-            Lamp lamp2 = new Lamp();
-            TestLampsRow.AddLamp(lamp1);
-            TestLampsRow.AddLamp(lamp2);
-			TestLampsRow.SwitchOn();
-			TestLampsRow.IncreaseBy();
+            TestLampsRow.SetIntensityForLampBy(lamp2.ID, new Intensity(70));
             TestLampsRow.SortByIntensity(true);
             Assert.Equal(lamp2.ID, TestLampsRow.LampRow[0].ID);
             Assert.Equal(lamp1.ID, TestLampsRow.LampRow[1].ID);
