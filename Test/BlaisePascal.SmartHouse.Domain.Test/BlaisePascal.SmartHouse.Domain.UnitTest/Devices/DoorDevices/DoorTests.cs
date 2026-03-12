@@ -1,0 +1,138 @@
+﻿using BlaisePascal.SmartHouse.Domain.Devices.Abstractions;
+using BlaisePascal.SmartHouse.Domain.Devices.DoorDevices;
+using BlaisePascal.SmartHouse.Domain.Devices.DoorDevices.ValueObjects;
+
+namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.DoorDevices
+{
+    public class DoorTests
+    {
+        private readonly Door testDoor = new();
+        private readonly Door testDoorCode = new(DoorCode.NewDoorCode(654321));
+        private readonly DoorCode basicCode = DoorCode.NewDoorCode(123456);
+        private readonly DoorCode newCode = DoorCode.NewDoorCode(676767);
+
+
+        [Fact]
+        public void Door_Constructor_WhenCreatedIsClosedAndCodeIsBasicCode()
+        {
+            Assert.Equal(DeviceStatus.Closed, testDoor.DeviceStatus);
+        }
+
+        [Fact]
+        public void Door_ConstructorWithCode_WhenCreatedIsClosedAndCodeIsSetToAValue()
+        {
+            Assert.Equal(DeviceStatus.Closed, testDoorCode.DeviceStatus);
+        }
+
+        [Fact]
+        public void Door_OpenDoor_NotOpenWhenLocked()
+        {
+            testDoor.LockDoor();
+            Assert.Throws<InvalidOperationException>(() => testDoor.OpenDoor());
+        }
+
+        [Fact]
+        public void Door_OpenDoor_OpenWhenClosed()
+        {
+            testDoor.OpenDoor();
+            Assert.Equal(DeviceStatus.Open, testDoor.DeviceStatus);
+        }
+
+        [Fact]
+        public void Door_OpenDoor_OpenWhenOpen()
+        {
+            testDoor.OpenDoor();
+            testDoor.OpenDoor();
+            Assert.Equal(DeviceStatus.Open, testDoor.DeviceStatus);
+        }
+
+        [Fact]
+        public void Door_UnlockDoor_WrongCode()
+        {
+            testDoor.LockDoor();
+            Assert.Throws<ArgumentException>(() => testDoor.UnlockDoor(newCode));
+        }
+
+        [Fact]
+        public void Door_UnlockDoor_LockedRightCode()
+        {
+            testDoor.LockDoor();
+			testDoor.UnlockDoor(basicCode);
+            Assert.Equal(DeviceStatus.Open, testDoor.DeviceStatus);
+        }
+        [Fact]
+        public void Door_CloseDoor_LockedDoor()
+        {
+            testDoor.LockDoor();
+            Assert.Throws<InvalidOperationException>(() => testDoor.OpenDoor());
+        }
+
+        [Fact]
+        public void Door_CloseDoor_ClosedDoor()
+        {
+            testDoor.CloseDoor();
+            Assert.Equal(DeviceStatus.Closed, testDoor.DeviceStatus);
+        }
+
+        [Fact]
+        public void Door_CloseDoor_OpenDoor()
+        {
+            testDoor.OpenDoor();
+            testDoor.CloseDoor();
+            Assert.Equal(DeviceStatus.Closed, testDoor.DeviceStatus);
+        }
+
+        [Fact]
+        public void Door_LockDoor_OpenDoor()
+        {
+            testDoor.LockDoor();
+            Assert.Equal(DeviceStatus.Locked, testDoor.DeviceStatus);
+        }
+
+        [Fact]
+        public void Door_LockDoor_ClosedDoor()
+        {
+            testDoor.LockDoor();
+            testDoor.LockDoor();
+            Assert.Equal(DeviceStatus.Locked, testDoor.DeviceStatus);
+        }
+
+        [Fact]
+        public void Door_LockDoor_LockedDoor()
+        {
+            testDoor.LockDoor();
+            testDoor.LockDoor();
+            Assert.Equal(DeviceStatus.Locked, testDoor.DeviceStatus);
+        }
+
+        [Fact]
+        public void Door_ChangeCode_CorrectCode()
+        {
+            testDoor.ChangeCodeTo(newCode, basicCode);
+            testDoor.UnlockDoor(newCode);
+            Assert.Equal(DeviceStatus.Open, testDoor.DeviceStatus);
+        }
+
+        [Fact]
+        public void Door_Toggle_WhenIsClosedTheDoorWillBeOpen()
+        {
+            testDoor.Toggle();
+            Assert.Equal(DeviceStatus.Open, testDoor.DeviceStatus);
+        }
+
+        [Fact]
+        public void Door_Toggle_WhenIsOpenTheDoorWillBeClosed()
+        {
+            testDoor.OpenDoor();
+            testDoor.Toggle();
+            Assert.Equal(DeviceStatus.Closed, testDoor.DeviceStatus);
+        }
+
+        [Fact]
+        public void Door_Toggle_WhenIsLockedCannotBeToggled()
+        {
+            testDoor.LockDoor();
+            Assert.Throws<InvalidOperationException>(() => testDoor.Toggle());
+        }
+    }
+}
