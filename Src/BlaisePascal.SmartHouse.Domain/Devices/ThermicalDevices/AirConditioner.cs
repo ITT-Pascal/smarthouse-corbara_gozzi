@@ -18,7 +18,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
             { AcMode.Heat, Temperature.NewTemperature(20) },
             { AcMode.Cool, Temperature.NewTemperature(10) },
             { AcMode.Freeze, Temperature.NewTemperature(Temperature.minHeat) },
-            { AcMode.Dry,Temperature.NewZeroTemperature() }
+            { AcMode.Dry, Temperature.NewZeroTemperature() }
         };
 
         //      ------CONSTRUCTORS------
@@ -97,6 +97,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
             switch (newMode)
             {
                 case AcMode.Custom:
+                    AcMode = newMode;
                     Temperature = CustomTemperature;
                     break;
                 default:
@@ -108,7 +109,6 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
         }
         public void ChangeCustomTemperatureTo(Temperature newTemp)
         {
-            CheckIsNot(DeviceStatus.Off);
             CustomTemperature = newTemp;
             LastModifierAtUtc = DateTime.Now;
         }

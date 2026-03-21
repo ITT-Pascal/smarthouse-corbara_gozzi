@@ -47,6 +47,8 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
 
         public override void SwitchOn()
         {
+            if(DeviceStatus == DeviceStatus.On)
+                return;
             base.SwitchOn();
             CameraLamp.SwitchOn();
 		}

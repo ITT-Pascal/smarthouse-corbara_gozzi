@@ -51,20 +51,29 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.ThermicalDevice
 		}
 
         [Fact]
-        public void Thermostat_SwitchOff_WhenSwitchedOffStatusIsOffAndTheThermostatPutTemperatureToTarget()
+        public void Thermostat_SwitchOff_WhenSwitchedOffStatusIsOff()
         {
             Thermo.SwitchOn();
             Thermo.SwitchOff();
+
             Assert.Equal(DeviceStatus.Off, Thermo.DeviceStatus);
 			Assert.Equal(Thermo.CurrentTemperature.Heat, Thermo.TargetTemperature.Heat);
 		}
+
+        [Fact]
+        public void Thermostat_ChangeTargetTemperature_ErrorIfOff()
+        {
+            Assert.Throws<InvalidOperationException>(() => Thermo.ChangeTargetTemperatureTo(Temperature.NewTemperature(25)));
+        }
 
         [Fact]
         public void Thermostat_ChangeTargetTemperature_ChangedTo30()
         {
             Temperature temp = Temperature.NewTemperature(30);
             Thermo.SwitchOn();
+
             Thermo.ChangeTargetTemperatureTo(temp);
+
             Assert.Equal(temp.Heat, Thermo.TargetTemperature.Heat);
 			Assert.Equal(Thermo.CurrentTemperature.Heat, Thermo.TargetTemperature.Heat);
 		}
