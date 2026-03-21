@@ -33,7 +33,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
 
         public void AccessToSistem(Password Try)
         {
-            if (Try == AdminPassword)
+            if (Try.Word == AdminPassword.Word)
                 AccessPermission = true;
             else
                 throw new ArgumentException("Password: Wrong password", nameof(Try));
@@ -50,7 +50,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
         }
         public void CheckIsInRange(int position)
         {
-            if (position < 0 || position >= SetOfCCTV.Count)
+            if (position < 0 || position > SetOfCCTV.Count)
                 throw new ArgumentOutOfRangeException(nameof(position), "Position: Position out of range");
         }
 
@@ -62,7 +62,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
             CheckAccessPermission();
             int pos = SetOfCCTV.FindIndex(cam => cam.ID == id);
             if (pos == -1)
-                throw new ArgumentException("ID: Id not identified", nameof(id));
+                throw new InvalidOperationException("ID: Id not identified");
             return pos;
         }
 
@@ -79,8 +79,6 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
             CheckAccessPermission();
             CheckIsNotNull(camera);
             CheckIsInRange(position);
-            if (SetOfCCTV[position] != null)
-                throw new ArgumentException("Position: Cannot add CCTV in positions already taken", nameof(position));
             SetOfCCTV.Insert(position, camera);
         }
         public void RemoveCCTVAt(int position)
@@ -97,7 +95,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
         public void RemoveCCTVBy(DeviceName name)
         {
             CheckAccessPermission();
-            RemoveCCTVBy(SetOfCCTV.First(cam => cam.Name == name).ID);
+            RemoveCCTVBy(SetOfCCTV.First(cam => cam.Name.DevName == name.DevName).ID);
         }
 
         //--SWITCH METHODS--

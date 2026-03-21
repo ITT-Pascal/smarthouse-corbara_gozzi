@@ -12,7 +12,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
         {
             Assert.NotNull(ecoLamp);
             Assert.Equal(DeviceStatus.Off, ecoLamp.DeviceStatus);
-            Assert.Equal("TestEcoLamp", ecoLamp.Name.Name);
+            Assert.Equal("TestEcoLamp", ecoLamp.Name.DevName);
         }
 
         [Fact]

@@ -20,7 +20,7 @@ namespace BlaisePascal.SmartHouse.Domain.UnitTest.Devices.LuminousDevices
         {
             Lamp lamp = new Lamp(Guid.NewGuid(), DeviceName.NewDeviceName("Lamp"), DeviceStatus.Off, new Intensity(50), DateTime.Now, DateTime.Now);
             Assert.Equal(DeviceStatus.Off, lamp.DeviceStatus);
-            Assert.Equal("Lamp", lamp.Name.Name);
+            Assert.Equal("Lamp", lamp.Name.DevName);
             Assert.Equal(new Intensity(50).Percentage, lamp.Intensity.Percentage);
         }
 

@@ -8,11 +8,12 @@
 
         public Zoom(uint val)
         {
-            if (!(val is >= minZoom and <= maxZoom))
-            {
-                throw new ArgumentOutOfRangeException(nameof(val), "Zoom: Invalid Zoom value[out of 10..200]");
-            }
-            Value = val;
+            if (val < minZoom)
+                Value = minZoom;
+            else if (val > maxZoom)
+                Value = maxZoom;
+            else
+                Value = val;
         }
         public static Zoom NewZoom(uint val)
         {

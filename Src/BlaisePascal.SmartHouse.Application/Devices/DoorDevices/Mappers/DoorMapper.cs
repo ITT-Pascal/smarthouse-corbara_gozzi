@@ -13,7 +13,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.DoorDevices.Mappers
             return new DoorDto
             {
                 ID = door.ID,
-                Name = door.Name.Name,
+                Name = door.Name.DevName,
                 DeviceStatus = DeviceStatusMapper.ToDto(door.DeviceStatus),
                 Code = door.Code.Digits,
                 DateTimeAtCreationUtc = door.DateTimeAtCreationUtc,

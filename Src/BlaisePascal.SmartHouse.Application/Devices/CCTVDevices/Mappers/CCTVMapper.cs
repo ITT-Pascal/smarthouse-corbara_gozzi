@@ -13,7 +13,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.CCTVDevices.Mappers
             return new CCTVDto
             {
                 ID = cam.ID,
-                Name = cam.Name.Name,
+                Name = cam.Name.DevName,
                 DeviceStatus = DeviceStatusMapper.ToDto(cam.DeviceStatus),
                 Zoom = cam.Zoom.Value,
                 Degrees = cam.Degrees.Angle,

@@ -21,7 +21,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.ThermicalDevices.Condition
 			return new AirConditionerDto
 			{
 				ID = cond.ID,
-				Name = cond.Name.Name,
+				Name = cond.Name.DevName,
 				DeviceStatus = DeviceStatusMapper.ToDto(cond.DeviceStatus),
 				Speed = cond.Speed.Value,
 				Temperature = cond.Temperature.Heat,

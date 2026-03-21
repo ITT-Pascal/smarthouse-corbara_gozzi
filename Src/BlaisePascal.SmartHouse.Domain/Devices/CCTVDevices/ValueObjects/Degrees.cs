@@ -10,8 +10,6 @@
         {
             if (angle > maxDegrees)
                 Angle = angle - maxDegrees;
-			else if (angle < minDegrees)
-                Angle = maxDegrees - angle;
 			else
 				Angle = angle;
         }
@@ -29,22 +27,23 @@
         }
         public static Degrees NewMaxDegrees()
         {
-            return new Degrees(360);
+            return new Degrees(maxDegrees);
         }
 
         //OVERRIDE DEGLI OPERATORI + E - PER AVER UINT SENZA PROBLEMI DI OVER O UNDERFLOW
         public static Degrees operator +(Degrees degree, uint jump)
         {
-            if (degree.Angle > maxDegrees + jump)
+            if (degree.Angle + jump > maxDegrees)
                 return NewDegrees(degree.Angle + jump - maxDegrees);
-            return NewDegrees(degree.Angle + jump);
+            else 
+                return NewDegrees(degree.Angle + jump);
         }
         public static Degrees operator -(Degrees degree, uint jump)
         {
-            if (degree.Angle < minDegrees + jump)
-                return NewDegrees(maxDegrees + degree.Angle - jump);
-            else 
+            if (degree.Angle < jump)
+                return NewDegrees(maxDegrees - (jump - degree.Angle));
+            else
                 return NewDegrees(degree.Angle - jump);
-		}
+        }
     }
 }

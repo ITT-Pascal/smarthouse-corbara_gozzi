@@ -13,7 +13,7 @@ namespace BlaisePascal.SmartHouse.Application.Devices.ThermicalDevices.Thermo.Ma
             return new ThermostatDto
             {
                 ID = thermo.ID,
-                Name = thermo.Name.Name,
+                Name = thermo.Name.DevName,
                 DeviceStatus = DeviceStatusMapper.ToDto(thermo.DeviceStatus),
                 CurrentTemperature = thermo.CurrentTemperature.Heat,
                 TargetTemperature = thermo.TargetTemperature.Heat,

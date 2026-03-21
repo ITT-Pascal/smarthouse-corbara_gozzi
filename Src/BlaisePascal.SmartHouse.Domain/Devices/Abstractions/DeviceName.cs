@@ -2,7 +2,7 @@
 {
     public class DeviceName
     {
-        public string Name { get; }
+        public string DevName { get; }
 
         public DeviceName(string name)
         {
@@ -11,7 +11,7 @@
                 throw new ArgumentException("DeviceName: There is no char", nameof(name));
             if (name.Contains(' ') || name.Contains('.'))
                 throw new ArgumentException("DeviceName: Name can't contain spaces[ ] or points[.]", nameof(name));
-            Name = name;
+            DevName = name;
         }
         public static DeviceName NewDeviceName(string name)
         {
