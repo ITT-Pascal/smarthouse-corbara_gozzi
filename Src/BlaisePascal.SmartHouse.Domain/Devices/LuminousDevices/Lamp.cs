@@ -38,7 +38,9 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
 
         public override void SwitchOn()
         {
-            base.SwitchOn();
+            if(DeviceStatus == DeviceStatus.On)
+                return;
+			base.SwitchOn();
             Intensity = Intensity.NewHalfIntensity();
         }
         public override void SwitchOff()

@@ -29,8 +29,10 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
 
         public void SwitchOn(bool enableAutoOff)
         {
-            SwitchOn();
-            autoOffAtUtc = enableAutoOff
+			SwitchOn();
+			if (DeviceStatus == DeviceStatus.On)
+				return;
+			autoOffAtUtc = enableAutoOff
             ? DateTime.UtcNow.AddMinutes(DefaultAutoOffMinutes) : null;
         }
         public void SwitchOn(int autoOffMinutes)
@@ -39,9 +41,11 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
             {
                 DeviceStatus = DeviceStatus.Error;
                 throw new ArgumentOutOfRangeException(nameof(autoOffMinutes));
-            }   
+            }  
             SwitchOn();
-            autoOffAtUtc = DateTime.Now.AddMinutes(autoOffMinutes);
+			if (DeviceStatus == DeviceStatus.On)
+				return;
+			autoOffAtUtc = DateTime.Now.AddMinutes(autoOffMinutes);
         }
         public override void SwitchOff()
         {
