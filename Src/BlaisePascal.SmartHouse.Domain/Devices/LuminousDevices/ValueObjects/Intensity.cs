@@ -39,8 +39,8 @@
             return NewIntensity(intensity.Percentage + jump);
         }
         public static Intensity operator -(Intensity intensity, uint jump)
-        {
-            if (intensity.Percentage - jump < minPercentage)
+        { 
+            if (intensity.Percentage < jump)
                 return NewIntensity(minPercentage);
             return NewIntensity(intensity.Percentage - jump);
         }

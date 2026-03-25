@@ -15,9 +15,10 @@
                 $"ID: {ID}\n" +
                 $"Name: {Name}\n" +
                 $"DeviceStatus: {DeviceStatus}\n" +
-                $"Code: {Code}\n" +
+                $"Code: ******\n" +
                 $"DateTimeAtCreation: {DateTimeAtCreationUtc}" +
                 $"LastModifierAtUtc: {LastModifierAtUtc}";
         }
+
     }
 }

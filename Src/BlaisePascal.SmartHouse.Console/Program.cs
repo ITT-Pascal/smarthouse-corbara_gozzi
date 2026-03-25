@@ -23,7 +23,7 @@ class Program()
 
             Console.WriteLine("Choose an option:");
 
-            LampController.ShowMenu();
+            global::LampController.ShowMenu();
 
             Console.WriteLine();
 
@@ -34,77 +34,58 @@ class Program()
             switch (choice)
             { 
                 case "1":
-                    if(Confirmation())
-                    {
-                        LampController.AddLamp();
-                    }
+                    LampController.AddLamp();
                     Pause();
                     Console.Clear();
                     Console.Write("\x1b[3J");
                     LampController.ShowLamps();
                     break;
                 case "2":
-                    if(Confirmation())
-                    {
-                        LampController.RemoveLamp();
-                    }
+                    LampController.RemoveLamp();
                     Pause();
                     Console.Clear();
                     Console.Write("\x1b[3J");
                     LampController.ShowLamps();
                     break;
                 case "3":
-                    if (Confirmation())
-                    {
-                        LampController.SetIntensity();
-                    }
+                    LampController.SetIntensity();
                     Pause();
                     Console.Clear();
                     Console.Write("\x1b[3J");
                     LampController.ShowLamps();
                     break;
                 case "4":
-                    if (Confirmation())
-                    {
-                        LampController.SwitchOn();
-                    }
+                    LampController.SwitchOn();
                     Pause();
                     Console.Clear();
                     Console.Write("\x1b[3J");
                     LampController.ShowLamps();
                     break;
                 case "5":
-                    if (Confirmation())
-                    {
-                        LampController.SwitchOff();
-                    }
+                    LampController.SwitchOff();
                     Pause();
                     Console.Clear();
                     Console.Write("\x1b[3J");
                     LampController.ShowLamps();
                     break;
                 case "6":
-                    if (Confirmation())
-                    {
-                        LampController.IncreaseBy();
-                    }
+                    LampController.IncreaseBy();
                     Pause();
                     Console.Clear();
                     Console.Write("\x1b[3J");
                     LampController.ShowLamps();
                     break;
                 case "7":
-                    if (Confirmation())
-                    {
-                        LampController.DecreaseBy();
-                    }
+                    LampController.DecreaseBy();
                     Pause();
                     Console.Clear();
                     Console.Write("\x1b[3J");
                     LampController.ShowLamps();
                     break;
                 case "0":
-                    Confirmation();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Console closed...");
+                    Console.ResetColor();
                     exit = true;
                     break;
                 default:
@@ -129,29 +110,6 @@ class Program()
             if (keyInfo.Key == ConsoleKey.Enter)
                 continuePause = false;
         }
-    }
-    static bool Confirmation()
-    {
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("ENTER to continue...");
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("ESC to cancel...");
-        Console.WriteLine();
-        Console.ResetColor();
-        var continuePause = true;
-        while (continuePause)
-        {
-            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-            if (keyInfo.Key == ConsoleKey.Enter)
-            {
-                return true;
-            }   
-            if (keyInfo.Key == ConsoleKey.Escape)
-            {
-                return false;
-            }
-        }
-        return true;
     }
 }
 

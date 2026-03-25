@@ -186,7 +186,7 @@ public class LampController
             Console.WriteLine($"{i + 1}. {l.Name}\n\n{l}");
         }
     }
-    public void ShowMenu()
+    public static void ShowMenu()
     {
         StringBuilder menu = new();
         menu.Append("1 - AddLamp\n");
