@@ -45,16 +45,20 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.CCTVDevices
 
         //--SWITCH METHODS--
 
-        public override void SwitchOn()
+        public void SwitchOn()
         {
             if(DeviceStatus == DeviceStatus.On)
                 return;
-            base.SwitchOn();
+            DeviceStatus = DeviceStatus.On;
+            LastModifierAtUtc = DateTime.Now;
             CameraLamp.SwitchOn();
 		}
-        public override void SwitchOff()
+        public void SwitchOff()
         {
-            base.SwitchOff();
+            if (DeviceStatus == DeviceStatus.Off)
+                return;
+            DeviceStatus = DeviceStatus.Off;
+            LastModifierAtUtc = DateTime.Now;
             CameraLamp.SwitchOff();
         }
 

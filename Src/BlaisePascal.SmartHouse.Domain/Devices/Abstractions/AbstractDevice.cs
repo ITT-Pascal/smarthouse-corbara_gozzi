@@ -2,7 +2,7 @@
 
 namespace BlaisePascal.SmartHouse.Domain.Devices.Abstractions
 {
-    public abstract class AbstractDevice
+    public abstract class AbstractDevice: IToggable
     {
         //   -------ATTRIBUTES AND PROPERTY-------
         public Guid ID { get; init; }
@@ -51,15 +51,13 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.Abstractions
             //ERRORE CHE INDICA L'INCOMPATIBILITA' DI UNO STATO ALLA CHIAMATA DEL METODO
         }
 
-        //--SWITCH METHODS--
-        public virtual void SwitchOn()
+        public virtual void Toggle()
         {
-            DeviceStatus = DeviceStatus.On;
-            LastModifierAtUtc = DateTime.Now;
-        }
-        public virtual void SwitchOff()
-        {
-            DeviceStatus = DeviceStatus.Off;
+            CheckIsNot(DeviceStatus.Error);
+            if (DeviceStatus == DeviceStatus.On)
+                DeviceStatus = DeviceStatus.Off;
+            else
+                DeviceStatus = DeviceStatus.On;
             LastModifierAtUtc = DateTime.Now;
         }
 

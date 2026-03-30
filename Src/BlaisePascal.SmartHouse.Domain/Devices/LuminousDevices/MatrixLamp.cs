@@ -55,9 +55,8 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
 
         //--ON/OFF METHODS--
 
-        public sealed override void SwitchOn()
+        public void SwitchOn()
         {
-            base.SwitchOn();
             for (int rows = 0; rows < rowSize; rows++)
             {
                 for (int cols = 0; cols < colsSize; cols++)
@@ -65,10 +64,10 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
                     LampMatrix[rows, cols]?.SwitchOn();
                 }
             }
+            LastModifierAtUtc = DateTime.Now;
         }
-        public sealed override void SwitchOff()
+        public void SwitchOff()
         {
-            base.SwitchOff();
             for (int rows = 0; rows < rowSize; rows++)
             {
                 for (int cols = 0; cols < colsSize; cols++)
@@ -76,8 +75,9 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
                     LampMatrix[rows, cols]?.SwitchOff();
                 }
             }
+            LastModifierAtUtc = DateTime.Now;
         }
-        public void Toggle()
+        public override void Toggle()
         {
             for (int rows = 0; rows < rowSize; rows++)
             {
@@ -86,6 +86,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
                     LampMatrix[rows, cols]?.Toggle();
                 }
             }
+            LastModifierAtUtc = DateTime.Now;
         }
 
         //ACCENDE UNA SI E UNA NO, TIPO SCACCHIERA

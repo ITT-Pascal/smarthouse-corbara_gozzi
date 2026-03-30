@@ -1,4 +1,5 @@
-﻿using BlaisePascal.SmartHouse.Domain.Devices.Abstractions;
+﻿using System.Runtime.CompilerServices;
+using BlaisePascal.SmartHouse.Domain.Devices.Abstractions;
 using BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices.ValueObjects;
 
 namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
@@ -36,24 +37,29 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
 
         //--ON/OFF METHODS--
 
-        public override void SwitchOn()
-        {
-            if(DeviceStatus == DeviceStatus.On)
-                return;
-			base.SwitchOn();
-            Intensity = Intensity.NewHalfIntensity();
-        }
-        public override void SwitchOff()
-        {
-            base.SwitchOff();
-            Intensity = Intensity.NewMinIntensity();
-        }
-        public virtual void Toggle()
+        public void SwitchOn()
         {
             if (DeviceStatus == DeviceStatus.On)
-                SwitchOff();
+                return;
+            DeviceStatus = DeviceStatus.On;
+            LastModifierAtUtc = DateTime.Now;
+            Intensity = Intensity.NewHalfIntensity();
+        }
+        public virtual void SwitchOff()
+        {
+            if (DeviceStatus == DeviceStatus.Off)
+                return;
+            DeviceStatus = DeviceStatus.Off;
+            LastModifierAtUtc = DateTime.Now;
+            Intensity = Intensity.NewMinIntensity();
+        }
+        public override void Toggle()
+        {
+            CheckIsNot(DeviceStatus.Error);
+            if (DeviceStatus == DeviceStatus.On)
+                DeviceStatus = DeviceStatus.Off;
             else
-                SwitchOn();
+                DeviceStatus = DeviceStatus.On;
             LastModifierAtUtc = DateTime.Now;
         }
 

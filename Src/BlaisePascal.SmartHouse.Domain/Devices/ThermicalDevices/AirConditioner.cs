@@ -3,7 +3,7 @@ using BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices.ValueObjects;
 
 namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
 {
-    public class AirConditioner: AbstractDevice, IToggable, ISwitchable
+    public class AirConditioner: AbstractDevice, ISwitchable
     {
         private const int starterCustomTemp = 15;
         //     -------ATTRIBUTES AND PROPERTY-------
@@ -57,18 +57,24 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.ThermicalDevices
 
         //--ON/OFF METHODS--
 
-        public sealed override void SwitchOn()
+        public void SwitchOn()
         {
-            base.SwitchOn();
+            CheckIsNot(DeviceStatus.Error);
+            if (DeviceStatus == DeviceStatus.Off)
+            {
+                DeviceStatus = DeviceStatus.On;
+            }
+            else
+                DeviceStatus = DeviceStatus.Off;
             PutStarterStatus();
         }
-        public sealed override void SwitchOff()
+        public void SwitchOff()
         {
             base.SwitchOff();
             Speed = SpeedRPM.NewZeroSpeed();
             Temperature = Temperature.NewZeroTemperature();
         }
-        public void Toggle()
+        public override void Toggle()
         {
             if (DeviceStatus == DeviceStatus.On)
                 SwitchOff();

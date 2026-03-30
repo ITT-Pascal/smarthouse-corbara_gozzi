@@ -24,13 +24,14 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
 
         //--SWITCH METHODS--
 
-        public override void SwitchOn()
+        public void SwitchOn()
         {
             foreach(Lamp lamp in LampRow) 
             {
                 lamp?.SwitchOn(); 
                 //? = SE E' NULL, NON FA SWITCH ON
             }
+            LastModifierAtUtc = DateTime.Now;
         }
 
         /// <summary>
@@ -40,6 +41,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         public void SwitchOnBy(Guid id)
         {
             FindLampBy(id).SwitchOn();
+            LastModifierAtUtc = DateTime.Now;
         }
 
         /// <summary>
@@ -49,13 +51,15 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         public void SwitchOnBy(DeviceName name)
         {
             LampRow.First(lamp => lamp.Name == name).SwitchOn();
+            LastModifierAtUtc = DateTime.Now;
         }
-        public override void SwitchOff()
+        public void SwitchOff()
         {
             foreach (Lamp lamp in LampRow)
             {
                 lamp?.SwitchOff();
             }
+            LastModifierAtUtc = DateTime.Now;
         }
 
         /// <summary>
@@ -65,6 +69,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         public void SwitchOffBy(Guid id) 
         {
             FindLampBy(id).SwitchOff();
+            LastModifierAtUtc = DateTime.Now;
         }
 
         /// <summary>
@@ -74,12 +79,14 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         public void SwitchOffBy(DeviceName name)
         {
             LampRow.First(lamp => lamp.Name == name).SwitchOff();
+            LastModifierAtUtc = DateTime.Now;
         }
 
-        public void Toggle()
+        public override void Toggle()
         {
             foreach (Lamp lamp in LampRow)
                 lamp.Toggle();
+            LastModifierAtUtc = DateTime.Now;
         }
 
         //--ADDER/REMOVER METHODS--
@@ -88,6 +95,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         {
             CheckIsNotNull(lamp);
             LampRow.Add(lamp);
+            LastModifierAtUtc = DateTime.Now;
         }
         public void AddLampIn(int position, Lamp lamp) 
         {
@@ -97,6 +105,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
             if (LampRow[position] != null)
                 throw new ArgumentException("Position: There is already a lamp", nameof(position));
             LampRow.Insert(position, lamp);
+            LastModifierAtUtc = DateTime.Now;
         }
 
         /// <summary>
@@ -106,6 +115,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         public void RemoveLampBy(Guid id) 
         {
             LampRow.RemoveAt(GetIdxOfLampBy(id));
+            LastModifierAtUtc = DateTime.Now;
         }
 
         /// <summary>
@@ -115,12 +125,14 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         public void RemoveLampBy(DeviceName name)
         {
             RemoveLampBy(LampRow.First(lamp => lamp.Name == name).ID);
+            LastModifierAtUtc = DateTime.Now;
         }
         public void RemoveLampAt(int position)
         {
             if (position < 0 || position >= LampRow.Count)
                 throw new ArgumentOutOfRangeException(nameof(position), "Position: Position out of range");
             LampRow.RemoveAt(position);
+            LastModifierAtUtc = DateTime.Now;
         }
 
         //--CHANGER INTENSITY METHODS--
@@ -129,6 +141,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         {
             foreach(Lamp lamp in LampRow)
                 lamp?.SetIntensityTo(intensity);
+            LastModifierAtUtc = DateTime.Now;
         }
 
         /// <summary>
@@ -138,6 +151,7 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         public void SetIntensityForLampBy(Guid id, Intensity intensity) 
         {
             FindLampBy(id).SetIntensityTo(intensity);
+            LastModifierAtUtc = DateTime.Now;
         }
 
         /// <summary>
@@ -147,16 +161,19 @@ namespace BlaisePascal.SmartHouse.Domain.Devices.LuminousDevices
         public void SetIntensityForLampBy(DeviceName name, Intensity intensity)
         {
             LampRow.First(lamp => lamp.Name == name).SetIntensityTo(intensity);
+            LastModifierAtUtc = DateTime.Now;
         }
         public void IncreaseBy()
         {
             foreach (Lamp lamp in LampRow)
                 lamp?.IncreaseBy();
+            LastModifierAtUtc = DateTime.Now;
         }
         public void DecreaseBy()
         {
             foreach (Lamp lamp in LampRow)
                 lamp?.DecreaseBy();
+            LastModifierAtUtc = DateTime.Now;
         }
 
         //--DETECTIONER METHODS--
